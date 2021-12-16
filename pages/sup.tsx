@@ -1,11 +1,8 @@
 import { FC } from 'react';
 import { Button } from '@material-ui/core';
-import { makeStyles, createStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
+import withWidth, { isWidthDown } from '@material-ui/core/withWidth';
 import styles from '../styles/Home.module.css';
-
-interface SupProps {
-  message: string;
-}
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -14,8 +11,9 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Sup: FC<SupProps> = ({ message }: SupProps) => {
+const Sup: FC<any> = ({ message, width }: any) => {
   const classes = useStyles();
+  console.log(isWidthDown('xs', width));
   return (
     <div className={styles.container}>
       <button type="button">I am so fucking boring!</button>
@@ -34,4 +32,4 @@ export const getServerSideProps = () => {
   };
 };
 
-export default Sup;
+export default withWidth({ noSSR: true })(Sup);
