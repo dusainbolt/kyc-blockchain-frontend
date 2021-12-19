@@ -2,6 +2,21 @@
 
 import { createTheme } from '@material-ui/core/styles';
 
+type DefaultStyle = {
+  container: any;
+};
+
+export const defaultStyle: DefaultStyle = {
+  container: {
+    minHeight: '100vh',
+    padding: '0 0.5rem',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+};
+
 // Create a theme instance.
 const theme = createTheme({
   palette: {

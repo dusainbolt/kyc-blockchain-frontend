@@ -29,30 +29,37 @@ module.exports = {
     'prettier/prettier': 'error',
     'react/react-in-jsx-scope': 'off',
     'react/jsx-filename-extension': 'off',
+    'react/prop-types': 'off',
     'import/extensions': 'off',
     'import/no-unresolved': 'error',
-    'eslintimport/no-cycle': 'off',
+    'import/no-cycle': 'off',
+    'import/no-named-as-default': 'off',
     'no-use-before-define': 'off',
+    'no-underscore-dangle': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-use-before-define': ['error'],
-    'import/order': [
-      'error',
-      {
-        groups: ['builtin', 'external', 'internal', ['parent', 'sibling', 'object', 'index']],
-        pathGroups: [
-          {
-            pattern: 'react',
-            group: 'external',
-            position: 'before',
-          },
-        ],
-        pathGroupsExcludedImportTypes: ['react'],
-        'newlines-between': 'never',
-        alphabetize: {
-          order: 'asc',
-          caseInsensitive: true,
-        },
-      },
-    ],
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    // 'import/order': [
+    //   'error',
+    //   {
+    //     groups: ['builtin', 'external', 'internal', ['parent', 'sibling', 'object', 'index']],
+    //     pathGroups: [
+    //       {
+    //         pattern: 'react',
+    //         group: 'external',
+    //         position: 'before',
+    //       },
+    //     ],
+    //     pathGroupsExcludedImportTypes: ['react'],
+    //     'newlines-between': 'never',
+    //     alphabetize: {
+    //       order: 'asc',
+    //       caseInsensitive: true,
+    //     },
+    //   },
+    // ],
+    'import/prefer-default-export': 'off',
+    '@typescript-eslint/no-unused-vars': ['error'],
     'import/no-extraneous-dependencies': [
       'error',
       { devDependencies: ['jest.setup.ts', '**/*.test.tsx', '**/*.spec.tsx', '**/*.test.ts', '**/*.spec.ts'] },

@@ -5,11 +5,11 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
-import theme from '@styles/theme';
 import { useStore } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import { wrapper } from '@src/redux/store';
+import { wrapper } from '@redux/store';
 import { compose } from '@reduxjs/toolkit';
+import theme from '@styles/theme';
 
 const MyApp: FC<AppProps> = ({ Component, pageProps }: AppProps) => {
   const store = useStore();

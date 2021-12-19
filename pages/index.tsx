@@ -13,7 +13,7 @@ const useStyles = makeStyles(() => ({
 const Home: FC<any> = ({ message, width }: any) => {
   const classes = useStyles();
   console.log(isWidthDown('xs', width));
-  return <div className={styles.container}></div>;
+  return <div className={styles.container}>{message}</div>;
 };
 
 export const getServerSideProps = () => {

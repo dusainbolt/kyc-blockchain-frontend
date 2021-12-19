@@ -1,14 +1,12 @@
 import { combineReducers } from '@reduxjs/toolkit';
-// import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import gallerySlice from './slices/gallerySlice';
 import seoHomeSlice from './slices/seoHomeSlice';
-// import seoHomeReducer from './slices/seoHomeSlice';
 
 export const getPersistConfig = (key = '', nested = {}): any => {
   return {
     key,
-    storage: storage,
+    storage,
     ...nested,
   };
 };
