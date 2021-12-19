@@ -1,13 +1,14 @@
 // import { ErrorSaga, NotifySystem, TypeNotify } from '@Models/LayoutModel';
-// import { all, put } from 'redux-saga/effects';
+import { all, put } from 'redux-saga/effects';
+import seoHomeSaga from './sagas/seoHomeSaga';
 // import WatchLoginSaga from './sagas/loginSaga';
-// // import seoHomeSaga from './sagas/seoHomeSaga';
-// // import watchTagSaga from './sagas/tagSaga';
+// import seoHomeSaga from './sagas/seoHomeSaga';
+// import watchTagSaga from './sagas/tagSaga';
 // import { setNotifySlice } from './slices/layoutSlice';
 
-// export default function* rootSaga(): any {
-//   yield all([WatchLoginSaga()]);
-// }
+export default function* rootSaga(): any {
+  yield all([seoHomeSaga()]);
+}
 
 // export function* handleMessageErrorSaga(error: ErrorSaga): any {
 //   yield console.log('Catch Error: ', error);

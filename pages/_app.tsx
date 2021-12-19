@@ -6,8 +6,15 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import theme from '@styles/theme';
+import { useStore } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { wrapper } from '@src/redux/store';
+import { compose } from '@reduxjs/toolkit';
 
 const MyApp: FC<AppProps> = ({ Component, pageProps }: AppProps) => {
+  const store = useStore();
+  const isClient = typeof window !== 'undefined';
+
   useEffect(() => {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
@@ -15,6 +22,14 @@ const MyApp: FC<AppProps> = ({ Component, pageProps }: AppProps) => {
       jssStyles?.parentElement?.removeChild(jssStyles);
     }
   }, []);
+
+  const PageComponent = isClient ? (
+    <PersistGate persistor={(store as any).__persistor} loading={null}>
+      <Component {...pageProps} />
+    </PersistGate>
+  ) : (
+    <Component {...pageProps} />
+  );
 
   return (
     <>
@@ -25,10 +40,10 @@ const MyApp: FC<AppProps> = ({ Component, pageProps }: AppProps) => {
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-        <Component {...pageProps} />
+        {PageComponent}
       </ThemeProvider>
     </>
   );
 };
 
-export default MyApp;
+export default compose(wrapper.withRedux)(MyApp);

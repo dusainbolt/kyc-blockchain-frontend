@@ -24,7 +24,7 @@ function makeStore<T>(initialState?: T) {
   const isServer = typeof window === 'undefined';
 
   // common make config store SERVER & CLIENT
-  const makeConfigStore = (reducer) => {
+  const makeConfigStore = (reducer: any) => {
     // return createStore(reducer, initialState, bindMiddleware([sagaMiddleware]));
     return configureStore({
       reducer: reducer,
@@ -49,7 +49,7 @@ function makeStore<T>(initialState?: T) {
     // persist config
     const persistConfig = {
       version: 1,
-      key: 'code_memory_root',
+      key: process.env.NEXT_PUBLIC_APP_NAME as string,
       whitelist: whitelist, // make sure it does not clash with server keys
       storage,
     };
@@ -57,14 +57,12 @@ function makeStore<T>(initialState?: T) {
     // create persist reducer
     const persistedReducer = persistReducer(persistConfig, rootReducer);
     storeWrapper = makeConfigStore(persistedReducer);
-    storeWrapper.__persistor = persistStore(storeWrapper); // Nasty hack
+    (storeWrapper as any).__persistor = persistStore(storeWrapper); // Nasty hack
   }
   //   storeWrapper = makeConfigStore(rootReducer);
-  storeWrapper.sagaTask = sagaMiddleware.run(rootSaga);
+  (storeWrapper as any).sagaTask = sagaMiddleware.run(rootSaga);
   return storeWrapper;
 }
-
-// console.clear();
 
 export type AppStore = ReturnType<typeof makeStore>;
 

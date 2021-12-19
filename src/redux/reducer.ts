@@ -1,7 +1,9 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import { persistReducer } from 'redux-persist';
+// import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import seoHomeReducer from './slices/seoHomeSlice';
+import gallerySlice from './slices/gallerySlice';
+import seoHomeSlice from './slices/seoHomeSlice';
+// import seoHomeReducer from './slices/seoHomeSlice';
 
 export const getPersistConfig = (key = '', nested = {}): any => {
   return {
@@ -13,11 +15,6 @@ export const getPersistConfig = (key = '', nested = {}): any => {
 
 export const whitelist = [];
 
-const persistLoginSlice = persistReducer(
-  getPersistConfig('loginSlice', { whitelist: ['token', 'user'] }),
-  seoHomeReducer
-);
-
-export const rootReducer = combineReducers({ seoHomeReducer, loginSlice: persistLoginSlice });
+export const rootReducer = combineReducers({ seoHomeSlice, gallerySlice });
 
 export type RootState = ReturnType<typeof rootReducer>;

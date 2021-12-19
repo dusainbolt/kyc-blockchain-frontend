@@ -1,17 +1,19 @@
 import { createAction, createSlice } from '@reduxjs/toolkit';
+import { SeoHome } from '@src/types/seoHomeType';
 import { HYDRATE } from 'next-redux-wrapper';
 import { RootState } from '../reducer';
 import { AppState } from '../store';
 
-const initialState: any = {};
+const initialState: SeoHome = {};
 
 const hydrate = createAction<AppState>(HYDRATE);
 
-export const seoHomeSlice: any = createSlice({
+export const seoHomeSlice = createSlice({
   name: 'seoHomeSlice',
   initialState,
   reducers: {
-    getSeoHomeSuccess: (state: any, action: any) => ({ ...state, ...action.payload }),
+    getSeoHomeStart: (state: SeoHome, action: any) => ({ ...state, id: "123213" }),
+    getSeoHomeSuccess: (state: SeoHome, action: any) => ({ ...state, ...action.payload }),
   },
   extraReducers(builder) {
     builder.addCase(hydrate, (state, action) => {
@@ -25,6 +27,6 @@ export const seoHomeSlice: any = createSlice({
 
 export const getSeoHomeSlice = (state: RootState): any => state.seoHomeSlice;
 
-export const { getSeoHomeSuccess } = seoHomeSlice.actions;
+export const { getSeoHomeSuccess, getSeoHomeStart } = seoHomeSlice.actions;
 
 export default seoHomeSlice.reducer;
