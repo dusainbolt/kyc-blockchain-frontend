@@ -30,6 +30,7 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'react/jsx-filename-extension': 'off',
     'react/prop-types': 'off',
+    'react/no-array-index-key': 'off',
     'import/extensions': 'off',
     'import/no-unresolved': 'error',
     'import/no-cycle': 'off',

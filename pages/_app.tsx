@@ -11,6 +11,8 @@ import { wrapper } from '@redux/store';
 import { compose } from '@reduxjs/toolkit';
 import theme from '@styles/theme';
 
+import '@styles/globals.css';
+
 const MyApp: FC<AppProps> = ({ Component, pageProps }: AppProps) => {
   const store = useStore();
   const isClient = typeof window !== 'undefined';
