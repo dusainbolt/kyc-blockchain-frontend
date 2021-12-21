@@ -37,9 +37,13 @@ module.exports = {
     'import/no-named-as-default': 'off',
     'no-use-before-define': 'off',
     'no-underscore-dangle': 'off',
+    'no-shadow': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-use-before-define': ['error'],
     '@typescript-eslint/explicit-module-boundary-types': 'off',
+    'import/order': 'off',
+    'object-shorthand': 'off',
+    'import/no-mutable-exports': 'off',
     // 'import/order': [
     //   'error',
     //   {

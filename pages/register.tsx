@@ -17,6 +17,7 @@ const Register: FC<any> = ({ message, width }: any) => {
 
   return (
     <div className={classes.container}>
+      <h1>Đăng ký</h1>
       <Formik initialValues={initialValuesForm} onSubmit={handleRegister} validationSchema={yup.object(validateForm)}>
         <FormRegister />
       </Formik>

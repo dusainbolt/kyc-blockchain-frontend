@@ -7,22 +7,12 @@ import createSagaMiddleware from 'redux-saga';
 import storage from 'redux-persist/lib/storage';
 import rootSaga from './saga';
 
-// function bindMiddleware(middleware: any) {
-//   // Just use redux devtools in dev mode
-//   if (process.env.NODE_ENV !== 'production') {
-//     return composeWithDevTools(applyMiddleware(...middleware));
-//   }
-//   return applyMiddleware(...middleware);
-// }
-
 const sagaMiddleware = createSagaMiddleware();
 
 let storeWrapper;
-// return createStore(rootReducer, initialState, bindMiddleware([sagaMiddleware]));
 
-function makeStore<T>(initialState?: T) {
+function makeStore() {
   const isServer = typeof window === 'undefined';
-
   // common make config store SERVER & CLIENT
   const makeConfigStore = (reducer: any) => {
     // return createStore(reducer, initialState, bindMiddleware([sagaMiddleware]));

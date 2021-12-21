@@ -28,7 +28,7 @@ const theme = createTheme({
       light: '#B3E5FC',
       main: '#03A9F4',
       dark: '#0288D1',
-      contrastText: '#212121',
+      contrastText: '#ffffff',
     },
     secondary: {
       main: '#607D8B', // omitting light and dark will calculate from main

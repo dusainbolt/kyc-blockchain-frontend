@@ -1,6 +1,11 @@
 import FieldText from '@common/FieldInput';
 import Constant from '@services/constant';
-import { IField } from './field';
+import { IField, Restrict } from './field';
+import { User } from './user';
+
+export type AuthenSlice = {
+  users: User[];
+};
 
 type RegisterInputName = 'username' | 'password' | 'rePassword' | 'email' | 'phoneNumber' | 'address';
 
@@ -20,6 +25,7 @@ export const registerField: Record<RegisterInputName, IField> = {
     label: 'Tên đăng nhập',
     component: FieldText,
     required: true,
+    restric: Restrict.DISALLOW_SPECIAL_CHAR,
   },
   password: {
     name: 'password',

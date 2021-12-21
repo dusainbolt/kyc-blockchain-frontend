@@ -1,5 +1,5 @@
 import { createAction, createSlice } from '@reduxjs/toolkit';
-import { SeoHome } from '@src/types/seoHomeType';
+import { SeoHome } from '@type/seoHome';
 import { HYDRATE } from 'next-redux-wrapper';
 import { RootState } from '../reducer';
 import { AppState } from '../store';
@@ -12,7 +12,6 @@ export const seoHomeSlice = createSlice({
   name: 'seoHomeSlice',
   initialState,
   reducers: {
-    getSeoHomeStart: (state: SeoHome, action: any) => ({ ...state, id: "123213" }),
     getSeoHomeSuccess: (state: SeoHome, action: any) => ({ ...state, ...action.payload }),
   },
   extraReducers(builder) {
@@ -27,6 +26,6 @@ export const seoHomeSlice = createSlice({
 
 export const getSeoHomeSlice = (state: RootState): any => state.seoHomeSlice;
 
-export const { getSeoHomeSuccess, getSeoHomeStart } = seoHomeSlice.actions;
+export const { getSeoHomeSuccess } = seoHomeSlice.actions;
 
 export default seoHomeSlice.reducer;

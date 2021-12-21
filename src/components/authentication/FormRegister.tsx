@@ -1,7 +1,7 @@
 import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { registerField } from '@type/authentication';
 import { IField } from '@type/field';
-import { registerField } from '@type/registerType';
 import { Field, useFormikContext } from 'formik';
 import { FC } from 'react';
 
@@ -35,6 +35,7 @@ const FormRegister: FC<any> = () => {
             type={field.type}
             placeholder={field.placeholder}
             required={field.required}
+            restric={field.restric}
           />
         );
       })}

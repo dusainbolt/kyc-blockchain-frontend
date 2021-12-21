@@ -1,6 +1,7 @@
 import { TextField } from '@material-ui/core';
 import Constant from '@services/constant';
 import Helper from '@services/helper';
+import { Restrict } from '@type/field';
 import clsx from 'clsx';
 import { FieldInputProps, FieldMetaProps, useFormikContext } from 'formik';
 import { FC, FormEvent } from 'react';
@@ -11,20 +12,26 @@ export interface FieldTextType {
   suffix?: any;
   placeholder?: string;
   className?: string;
+  restric: Restrict;
   type?: string;
   required?: boolean;
   field?: FieldInputProps<any>;
   meta?: FieldMetaProps<any>;
 }
 
-const FieldText: FC<FieldTextType> = ({ label, placeholder, className, type, field, required }) => {
+const FieldText: FC<FieldTextType> = ({ label, placeholder, className, type, field, required, restric }) => {
   const { touched, errors, setFieldValue } = useFormikContext();
   const fieldTouch: boolean = Helper.objValue(touched, field?.name);
   const fieldError: string = Helper.objValue(errors, field?.name);
   const isError: boolean = fieldTouch && Boolean(fieldError);
 
-  const onChangeInput = (e: FormEvent<HTMLInputElement>) => {
-    setFieldValue(field?.name as string, e.currentTarget.value);
+  const onChangeInput = ({ currentTarget: { value } }: FormEvent<HTMLInputElement>) => {
+    const includeSpecialChar = value.match(/[%<>\\$'"]/);
+    console.log(Restrict.DISALLOW_SPECIAL_CHAR === restric);
+    if (Restrict.DISALLOW_SPECIAL_CHAR === restric && includeSpecialChar?.input) {
+      return;
+    }
+    setFieldValue(field?.name as string, value);
   };
 
   return (

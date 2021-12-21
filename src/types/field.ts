@@ -1,3 +1,6 @@
+export enum Restrict {
+  DISALLOW_SPECIAL_CHAR = 'DISALLOW_SPECIAL_CHAR',
+}
 export interface OptionSelect {
   label: string;
   value: string;
@@ -12,5 +15,6 @@ export interface IField {
   options?: OptionSelect[];
   component: any;
   type?: 'password' | 'text' | any;
+  restric?: Restrict;
   required?: boolean;
 }
