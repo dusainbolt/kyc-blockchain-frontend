@@ -31,10 +31,13 @@ module.exports = {
     'react/jsx-filename-extension': 'off',
     'react/prop-types': 'off',
     'react/no-array-index-key': 'off',
+    'react/require-default-props': 'off',
+    'react/jsx-props-no-spreading': 'off',
     'import/extensions': 'off',
     'import/no-unresolved': 'error',
     'import/no-cycle': 'off',
     'import/no-named-as-default': 'off',
+    'import/no-extraneous-dependencies': 'off',
     'no-use-before-define': 'off',
     'no-underscore-dangle': 'off',
     'no-shadow': 'off',
@@ -65,10 +68,10 @@ module.exports = {
     // ],
     'import/prefer-default-export': 'off',
     '@typescript-eslint/no-unused-vars': ['error'],
-    'import/no-extraneous-dependencies': [
-      'error',
-      { devDependencies: ['jest.setup.ts', '**/*.test.tsx', '**/*.spec.tsx', '**/*.test.ts', '**/*.spec.ts'] },
-    ],
+    // 'import/no-extraneous-dependencies': [
+    //   'error',
+    //   { devDependencies: ['jest.setup.ts', '**/*.test.tsx', '**/*.spec.tsx', '**/*.test.ts', '**/*.spec.ts'] },
+    // ],
   },
   settings: {
     react: {

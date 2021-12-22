@@ -1,6 +1,5 @@
-// styles/theme.ts
-
-import { createTheme } from '@material-ui/core/styles';
+import { createTheme } from '@mui/material/styles';
+import createCache from '@emotion/cache';
 
 type DefaultStyle = {
   container: any;
@@ -55,5 +54,9 @@ const theme = createTheme({
     fontFamily: 'Roboto',
   },
 });
+
+export function createEmotionCache() {
+  return createCache({ key: 'css', prepend: true });
+}
 
 export default theme;

@@ -1,11 +1,11 @@
-import { Button } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { Button } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import { registerField } from '@type/authentication';
 import { IField } from '@type/field';
 import { Field, useFormikContext } from 'formik';
 import { FC } from 'react';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles({
   inputField: {
     marginTop: 12,
   },
@@ -16,7 +16,7 @@ const useStyles = makeStyles(() => ({
   buttonSubmit: {
     marginTop: 20,
   },
-}));
+});
 
 const FormRegister: FC<any> = () => {
   const classes = useStyles();
@@ -39,13 +39,12 @@ const FormRegister: FC<any> = () => {
           />
         );
       })}
-
       <Button
         color="primary"
-        variant="contained"
         className={classes.buttonSubmit}
-        onClick={handleSubmit as any}
         fullWidth
+        onClick={handleSubmit as any}
+        variant="contained"
         type="submit"
       >
         Submit

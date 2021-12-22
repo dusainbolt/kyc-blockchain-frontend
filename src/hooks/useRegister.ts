@@ -1,5 +1,6 @@
 import { addUser, getAuthenSlice } from '@redux/slices/authentication';
 import { useAppDispatch, useAppSelector } from '@redux/store';
+import Hash from '@services/hash';
 import Validate from '@services/validate';
 import { RegisterInput, RegisterValidate, registerField } from '@type/authentication';
 import { User } from '@type/user';
@@ -14,7 +15,6 @@ interface UseRegister {
 export const useRegister = (): UseRegister => {
   const dispatch = useAppDispatch();
   const authenSlice = useAppSelector(getAuthenSlice);
-  console.log('authenSlice => ', authenSlice);
   const initialValuesForm: RegisterInput = {
     username: '',
     email: '',
@@ -44,12 +44,22 @@ export const useRegister = (): UseRegister => {
       .string()
       .required(Validate.require(registerField.rePassword.label))
       .oneOf([yup.ref('password'), null], Validate.notMatch(registerField.password.label)),
-    phoneNumber: yup.string(),
+    phoneNumber: yup.string().matches(Validate.regexPhone, Validate.phone()),
     address: yup.string(),
   };
 
   const handleRegister = (values: RegisterInput) => {
-    const user: User = { ...values, status: true };
+    const password = Hash.encryptAES(values.password);
+    // const unHashPassword = Hash.decryptAES(password);
+    const user: User = {
+      status: true,
+      password,
+      address: values.address,
+      email: values.email,
+      username: values.username,
+      phoneNumber: values.phoneNumber,
+    };
+
     dispatch(addUser(user));
   };
 

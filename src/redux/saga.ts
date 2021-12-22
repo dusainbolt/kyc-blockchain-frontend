@@ -1,5 +1,5 @@
 // import { ErrorSaga, NotifySystem, TypeNotify } from '@Models/LayoutModel';
-import { all, put } from 'redux-saga/effects';
+import { all } from 'redux-saga/effects';
 import seoHomeSaga from './sagas/seoHomeSaga';
 // import WatchLoginSaga from './sagas/loginSaga';
 // import seoHomeSaga from './sagas/seoHomeSaga';
