@@ -1,10 +1,11 @@
 import { makeStyles } from '@mui/styles';
-import { registerField } from '@type/authentication';
+import {  loginField } from '@type/authentication';
 import { IField } from '@type/field';
 import { Field, useFormikContext } from 'formik';
 import { FC } from 'react';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Button } from '@mui/material';
+import Alert from '@mui/material/Alert';
 
 const useStyles = makeStyles({
   inputField: {
@@ -19,12 +20,12 @@ const useStyles = makeStyles({
   },
 });
 
-const FormRegister: FC<{loadingSubmitRegister: boolean}> = ({loadingSubmitRegister}) => {
+const FormLogin: FC<{loadingSubmitLogin: boolean, errorMessage: string}> = ({loadingSubmitLogin, errorMessage }) => {
   const classes = useStyles();
   const { handleSubmit } = useFormikContext();
   return (
     <div className={classes.formWrapper}>
-      {Object.entries(registerField).map((item: any[], index: number) => {
+      {Object.entries(loginField).map((item: any[], index: number) => {
         const field: IField = item[1];
         return (
           <Field
@@ -40,6 +41,7 @@ const FormRegister: FC<{loadingSubmitRegister: boolean}> = ({loadingSubmitRegist
           />
         );
       })}
+      {errorMessage && <Alert className={classes.buttonSubmit} severity="error">{errorMessage}</Alert>}
       <LoadingButton
         color="primary"
         className={classes.buttonSubmit}
@@ -47,14 +49,14 @@ const FormRegister: FC<{loadingSubmitRegister: boolean}> = ({loadingSubmitRegist
         onClick={handleSubmit as any}
         variant="contained"
         type="submit"
-        loading={loadingSubmitRegister}
+        loading={loadingSubmitLogin}
         loadingPosition="start"
       >
-        Đăng ký
+        Đăng nhập
       </LoadingButton>
-      <Button href="/login">Đăng nhập</Button>
+      <Button href="/register">Đăng ký</Button>
     </div>
   );
 };
 
-export default FormRegister;
+export default FormLogin;

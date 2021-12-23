@@ -13,6 +13,8 @@ export default class Validate {
 
   static phone = () => `Vui lòng nhập số điện thoại hợp lệ`;
 
+  static userOrPasswordError = `Tài khoản hoặc mật khẩu không chính xác`;
+
   static regexPhone =
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 

@@ -1,21 +1,28 @@
+
 import { addUser, getAuthenSlice } from '@redux/slices/authentication';
 import { useAppDispatch, useAppSelector } from '@redux/store';
 import Hash from '@services/hash';
+import Helper from '@services/helper';
 import Validate from '@services/validate';
 import { RegisterInput, RegisterValidate, registerField } from '@type/authentication';
 import { User } from '@type/user';
+import { useState } from 'react';
 import * as yup from 'yup';
+//@ts-ignore
+import { NotificationManager} from 'react-notifications';
 
 interface UseRegister {
   handleRegister: (values: RegisterInput) => void;
-  initialValuesForm: RegisterInput;
+  initialFormRegister: RegisterInput;
   validateForm: any;
+  loadingSubmitRegister: boolean;
 }
 
 export const useRegister = (): UseRegister => {
   const dispatch = useAppDispatch();
   const authenSlice = useAppSelector(getAuthenSlice);
-  const initialValuesForm: RegisterInput = {
+  const [loadingSubmitRegister, setLoadingSubmitRegister] = useState<boolean>(false);
+  const initialFormRegister: RegisterInput = {
     username: '',
     email: '',
     password: '',
@@ -48,9 +55,10 @@ export const useRegister = (): UseRegister => {
     address: yup.string(),
   };
 
-  const handleRegister = (values: RegisterInput) => {
+  const handleRegister = async (values: RegisterInput) => {
+    setLoadingSubmitRegister(true);
+    await Helper.delay(1500);
     const password = Hash.encryptAES(values.password);
-    // const unHashPassword = Hash.decryptAES(password);
     const user: User = {
       status: true,
       password,
@@ -61,7 +69,9 @@ export const useRegister = (): UseRegister => {
     };
 
     dispatch(addUser(user));
+    NotificationManager.success('Bạn vừa đăng ký thành công', 'Thành công');
+    setLoadingSubmitRegister(false);
   };
 
-  return { handleRegister, initialValuesForm, validateForm };
+  return { handleRegister, initialFormRegister, validateForm, loadingSubmitRegister };
 };

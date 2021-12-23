@@ -6,6 +6,7 @@ import { useRegister } from '@hooks/useRegister';
 import FormRegister from '@components/authentication/FormRegister';
 import * as yup from 'yup';
 import { defaultStyle } from '@styles/theme';
+import { useRedirectAuthen } from '@hooks/useLogin';
 
 const useStyles = makeStyles({
   container: defaultStyle.container,
@@ -13,13 +14,13 @@ const useStyles = makeStyles({
 
 const Register: FC<any> = ({ titlePages }) => {
   const classes = useStyles();
-  const { handleRegister, initialValuesForm, validateForm } = useRegister();
-
+  const { handleRegister, initialFormRegister, validateForm, loadingSubmitRegister } = useRegister();
+  useRedirectAuthen();
   return (
     <div className={classes.container}>
       <h1>{titlePages}</h1>
-      <Formik initialValues={initialValuesForm} onSubmit={handleRegister} validationSchema={yup.object(validateForm)}>
-        <FormRegister />
+      <Formik initialValues={initialFormRegister} onSubmit={handleRegister} validationSchema={yup.object(validateForm)}>
+        <FormRegister loadingSubmitRegister={loadingSubmitRegister} />
       </Formik>
     </div>
   );

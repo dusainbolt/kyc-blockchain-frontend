@@ -20,6 +20,9 @@ export const authenSlice = createSlice({
     addUser: (state: AuthenSlice, action: AddUserAction) => {
       state.users.push(action.payload);
     },
+    setCurrentUser: (state: AuthenSlice, action: AddUserAction) => {
+      state.currentUser = action.payload;
+    },
   },
   extraReducers(builder) {
     builder.addCase(hydrate, (state, action) => {
@@ -33,6 +36,6 @@ export const authenSlice = createSlice({
 
 export const getAuthenSlice = (state: RootState): AuthenSlice => state.authenSlice;
 
-export const { addUser } = authenSlice.actions;
+export const { addUser, setCurrentUser } = authenSlice.actions;
 
-export default persistReducer(getPersistConfig('authenSlice', { whitelist: ['users'] }), authenSlice.reducer);
+export default persistReducer(getPersistConfig('authenSlice', { whitelist: ['users', 'currentUser'] }), authenSlice.reducer);

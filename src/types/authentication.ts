@@ -5,6 +5,7 @@ import { User } from './user';
 
 export type AuthenSlice = {
   users: User[];
+  currentUser?: User;
 };
 
 type RegisterInputName = 'username' | 'password' | 'rePassword' | 'email' | 'phoneNumber' | 'address';
@@ -50,5 +51,28 @@ export const registerField: Record<RegisterInputName, IField> = {
     name: 'address',
     label: 'Địa chỉ',
     component: FieldText,
+  },
+};
+
+type LoginInputInputName = 'username' | 'password';
+
+export type LoginInput = Pick<RegisterInput, LoginInputInputName>;
+
+export type LoginValidate = Record<LoginInputInputName, any>;
+
+export const loginField: Record<LoginInputInputName, IField> = {
+  username: {
+    name: 'username',
+    label: 'Tên đăng nhập',
+    component: FieldText,
+    required: true,
+    restric: Restrict.DISALLOW_SPECIAL_CHAR,
+  },
+  password: {
+    name: 'password',
+    label: 'Mật khẩu',
+    component: FieldText,
+    type: Constant.FORM.TYPE_PASSWORD,
+    required: true,
   },
 };
