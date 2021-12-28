@@ -3,5 +3,5 @@ export default class Helper {
     return object[key];
   };
 
-  static delay = (timeMilliSecond: number = 1000) => new Promise(resolve => setTimeout(() => resolve(null), timeMilliSecond));
+  static delay = (timeMilliSecond = 1000) => new Promise((resolve) => setTimeout(() => resolve(null), timeMilliSecond));
 }

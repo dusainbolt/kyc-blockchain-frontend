@@ -18,7 +18,7 @@ const Login: FC<any> = ({ titlePages }) => {
     <div className={classes.container}>
       <h1>{titlePages}</h1>
       <Formik initialValues={initialFormLogin} onSubmit={handleLogin} validationSchema={yup.object(validateFormLogin)}>
-        <FormLogin errorMessage={errorMessage} loadingSubmitLogin={loadingSubmitLogin}/>
+        <FormLogin errorMessage={errorMessage} loadingSubmitLogin={loadingSubmitLogin} />
       </Formik>
     </div>
   );

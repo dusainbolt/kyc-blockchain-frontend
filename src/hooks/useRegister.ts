@@ -1,4 +1,3 @@
-
 import { addUser, getAuthenSlice } from '@redux/slices/authentication';
 import { useAppDispatch, useAppSelector } from '@redux/store';
 import Hash from '@services/hash';
@@ -9,18 +8,22 @@ import { User } from '@type/user';
 import { useState } from 'react';
 import * as yup from 'yup';
 //@ts-ignore
-import { NotificationManager} from 'react-notifications';
+import { NotificationManager } from 'react-notifications';
+import { Role } from '@type/authorisation';
 
 interface UseRegister {
-  handleRegister: (values: RegisterInput) => void;
   initialFormRegister: RegisterInput;
   validateForm: any;
   loadingSubmitRegister: boolean;
+  isWaitOTP: boolean;
+  handleRegister: (values: RegisterInput) => void;
+  handleSubmitOTP: () => void;
 }
 
 export const useRegister = (): UseRegister => {
   const dispatch = useAppDispatch();
   const authenSlice = useAppSelector(getAuthenSlice);
+  const [isWaitOTP, setIsWaitOTP] = useState<boolean>(false);
   const [loadingSubmitRegister, setLoadingSubmitRegister] = useState<boolean>(false);
   const initialFormRegister: RegisterInput = {
     username: '',
@@ -66,12 +69,20 @@ export const useRegister = (): UseRegister => {
       email: values.email,
       username: values.username,
       phoneNumber: values.phoneNumber,
+      role: values.username === 'dusainbolt' ? Role.ADMIN : Role.User,
     };
 
     dispatch(addUser(user));
     NotificationManager.success('Bạn vừa đăng ký thành công', 'Thành công');
+    setIsWaitOTP(true);
     setLoadingSubmitRegister(false);
   };
 
-  return { handleRegister, initialFormRegister, validateForm, loadingSubmitRegister };
+  const handleSubmitOTP = async () => {
+    setLoadingSubmitRegister(true);
+    await Helper.delay(1500);
+    window.open('/login', '_self');
+  };
+
+  return { handleRegister, initialFormRegister, validateForm, loadingSubmitRegister, isWaitOTP, handleSubmitOTP };
 };

@@ -1,10 +1,9 @@
 import { makeStyles } from '@mui/styles';
-import { registerField } from '@type/authentication';
-import { IField } from '@type/field';
 import { Field, useFormikContext } from 'formik';
 import { FC } from 'react';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Button } from '@mui/material';
+import FieldText from '@common/FieldInput';
 
 const useStyles = makeStyles({
   inputField: {
@@ -19,27 +18,13 @@ const useStyles = makeStyles({
   },
 });
 
-const FormRegister: FC<{ loadingSubmitRegister: boolean }> = ({ loadingSubmitRegister }) => {
+const FormOTP: FC<{ loadingSubmitRegister: boolean }> = ({ loadingSubmitRegister }) => {
   const classes = useStyles();
   const { handleSubmit } = useFormikContext();
   return (
     <div className={classes.formWrapper}>
-      {Object.entries(registerField).map((item: any[], index: number) => {
-        const field: IField = item[1];
-        return (
-          <Field
-            key={index}
-            className={classes.inputField}
-            name={field.name}
-            label={field.label}
-            component={field.component}
-            type={field.type}
-            placeholder={field.placeholder}
-            required={field.required}
-            restric={field.restric}
-          />
-        );
-      })}
+      <p>Lưu ý mã có hiệu lực trong 5p</p>
+      <Field className={classes.inputField} name="otp" label="Mã xác thực" component={FieldText} required={true} />
       <LoadingButton
         color="primary"
         className={classes.buttonSubmit}
@@ -52,9 +37,8 @@ const FormRegister: FC<{ loadingSubmitRegister: boolean }> = ({ loadingSubmitReg
       >
         Đăng ký
       </LoadingButton>
-      <Button href="/login">Đăng nhập</Button>
     </div>
   );
 };
 
-export default FormRegister;
+export default FormOTP;

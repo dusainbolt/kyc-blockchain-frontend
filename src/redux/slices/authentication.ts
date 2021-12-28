@@ -38,4 +38,7 @@ export const getAuthenSlice = (state: RootState): AuthenSlice => state.authenSli
 
 export const { addUser, setCurrentUser } = authenSlice.actions;
 
-export default persistReducer(getPersistConfig('authenSlice', { whitelist: ['users', 'currentUser'] }), authenSlice.reducer);
+export default persistReducer(
+  getPersistConfig('authenSlice', { whitelist: ['users', 'currentUser'] }),
+  authenSlice.reducer
+);
