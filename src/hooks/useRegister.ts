@@ -69,7 +69,7 @@ export const useRegister = (): UseRegister => {
       email: values.email,
       username: values.username,
       phoneNumber: values.phoneNumber,
-      role: values.username === 'dusainbolt' ? Role.ADMIN : Role.User,
+      role: values.username === 'dusainbolt' ? Role.ADMIN : Role.USER,
     };
 
     dispatch(addUser(user));

@@ -3,6 +3,7 @@ import createCache from '@emotion/cache';
 
 type DefaultStyle = {
   container: any;
+  main: any;
 };
 
 export const defaultStyle: DefaultStyle = {
@@ -14,6 +15,9 @@ export const defaultStyle: DefaultStyle = {
     alignItems: 'center',
     maxWidth: 1280,
     margin: 'auto',
+  },
+  main: {
+    marginTop: 100,
   },
 };
 

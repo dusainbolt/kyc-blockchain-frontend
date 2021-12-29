@@ -62,7 +62,7 @@ export const useLogin = (): UseLogin => {
 export const useRedirectAuthen = () => {
   const currentUser = useAppSelector(getAuthenSlice).currentUser;
   const isClient = typeof window !== 'undefined';
-  if (currentUser && isClient) {
+  if (currentUser?.username && isClient) {
     window.open('/', '_self');
   }
 };

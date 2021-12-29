@@ -1,4 +1,4 @@
-import { AddUserAction } from '@redux/action/authentication';
+import { AddUserAction, UpdateUsersAction } from '@redux/action/authentication';
 import { getPersistConfig } from '@redux/storage';
 import { createAction, createSlice } from '@reduxjs/toolkit';
 import { AuthenSlice } from '@type/authentication';
@@ -23,6 +23,12 @@ export const authenSlice = createSlice({
     setCurrentUser: (state: AuthenSlice, action: AddUserAction) => {
       state.currentUser = action.payload;
     },
+    updateUsers: (state: AuthenSlice, action: UpdateUsersAction) => {
+      state.users = action.payload
+    },
+    disconnectUser: (state: AuthenSlice) => {
+      state.currentUser = {} as any;
+    },
   },
   extraReducers(builder) {
     builder.addCase(hydrate, (state, action) => {
@@ -36,7 +42,7 @@ export const authenSlice = createSlice({
 
 export const getAuthenSlice = (state: RootState): AuthenSlice => state.authenSlice;
 
-export const { addUser, setCurrentUser } = authenSlice.actions;
+export const { addUser, setCurrentUser, updateUsers, disconnectUser } = authenSlice.actions;
 
 export default persistReducer(
   getPersistConfig('authenSlice', { whitelist: ['users', 'currentUser'] }),

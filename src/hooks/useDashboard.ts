@@ -2,12 +2,12 @@ import { Role } from '@type/authorisation';
 import { User } from '@type/user';
 
 interface UseDashboard {
-  sayRole: () => void;
+  getRole: (role: Role) => string;
 }
 
-export const useDashboard = (user?: User): UseDashboard => {
-  const sayRole = (): string => {
-    switch (user?.role) {
+export const useDashboard = (): UseDashboard => {
+  const getRole = (role?: Role): string => {
+    switch (role) {
       case Role.ADMIN:
         return 'Quản trị viên';
       case Role.MANAGER:
@@ -15,8 +15,8 @@ export const useDashboard = (user?: User): UseDashboard => {
       case Role.MEMBER:
         return 'Thành viên';
       default:
-        return '';
+        return 'Người dùng';
     }
   };
-  return { sayRole };
+  return { getRole };
 };

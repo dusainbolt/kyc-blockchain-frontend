@@ -6,5 +6,5 @@ export enum Role {
   // Nguoi dung da dang ky
   MEMBER,
   // Nguoi dung binh thuong
-  User,
+  USER,
 }
