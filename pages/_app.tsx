@@ -11,7 +11,7 @@ import theme, { createEmotionCache } from '@styles/theme';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import NoSsr from '@mui/material/NoSsr';
 //@ts-ignore
-import { NotificationContainer} from 'react-notifications';
+import { NotificationContainer } from 'react-notifications';
 
 import '@styles/globals.css';
 import 'react-notifications/lib/notifications.css';
@@ -54,7 +54,7 @@ const MyApp: FC<MyAppProps> = (props: MyAppProps) => {
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
         {PageComponent}
-        <NoSsr>        
+        <NoSsr>
           <NotificationContainer />
         </NoSsr>
       </ThemeProvider>

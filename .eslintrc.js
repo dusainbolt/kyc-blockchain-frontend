@@ -32,6 +32,7 @@ module.exports = {
     'react/prop-types': 'off',
     'react/no-array-index-key': 'off',
     'react/require-default-props': 'off',
+    'react/jsx-fragments': 'off',
     'react/jsx-props-no-spreading': 'off',
     'import/extensions': 'off',
     'import/no-unresolved': 'error',
