@@ -10,17 +10,25 @@ import { compose } from '@reduxjs/toolkit';
 import theme, { createEmotionCache } from '@styles/theme';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import NoSsr from '@mui/material/NoSsr';
+import { Web3Provider } from '@ethersproject/providers';
+import { Web3ReactProvider } from '@web3-react/core';
 //@ts-ignore
 import { NotificationContainer } from 'react-notifications';
-
 import '@styles/globals.css';
 import 'react-notifications/lib/notifications.css';
+import { ethers } from 'ethers';
 
 const clientSideEmotionCache = createEmotionCache();
 
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
+
+export const getLibrary = (provider: any): Web3Provider => {
+  const library = new ethers.providers.Web3Provider(provider, 'any');
+  library.pollingInterval = 10000;
+  return library;
+};
 
 const MyApp: FC<MyAppProps> = (props: MyAppProps) => {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
@@ -50,14 +58,16 @@ const MyApp: FC<MyAppProps> = (props: MyAppProps) => {
         <title>My App</title>
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
       </Head>
-      <ThemeProvider theme={theme}>
-        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-        <CssBaseline />
-        {PageComponent}
-        <NoSsr>
-          <NotificationContainer />
-        </NoSsr>
-      </ThemeProvider>
+      <Web3ReactProvider getLibrary={getLibrary}>
+        <ThemeProvider theme={theme}>
+          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+          <CssBaseline />
+          {PageComponent}
+          <NoSsr>
+            <NotificationContainer />
+          </NoSsr>
+        </ThemeProvider>
+      </Web3ReactProvider>
     </CacheProvider>
   );
 };

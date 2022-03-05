@@ -1,10 +1,10 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import authenSlice from './slices/authentication';
-import seoHomeSlice from './slices/seoHomeSlice';
+import walletSlice from './slices/walletSlice';
 
 export const whitelist = [];
 
-export const rootReducer = combineReducers({ seoHomeSlice, authenSlice });
+export const rootReducer = combineReducers({ authenSlice, walletSlice });
 
 export type RootState = ReturnType<typeof rootReducer>;
 

@@ -34,6 +34,7 @@ module.exports = {
     'react/require-default-props': 'off',
     'react/jsx-fragments': 'off',
     'react/jsx-props-no-spreading': 'off',
+    'react-hooks/exhaustive-deps': 'off',
     'import/extensions': 'off',
     'import/no-unresolved': 'error',
     'import/no-cycle': 'off',
@@ -73,6 +74,7 @@ module.exports = {
     // ],
     'import/prefer-default-export': 'off',
     '@typescript-eslint/no-unused-vars': ['error'],
+    '@typescript-eslint/no-inferrable-types': 'off',
     // 'import/no-extraneous-dependencies': [
     //   'error',
     //   { devDependencies: ['jest.setup.ts', '**/*.test.tsx', '**/*.spec.tsx', '**/*.test.ts', '**/*.spec.ts'] },

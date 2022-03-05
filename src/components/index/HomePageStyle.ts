@@ -10,8 +10,16 @@ export const useStyles = makeStyles({
     marginTop: theme.spacing(4),
   },
   btnMetamask: {
-    borderColor: 'red',
+    ...defaultStyle.btnStyle('#dc6a00', '#dc6a001c'),
+    '& .icon-metamask': {
+      width: 32,
+    },
   },
+  btnWalletConnect: {
+    borderColor: '#5dabfc',
+    color: '#5dabfc',
+  },
+
   //   btnGroup: {
   //     marginTop: theme.spacing(4),
   //   },
