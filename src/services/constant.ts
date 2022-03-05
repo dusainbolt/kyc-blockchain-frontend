@@ -6,7 +6,11 @@ export default class Constant {
   };
 
   static ENV = {
-    ETH_CHAIN_ID: process.env.NEXT_PUBLIC_ETH_CHAIN_ID,
+    ETH_CHAIN_ID: Number(process.env.NEXT_PUBLIC_ETH_CHAIN_ID),
     RPC_ETH: process.env.NEXT_PUBLIC_RPC_ETH,
+  };
+
+  static CODE = {
+    ALREADY_PENDING_REQUEST: -32002,
   };
 }

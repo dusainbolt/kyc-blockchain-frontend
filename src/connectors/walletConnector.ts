@@ -23,7 +23,7 @@ import { WalletConnectConnector } from '@web3-react/walletconnect-connector';
 
 // export const injected = new InjectedConnector({ supportedChainIds: [1, 3, 4, 5, 42] });
 
-export const injected = new InjectedConnector({ supportedChainIds: [1] });
+export const injected = new InjectedConnector({ supportedChainIds: [Constant.ENV.ETH_CHAIN_ID] });
 
 // export const network = new NetworkConnector({
 //   urls: { 1: RPC_URLS[1], 4: RPC_URLS[4] },
@@ -31,7 +31,7 @@ export const injected = new InjectedConnector({ supportedChainIds: [1] });
 // });
 
 export const walletConnect = new WalletConnectConnector({
-  rpc: { 1: Constant.ENV.RPC_ETH as string },
+  rpc: { [Constant.ENV.ETH_CHAIN_ID]: Constant.ENV.RPC_ETH as string },
   bridge: 'https://bridge.walletconnect.org',
   qrcode: true,
   //   pollingInterval: POLLING_INTERVAL as any,

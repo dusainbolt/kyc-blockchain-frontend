@@ -8,4 +8,5 @@ export type WalletSlice = {
   address: string;
   chainId: number | string;
   balance: any;
+  connected: boolean;
 };

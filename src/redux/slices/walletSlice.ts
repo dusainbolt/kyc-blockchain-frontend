@@ -1,4 +1,5 @@
 // import { AddUserAction, UpdateUsersAction } from '@redux/action/authentication';
+import { ChooseWalletAction, ReceiveWalletAction } from '@redux/action/walletAction';
 import { getPersistConfig } from '@redux/storage';
 import { createAction, createSlice } from '@reduxjs/toolkit';
 import { WalletSlice } from '@type/wallet';
@@ -12,6 +13,7 @@ const initialState: WalletSlice = {
   type: null,
   balance: 0,
   chainId: 0,
+  connected: false,
 };
 
 const hydrate = createAction<AppState>(HYDRATE);
@@ -20,9 +22,14 @@ const walletSlice = createSlice({
   name: 'walletSlice',
   initialState,
   reducers: {
-    // addUser: (state: AuthenSlice, action: AddUserAction) => {
-    //   state.users.push(action.payload);
-    // },
+    chooseWallet: (state: WalletSlice, { payload }: ChooseWalletAction) => {
+      state.type = payload;
+    },
+    receiveWallet: (state: WalletSlice, { payload }: ReceiveWalletAction) => {
+      state.address = payload.account;
+      state.chainId = payload.chainId;
+      state.connected = true;
+    },
     // setCurrentUser: (state: AuthenSlice, action: AddUserAction) => {
     //   state.currentUser = action.payload;
     // },
@@ -45,6 +52,6 @@ const walletSlice = createSlice({
 
 export const getWalletSlice = (state: RootState): WalletSlice => state.walletSlice;
 
-// export const { addUser, setCurrentUser, updateUsers, disconnectUser } = authenSlice.actions;
+export const { chooseWallet, receiveWallet } = walletSlice.actions;
 
 export default persistReducer(getPersistConfig('walletSlice'), walletSlice.reducer);

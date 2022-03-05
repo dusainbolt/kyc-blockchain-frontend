@@ -1,8 +1,14 @@
 import { useEffect, useState } from 'react';
-import { useWeb3React } from '@web3-react/core';
+import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core';
 import { useEagerConnect, useInactiveListener } from './useEagerConnect';
 import { TypeWallet } from '@type/wallet';
 import { injected, walletConnect } from '@connectors/walletConnector';
+import { NotificationManager } from 'react-notifications';
+import { NoEthereumProviderError, UserRejectedRequestError } from '@web3-react/injected-connector';
+import Constant from '@services/constant';
+import { useAppDispatch } from '@redux/store';
+import { chooseWallet, receiveWallet } from '@redux/slices/walletSlice';
+import { ReceiveWallet } from '@redux/action/walletAction';
 
 export const useConnectProvider = () => {
   const { connector } = useWeb3React();
@@ -33,18 +39,41 @@ export const useControlConnect = (): {
   connectWallet: (type: TypeWallet) => void;
   disconnectWallet: () => void;
 } => {
-  const { activate, account, deactivate } = useWeb3React();
+  const { activate, account, deactivate, library, error, active, chainId } = useWeb3React();
+  const dispatch = useAppDispatch();
   console.log('====> account: ', account);
-  const connectWallet = (type: TypeWallet) => {
-    try {
-      activate(connectorsByName[type]);
-    } catch (e) {
-      console.log('===> E: ', e);
+
+  // const requestChangeNetwork = async () => {
+  //   // deactivate();
+  //   await library?.provider.request({
+  //     method: 'wallet_switchEthereumChain',
+  //     params: [{ chainId: '0x4' }],
+  //   });
+  // };
+
+  useEffect(() => {
+    if (error instanceof UnsupportedChainIdError) {
+      NotificationManager.warning(`Your network isn't correct, please switch network to Rinkeby Testnet`, 'Warning');
     }
+    if ((error as any)?.code === Constant.CODE.ALREADY_PENDING_REQUEST) {
+      NotificationManager.warning(
+        'Request connect wallet is pending, Please open your extension and confirm',
+        'Warning'
+      );
+    }
+  }, [error]);
+
+  useEffect(() => {
+    if (account && chainId) {
+      dispatch(receiveWallet({ account, chainId } as ReceiveWallet));
+    }
+  }, [account, chainId]);
+
+  const connectWallet = (type: TypeWallet) => {
+    dispatch(chooseWallet(type));
+    activate(connectorsByName[type]);
   };
 
-  const disconnectWallet = () => {
-    deactivate();
-  };
+  const disconnectWallet = async () => {};
   return { connectWallet, disconnectWallet };
 };
