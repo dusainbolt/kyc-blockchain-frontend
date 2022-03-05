@@ -4,6 +4,7 @@ import createCache from '@emotion/cache';
 type DefaultStyle = {
   container: any;
   main: any;
+  btnStyle: (color: string, hoverBackground: string) => any;
 };
 
 export const defaultStyle: DefaultStyle = {
@@ -19,6 +20,14 @@ export const defaultStyle: DefaultStyle = {
   main: {
     marginTop: 100,
   },
+  btnStyle: (color: string, hoverBackground: string = '') => ({
+    borderColor: color,
+    color: color,
+    '&:hover': {
+      borderColor: color,
+      background: hoverBackground,
+    },
+  }),
 };
 
 // Create a theme instance.

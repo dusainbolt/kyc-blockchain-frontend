@@ -12,10 +12,13 @@ import { FC, Fragment } from 'react';
 import { wrapper } from '@redux/store';
 import { SSGContext } from '@type/context';
 import Head from 'next/head';
-import { Typography } from '@mui/material';
+// import { Typography } from '@mui/material';
 import HomePageComponent from '@components/index/HomePage';
+import { useConnectProvider } from '@hooks/useConnectProvider';
 
 const Home: FC<any> = () => {
+  useConnectProvider();
+
   // const classes = useStyles();
   // const { currentUser, users } = useAppSelector(getAuthenSlice);
   // const [loadingDisconnect, setLoadingDisconnect] = useState<boolean>(false);

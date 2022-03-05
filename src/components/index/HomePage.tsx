@@ -2,12 +2,15 @@ import { Alert, Container, Typography } from '@mui/material';
 import { FC } from 'react';
 import { useStyles } from './HomePageStyle';
 import LoadingButton from '@mui/lab/LoadingButton';
-import SendIcon from '@mui/icons-material/Send';
 import Stack from '@mui/material/Stack';
 import { MetaMaskIcon } from '@asset/icon/metamask';
+import { WalletConnectIcon } from '@asset/icon/walletConnect';
+import { useControlConnect } from '@hooks/useConnectProvider';
+import { TypeWallet } from '@type/wallet';
 
 const HomePageComponent: FC<any> = () => {
   const classes = useStyles();
+  const { connectWallet, disconnectWallet } = useControlConnect();
   return (
     <main className={classes.main}>
       <Container maxWidth="lg">
@@ -18,14 +21,24 @@ const HomePageComponent: FC<any> = () => {
           Share your KYC information everywhere with blockchain technology{' '}
         </Typography>
         <Alert className={classes.spacingContent} severity="info">
-          Please choose method for connect to the platform
+          Please choose method and connect your wallet to the platform
         </Alert>
         <Stack className={classes.spacingContent} direction="row" spacing={2}>
-          <LoadingButton className={classes.btnMetamask} variant="outlined" startIcon={<MetaMaskIcon />}>
-            Send
+          <LoadingButton
+            onClick={() => connectWallet(TypeWallet.METAMASK)}
+            className={classes.btnMetamask}
+            variant="outlined"
+            startIcon={<MetaMaskIcon />}
+          >
+            Metamask
           </LoadingButton>{' '}
-          <LoadingButton variant="outlined" startIcon={<SendIcon />}>
-            Send
+          <LoadingButton
+            onClick={disconnectWallet}
+            className={classes.btnWalletConnect}
+            variant="outlined"
+            startIcon={<WalletConnectIcon />}
+          >
+            WalletConnect
           </LoadingButton>
         </Stack>
       </Container>

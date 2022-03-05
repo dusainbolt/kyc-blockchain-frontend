@@ -73,6 +73,7 @@ module.exports = {
     // ],
     'import/prefer-default-export': 'off',
     '@typescript-eslint/no-unused-vars': ['error'],
+    '@typescript-eslint/no-inferrable-types': 'off',
     // 'import/no-extraneous-dependencies': [
     //   'error',
     //   { devDependencies: ['jest.setup.ts', '**/*.test.tsx', '**/*.spec.tsx', '**/*.test.ts', '**/*.spec.ts'] },

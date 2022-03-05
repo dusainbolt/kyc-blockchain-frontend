@@ -13,7 +13,7 @@ const initialState: AuthenSlice = {
 
 const hydrate = createAction<AppState>(HYDRATE);
 
-export const authenSlice = createSlice({
+const authenSlice = createSlice({
   name: 'authenSlice',
   initialState,
   reducers: {
@@ -24,7 +24,7 @@ export const authenSlice = createSlice({
       state.currentUser = action.payload;
     },
     updateUsers: (state: AuthenSlice, action: UpdateUsersAction) => {
-      state.users = action.payload
+      state.users = action.payload;
     },
     disconnectUser: (state: AuthenSlice) => {
       state.currentUser = {} as any;
