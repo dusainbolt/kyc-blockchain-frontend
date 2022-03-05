@@ -14,7 +14,6 @@ import { Web3Provider } from '@ethersproject/providers';
 import { Web3ReactProvider } from '@web3-react/core';
 //@ts-ignore
 import { NotificationContainer } from 'react-notifications';
-import { useConnectProvider } from '@hooks/useConnectProvider';
 import '@styles/globals.css';
 import 'react-notifications/lib/notifications.css';
 import { ethers } from 'ethers';

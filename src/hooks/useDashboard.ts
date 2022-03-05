@@ -1,5 +1,4 @@
 import { Role } from '@type/authorisation';
-import { User } from '@type/user';
 
 interface UseDashboard {
   getRole: (role: Role) => string;

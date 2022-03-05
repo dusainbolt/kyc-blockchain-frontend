@@ -6,11 +6,9 @@ export function useEagerConnect() {
   const { activate, active } = useWeb3React();
 
   const [tried, setTried] = useState(false);
-  const [isAuthorized, setIsAuthorized] = useState(false);
 
   useEffect(() => {
     injected.isAuthorized().then((isAuthorized: boolean) => {
-      setIsAuthorized(isAuthorized);
       if (isAuthorized) {
         activate(injected, undefined, true).catch(() => {
           setTried(true);

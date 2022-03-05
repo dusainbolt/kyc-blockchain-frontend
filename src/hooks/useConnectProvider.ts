@@ -4,7 +4,7 @@ import { useEagerConnect, useInactiveListener } from './useEagerConnect';
 import { TypeWallet } from '@type/wallet';
 import { injected, walletConnect } from '@connectors/walletConnector';
 import { NotificationManager } from 'react-notifications';
-import { NoEthereumProviderError, UserRejectedRequestError } from '@web3-react/injected-connector';
+// import { NoEthereumProviderError, UserRejectedRequestError } from '@web3-react/injected-connector';
 import Constant from '@services/constant';
 import { useAppDispatch } from '@redux/store';
 import { chooseWallet, receiveWallet } from '@redux/slices/walletSlice';
@@ -39,7 +39,7 @@ export const useControlConnect = (): {
   connectWallet: (type: TypeWallet) => void;
   disconnectWallet: () => void;
 } => {
-  const { activate, account, deactivate, library, error, active, chainId } = useWeb3React();
+  const { activate, account, error, chainId } = useWeb3React();
   const dispatch = useAppDispatch();
   console.log('====> account: ', account);
 

@@ -50,7 +50,7 @@ const Home: FC<any> = () => {
   );
 };
 
-export const getStaticProps = wrapper.getStaticProps((store): SSGContext | any => async (ctx: any) => {
+export const getStaticProps = wrapper.getStaticProps((): SSGContext | any => async () => {
   // await Helper.delay(5000);
 });
 
