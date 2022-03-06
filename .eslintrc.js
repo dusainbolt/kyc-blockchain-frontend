@@ -42,6 +42,7 @@ module.exports = {
     'import/no-extraneous-dependencies': 'off',
     'no-use-before-define': 'off',
     'no-underscore-dangle': 'off',
+    'no-unused-expressions': 'off',
     'no-shadow': 'off',
     'no-param-reassign': 'off',
     '@typescript-eslint/no-explicit-any': 'off',

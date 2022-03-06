@@ -7,7 +7,7 @@ import { NotificationManager } from 'react-notifications';
 // import { NoEthereumProviderError, UserRejectedRequestError } from '@web3-react/injected-connector';
 import Constant from '@services/constant';
 import { useAppDispatch } from '@redux/store';
-import { chooseWallet, receiveWallet } from '@redux/slices/walletSlice';
+import { chooseWallet, disconnectWallet, receiveWallet } from '@redux/slices/walletSlice';
 import { ReceiveWallet } from '@redux/action/walletAction';
 
 export const useConnectProvider = () => {
@@ -37,11 +37,10 @@ const connectorsByName: { [typeWallet in TypeWallet]: any } = {
 
 export const useControlConnect = (): {
   connectWallet: (type: TypeWallet) => void;
-  disconnectWallet: () => void;
+  onDisconnect: () => void;
 } => {
-  const { activate, account, error, chainId } = useWeb3React();
+  const { activate, account, error, chainId, deactivate } = useWeb3React();
   const dispatch = useAppDispatch();
-  console.log('====> account: ', account);
 
   // const requestChangeNetwork = async () => {
   //   // deactivate();
@@ -74,6 +73,13 @@ export const useControlConnect = (): {
     activate(connectorsByName[type]);
   };
 
-  const disconnectWallet = async () => {};
-  return { connectWallet, disconnectWallet };
+  const onDisconnect = () => {
+    const text = 'Do you want to disconnect wallet?';
+    // eslint-disable-next-line no-restricted-globals
+    if (confirm(text) === true) {
+      deactivate();
+      dispatch(disconnectWallet());
+    }
+  };
+  return { connectWallet, onDisconnect };
 };

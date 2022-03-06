@@ -30,15 +30,9 @@ const walletSlice = createSlice({
       state.chainId = payload.chainId;
       state.connected = true;
     },
-    // setCurrentUser: (state: AuthenSlice, action: AddUserAction) => {
-    //   state.currentUser = action.payload;
-    // },
-    // updateUsers: (state: AuthenSlice, action: UpdateUsersAction) => {
-    //   state.users = action.payload;
-    // },
-    // disconnectUser: (state: AuthenSlice) => {
-    //   state.currentUser = {} as any;
-    // },
+    disconnectWallet: () => {
+      return initialState;
+    },
   },
   extraReducers(builder) {
     builder.addCase(hydrate, (state, action) => {
@@ -52,6 +46,6 @@ const walletSlice = createSlice({
 
 export const getWalletSlice = (state: RootState): WalletSlice => state.walletSlice;
 
-export const { chooseWallet, receiveWallet } = walletSlice.actions;
+export const { chooseWallet, receiveWallet, disconnectWallet } = walletSlice.actions;
 
 export default persistReducer(getPersistConfig('walletSlice'), walletSlice.reducer);

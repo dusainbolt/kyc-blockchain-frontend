@@ -9,6 +9,9 @@ export const useStyles = makeStyles({
   spacingContent: {
     marginTop: theme.spacing(4),
   },
+  spacingContentSmall: {
+    marginTop: theme.spacing(2),
+  },
   btnMetamask: {
     ...defaultStyle.btnStyle('#dc6a00', '#dc6a001c'),
     '& .icon-metamask': {
