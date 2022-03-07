@@ -9,12 +9,13 @@ import { useControlConnect } from '@hooks/useConnectProvider';
 import { TypeWallet } from '@type/wallet';
 import { useAppSelector } from '@redux/store';
 import { getWalletSlice } from '@redux/slices/walletSlice';
+import useWalletSignature from '@hooks/useWalletSignature';
 
 const HomePageComponent: FC<any> = () => {
   const classes = useStyles();
   const { connectWallet, onDisconnect } = useControlConnect();
   const wallet = useAppSelector(getWalletSlice);
-
+  const { signMessage } = useWalletSignature();
   const [alignment, setAlignment] = useState('web');
 
   const handleChange = (event, newAlignment) => {
@@ -87,7 +88,9 @@ const HomePageComponent: FC<any> = () => {
               2. Please click to continue?
             </Typography>
             <Stack direction="row" spacing={2}>
-              <LoadingButton variant="contained">Login</LoadingButton>
+              <LoadingButton onClick={signMessage} variant="contained">
+                Login
+              </LoadingButton>
               <LoadingButton onClick={onDisconnect} color="error" variant="contained">
                 Disconnect
               </LoadingButton>
