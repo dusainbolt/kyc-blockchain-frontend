@@ -1,9 +1,9 @@
-import { addUser, getAuthenSlice } from '@redux/slices/authentication';
+import { addUser, getAuthSlice } from '@redux/slices/authtication';
 import { useAppDispatch, useAppSelector } from '@redux/store';
 import Hash from '@services/hash';
 import Helper from '@services/helper';
 import Validate from '@services/validate';
-import { RegisterInput, RegisterValidate, registerField } from '@type/authentication';
+import { RegisterInput, RegisterValidate, registerField } from '@type/authtication';
 import { User } from '@type/user';
 import { useState } from 'react';
 import * as yup from 'yup';
@@ -22,7 +22,7 @@ interface UseRegister {
 
 export const useRegister = (): UseRegister => {
   const dispatch = useAppDispatch();
-  const authenSlice = useAppSelector(getAuthenSlice);
+  const authSlice = useAppSelector(getAuthSlice);
   const [isWaitOTP, setIsWaitOTP] = useState<boolean>(false);
   const [loadingSubmitRegister, setLoadingSubmitRegister] = useState<boolean>(false);
   const initialFormRegister: RegisterInput = {
@@ -40,7 +40,7 @@ export const useRegister = (): UseRegister => {
       .string()
       .required(Validate.require(registerField.username.label))
       .test(Validate.unique.name, Validate.unique.message(registerField.username.label), (value: any) => {
-        return !authenSlice.users.some((user) => user.username === value);
+        return !authSlice.users.some((user) => user.username === value);
       })
       .min(8, Validate.during(8, 21))
       .max(21, Validate.during(8, 21)),

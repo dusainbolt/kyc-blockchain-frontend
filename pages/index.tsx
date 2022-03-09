@@ -1,5 +1,5 @@
 // import { useDashboard } from '@hooks/useDashboard';
-// import { disconnectUser, getAuthenSlice, updateUsers } from '@redux/slices/authentication';
+// import { disconnectUser, getAuthSlice, updateUsers } from '@redux/slices/authtication';
 // import { useAppDispatch, useAppSelector } from '@redux/store';
 import { FC, Fragment } from 'react';
 // import Grid from '@mui/material/Grid';
@@ -20,7 +20,7 @@ const Home: FC<any> = () => {
   useConnectProvider();
 
   // const classes = useStyles();
-  // const { currentUser, users } = useAppSelector(getAuthenSlice);
+  // const { currentUser, users } = useAppSelector(getAuthSlice);
   // const [loadingDisconnect, setLoadingDisconnect] = useState<boolean>(false);
   // const { getRole } = useDashboard();
   // const dispatch = useAppDispatch();

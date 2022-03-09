@@ -1,7 +1,12 @@
-import { Role } from './authorisation';
-import { RegisterInput } from '@type/authentication';
+// import { RegisterInput } from '@type/authtication';
 
-export interface User extends Omit<RegisterInput, 'rePassword'> {
-  status: boolean;
-  role: Role;
+export enum Role {
+  USER,
+  ADMIN,
+  PROJECT_ADMIN,
 }
+
+// export interface User extends Omit<RegisterInput, 'rePassword'> {
+//   status: boolean;
+//   role: Role;
+// }

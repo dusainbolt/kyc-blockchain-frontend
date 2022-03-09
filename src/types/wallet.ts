@@ -10,3 +10,8 @@ export type WalletSlice = {
   balance: any;
   connected: boolean;
 };
+
+export type WalletSignature = {
+  messageHash: string;
+  signature: string;
+};

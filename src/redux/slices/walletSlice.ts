@@ -1,8 +1,8 @@
-// import { AddUserAction, UpdateUsersAction } from '@redux/action/authentication';
+// import { AddUserAction, UpdateUsersAction } from '@redux/action/authtication';
 import { ChooseWalletAction, ReceiveWalletAction } from '@redux/action/walletAction';
 import { getPersistConfig } from '@redux/storage';
 import { createAction, createSlice } from '@reduxjs/toolkit';
-import { WalletSlice } from '@type/wallet';
+import { TypeWallet, WalletSlice } from '@type/wallet';
 import { HYDRATE } from 'next-redux-wrapper';
 import { persistReducer } from 'redux-persist';
 import { RootState } from '../reducer';
@@ -10,7 +10,7 @@ import { AppState } from '../store';
 
 const initialState: WalletSlice = {
   address: '',
-  type: null,
+  type: TypeWallet.METAMASK,
   balance: 0,
   chainId: 0,
   connected: false,

@@ -9,11 +9,12 @@ import Constant from '@services/constant';
 import { useAppDispatch } from '@redux/store';
 import { chooseWallet, disconnectWallet, receiveWallet } from '@redux/slices/walletSlice';
 import { ReceiveWallet } from '@redux/action/walletAction';
+import { WalletConnectConnector } from '@web3-react/walletconnect-connector';
 
 export const useConnectProvider = () => {
   const { connector } = useWeb3React();
   //   const isHmyLibrary = library?.messenger?.chainType === 'hmy';
-  console.log('===========> connector: ', connector);
+  // console.log('===========> connector: ', connector);
   // handle logic to recognize the connector currently being activated
   const [activatingConnector, setActivatingConnector] = useState<any>();
 
@@ -30,7 +31,7 @@ export const useConnectProvider = () => {
   useInactiveListener(!triedEager || !!activatingConnector);
 };
 
-const connectorsByName: { [typeWallet in TypeWallet]: any } = {
+export const connectorsByName: { [typeWallet in TypeWallet]: any } = {
   [TypeWallet.METAMASK]: injected,
   [TypeWallet.WALLET_CONNECT]: walletConnect,
 };
@@ -39,7 +40,7 @@ export const useControlConnect = (): {
   connectWallet: (type: TypeWallet) => void;
   onDisconnect: () => void;
 } => {
-  const { activate, account, error, chainId, deactivate } = useWeb3React();
+  const { activate, account, error, chainId, connector, deactivate } = useWeb3React();
   const dispatch = useAppDispatch();
 
   // const requestChangeNetwork = async () => {
@@ -65,6 +66,8 @@ export const useControlConnect = (): {
   useEffect(() => {
     if (account && chainId) {
       dispatch(receiveWallet({ account, chainId } as ReceiveWallet));
+    } else if (!account && !connector) {
+      dispatch(disconnectWallet());
     }
   }, [account, chainId]);
 
@@ -77,7 +80,12 @@ export const useControlConnect = (): {
     const text = 'Do you want to disconnect wallet?';
     // eslint-disable-next-line no-restricted-globals
     if (confirm(text) === true) {
-      deactivate();
+      if (connector instanceof WalletConnectConnector) {
+        connector.close();
+      } else {
+        deactivate();
+      }
+
       dispatch(disconnectWallet());
     }
   };

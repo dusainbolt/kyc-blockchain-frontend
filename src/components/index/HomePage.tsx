@@ -1,26 +1,52 @@
 import { Alert, Container, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useStyles } from './HomePageStyle';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Stack from '@mui/material/Stack';
 import { MetaMaskIcon } from '@asset/icon/metamask';
-import { WalletConnectIcon } from '@asset/icon/walletConnect';
 import { useControlConnect } from '@hooks/useConnectProvider';
 import { TypeWallet } from '@type/wallet';
-import { useAppSelector } from '@redux/store';
+import { useAppDispatch, useAppSelector } from '@redux/store';
 import { getWalletSlice } from '@redux/slices/walletSlice';
 import useWalletSignature from '@hooks/useWalletSignature';
+import { getAuthSlice, loginStart } from '@redux/slices/auth';
+import { LoginParams } from '@redux/action/authAction';
 
 const HomePageComponent: FC<any> = () => {
   const classes = useStyles();
   const { connectWallet, onDisconnect } = useControlConnect();
   const wallet = useAppSelector(getWalletSlice);
-  const { signMessage } = useWalletSignature();
-  const [alignment, setAlignment] = useState('web');
+  const auth = useAppSelector(getAuthSlice);
 
+  const { signMessage, loadingSignature, walletSignature } = useWalletSignature();
+  const [alignment, setAlignment] = useState('web');
+  const dispatch = useAppDispatch();
   const handleChange = (event, newAlignment) => {
     setAlignment(newAlignment);
   };
+
+  useEffect(() => {
+    if (walletSignature.signature) {
+      handleLogin();
+    }
+  }, [walletSignature]);
+
+  const handleLogin = () => {
+    console.log('walletSignature: ', walletSignature);
+    dispatch(loginStart({ ...walletSignature, role: 1, address: wallet.address } as LoginParams));
+  };
+
+  const clickLogin = () => {
+    signMessage(wallet.address);
+    // setLoadingLogin(true);
+    // const walletSignature: WalletSignature = await signMessage(wallet.address);
+    // console.log('===> walletSignature: ', walletSignature);
+    // setLoadingLogin(true);
+
+    // console.log(walletSignature);
+  };
+
+  const loadingBtn = auth.loadingLogin || loadingSignature;
 
   return (
     <main className={classes.main}>
@@ -45,14 +71,14 @@ const HomePageComponent: FC<any> = () => {
               >
                 Metamask
               </LoadingButton>{' '}
-              <LoadingButton
+              {/* <LoadingButton
                 onClick={() => connectWallet(TypeWallet.WALLET_CONNECT)}
                 className={classes.btnWalletConnect}
                 variant="outlined"
                 startIcon={<WalletConnectIcon />}
               >
                 WalletConnect
-              </LoadingButton>
+              </LoadingButton> */}
             </Stack>
           </>
         ) : (
@@ -67,11 +93,11 @@ const HomePageComponent: FC<any> = () => {
                 </LoadingButton>
               )}
 
-              {wallet.type === TypeWallet.WALLET_CONNECT && (
+              {/* {wallet.type === TypeWallet.WALLET_CONNECT && (
                 <LoadingButton className={classes.btnWalletConnect} startIcon={<WalletConnectIcon />}>
                   {wallet.address}
                 </LoadingButton>
-              )}
+              )} */}
             </Stack>
             <Alert className={classes.spacingContent} severity="success">
               Thanks for your cooperation with us. You can choose permission and login right now.
@@ -88,10 +114,10 @@ const HomePageComponent: FC<any> = () => {
               2. Please click to continue?
             </Typography>
             <Stack direction="row" spacing={2}>
-              <LoadingButton onClick={signMessage} variant="contained">
+              <LoadingButton loading={loadingBtn} onClick={clickLogin} variant="contained">
                 Login
               </LoadingButton>
-              <LoadingButton onClick={onDisconnect} color="error" variant="contained">
+              <LoadingButton loading={loadingBtn} onClick={onDisconnect} color="error" variant="contained">
                 Disconnect
               </LoadingButton>
             </Stack>
