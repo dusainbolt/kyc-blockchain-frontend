@@ -11,6 +11,7 @@ import { AppState } from '../store';
 const initialState: WalletSlice = {
   address: '',
   type: TypeWallet.METAMASK,
+  processing: false,
   balance: 0,
   chainId: 0,
   connected: false,
@@ -24,6 +25,7 @@ const walletSlice = createSlice({
   reducers: {
     chooseWallet: (state: WalletSlice, { payload }: ChooseWalletAction) => {
       state.type = payload;
+      state.processing = true;
     },
     receiveWallet: (state: WalletSlice, { payload }: ReceiveWalletAction) => {
       state.address = payload.account;

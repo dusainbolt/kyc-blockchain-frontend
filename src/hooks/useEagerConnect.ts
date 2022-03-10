@@ -2,13 +2,20 @@ import { useState, useEffect } from 'react';
 import { useWeb3React } from '@web3-react/core';
 import { injected } from '@connectors/walletConnector';
 import { useAppDispatch, useAppSelector } from '@redux/store';
-import { disconnectWallet, getWalletSlice } from '@redux/slices/walletSlice';
+import { disconnectWallet, getWalletSlice, receiveWallet } from '@redux/slices/walletSlice';
+import { ReceiveWallet } from '@redux/action/walletAction';
+import { logout } from '@redux/slices/authSlice';
 
 export function useEagerConnect() {
-  const { activate, active } = useWeb3React();
-
+  const { activate, account, chainId, active } = useWeb3React();
   const [tried, setTried] = useState(false);
   const { address } = useAppSelector(getWalletSlice);
+  const dispatch = useAppDispatch();
+
+  const resetAuthAndWallet = () => {
+    dispatch(disconnectWallet());
+    dispatch(logout());
+  };
 
   useEffect(() => {
     address &&
@@ -19,9 +26,22 @@ export function useEagerConnect() {
           });
         } else {
           setTried(true);
+          // resetAuthAndWallet();
         }
       });
   }, [address]); // intentionally only running on mount (make sure it's only mounted once :))
+
+  useEffect(() => {
+    if (account && chainId) {
+      dispatch(receiveWallet({ account, chainId } as ReceiveWallet));
+    }
+  }, [account, chainId]);
+
+  useEffect(() => {
+    if (tried && !account) {
+      resetAuthAndWallet();
+    }
+  }, [tried, account]);
 
   // if the connection worked, wait until we get confirmation of that to flip the flag
   useEffect(() => {
@@ -30,15 +50,6 @@ export function useEagerConnect() {
     }
   }, [tried, active]);
 
-  // useEffect(() => {
-  //   if (isAuthorized) {
-  //     setTimeout(() => {
-  //       activate(injected);
-  //     }, 1000);
-  //   } else {
-  //     setTried(true);
-  //   }
-  // }, [isAuthorized]);
   return tried;
 }
 

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-unused-vars */
 // import { AddUserAction, UpdateUsersAction } from '@redux/action/authtication';
+import { LoginAction, LoginSuccess } from '@redux/action/authAction';
 import { getPersistConfig } from '@redux/storage';
 import { createAction, createSlice } from '@reduxjs/toolkit';
 import { AuthSlice } from '@type/auth';
@@ -19,21 +20,22 @@ const authSlice = createSlice({
   name: 'authSlice',
   initialState,
   reducers: {
-    loginStart: (state: AuthSlice, { payload }) => {
+    loginStart: (state: AuthSlice, { payload }: LoginAction) => {
       state.loadingLogin = true;
+      state.signature = payload.signature;
+      state.role = payload.role;
     },
-    // addUser: (state: AuthSlice, action: AddUserAction) => {
-    //   state.users.push(action.payload);
-    // },
-    // setCurrentUser: (state: AuthSlice, action: AddUserAction) => {
-    //   state.currentUser = action.payload;
-    // },
-    // updateUsers: (state: AuthSlice, action: UpdateUsersAction) => {
-    //   state.users = action.payload;
-    // },
-    // disconnectUser: (state: AuthSlice) => {
-    //   state.currentUser = {} as any;
-    // },
+    loginSuccess: (state: AuthSlice, { payload }: LoginSuccess) => {
+      state.loadingLogin = false;
+      state.address = payload.address;
+      state.token = payload.token;
+    },
+    loginError: (state: AuthSlice) => {
+      state.loadingLogin = false;
+    },
+    logout: () => {
+      return initialState;
+    },
   },
   extraReducers(builder) {
     builder.addCase(hydrate, (state, action) => {
@@ -47,9 +49,9 @@ const authSlice = createSlice({
 
 export const getAuthSlice = (state: RootState): AuthSlice => state.authSlice;
 
-export const { loginStart } = authSlice.actions;
+export const { loginStart, loginSuccess, loginError, logout } = authSlice.actions;
 
 export default persistReducer(
-  getPersistConfig('authSlice', { whitelist: ['users', 'currentUser'] }),
+  getPersistConfig('authSlice', { whitelist: ['address', 'token', 'role'] }),
   authSlice.reducer
 );

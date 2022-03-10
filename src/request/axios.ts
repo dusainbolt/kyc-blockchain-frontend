@@ -1,44 +1,35 @@
-// import axios from 'axios';
-
-// export default axios.create({
-//   baseURL: 'http://localhost:8080/api',
-//   headers: {
-//     'Content-type': 'application/json',
-//   },
-// });
-
+/* eslint-disable class-methods-use-this */
+import Constant from '@services/constant';
 import axios, { AxiosInstance } from 'axios';
-// import { browserHistory } from '../utils/history';
-// import { store } from '../redux/configStore';
-// // import { actions } from "../pages/Layout/actions";
-// import showNotification from '../components/Notification';
-// import { ERROR_NETWORK, ERROR_AUTH } from '../common';
-// // import { logoutSocket } from "../utils/socket";
-// import { getI18n as i18 } from 'react-i18next';
-// import crypto from 'crypto-js';
-// import { actions } from '../pages/Login/actions';
+import { NotificationManager } from 'react-notifications';
 
 class AxiosServer {
   public instance: AxiosInstance;
 
   constructor() {
     const instance = axios.create({
-      baseURL: 'http://localhost:8000/api',
+      baseURL: process.env.NEXT_PUBLIC_API_URL,
       headers: {
         'Content-type': 'application/json',
       },
     });
-    // instance.interceptors.response.use(this.handelSuccess, this.handelError);
+    instance.interceptors.response.use(this.handelSuccess, this.handelError);
     this.instance = instance;
   }
 
-  //   setUserRequest(token) {
-  //     if (token) {
-  //       this.instance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-  //     } else {
-  //       delete this.instance.defaults.headers.common['Authorization'];
-  //     }
+  // setUserRequest(token) {
+  //   if (token) {
+  //     this.instance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  //   } else {
+  //     delete this.instance.defaults.headers.common['Authorization'];
   //   }
+  // }
+
+  setTokenRequest(token: string) {
+    if (token) {
+      this.instance.defaults.headers.common['x-access-token'] = token;
+    }
+  }
 
   //   getFullUrl(url) {
   //     if (!url.startsWith('/')) {
@@ -52,42 +43,15 @@ class AxiosServer {
   //   }
 
   handelSuccess(response) {
-    //   const {
-    //     data: { data },
-    //     config: { headers },
-    //   } = response;
-    //   let dataResult = null;
-    //   if (process.env.REACT_APP_API_ENV === 'local') {
-    //     dataResult = data;
-    //   } else {
-    //     const decrypted = crypto.AES.decrypt(data, headers.hash_key);
-    //     dataResult = JSON.parse(crypto.enc.Utf8.stringify(decrypted));
-    //   }
-    //   if (!response.data.status) {
-    //     showNotification(0, `error_code.title`, i18().t(`error_code.msg_${response.data.errorCode}`, dataResult));
-    //   }
-    //   return { ...response.data, data: dataResult };
+    if (Constant.CODE.ERROR_RESPONSE === response.data?.code) {
+      NotificationManager.warning(response.data?.msg, 'Warning');
+    }
+    return response.data;
   }
 
   handelError(error) {
-    //   if (error.response && error.response.status === 401) {
-    //     const promiseList = [];
-    //     promiseList.push(localStorage.removeItem('persist:root'));
-    //     promiseList.push(store.dispatch(actions.postLogoutSuccess()));
-    //     // promiseList.push(logoutSocket());
-    //     promiseList.push(browserHistory.push('/bautroixanh/login'));
-    //     promiseList.push(showNotification(0, `notify.${ERROR_AUTH.TITLE}`, `notify.${ERROR_AUTH.CONTENT}`));
-    //     Promise.all(promiseList)
-    //       .then((resolvedList) => {})
-    //       .catch((error) => {});
-    //   }
-    //   if (error.response && error.response.status === 400) {
-    //     return error.response.data;
-    //   }
-    //   if (!error.response || error.response.status === 500) {
-    //     showNotification(0, `error_code.title`, ERROR_NETWORK.CONTENT);
-    //   }
-    //   return Promise.reject(error);
+    NotificationManager.error(error.toString(), 'Error');
+    return Promise.reject(error);
   }
 
   get(endpoint, body = {}) {

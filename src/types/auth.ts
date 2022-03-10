@@ -3,10 +3,16 @@
 // import { IField, Restrict } from './field';
 // import { User } from './user';
 
+import { Role } from './user';
+
 export type AuthSlice = {
   // users: User[];
   // currentUser?: User;
   loadingLogin: boolean;
+  token?: string;
+  address?: string;
+  signature?: string;
+  role?: Role;
 };
 
 // type RegisterInputName = 'username' | 'password' | 'rePassword' | 'email' | 'phoneNumber' | 'address';

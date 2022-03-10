@@ -1,5 +1,5 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import authSlice from './slices/auth';
+import authSlice from './slices/authSlice';
 import walletSlice from './slices/walletSlice';
 
 export const whitelist = [];

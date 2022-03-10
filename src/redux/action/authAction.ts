@@ -9,6 +9,12 @@ export type LoginParams = {
   role: Role;
 };
 
+export type LoginResponse = {
+  address: string;
+  token: string;
+};
+
 export type LoginAction = Record<PayloadName, LoginParams>;
+export type LoginSuccess = Record<PayloadName, LoginResponse>;
 
 // export type UpdateUsersAction = Record<PayloadName, User[]>;

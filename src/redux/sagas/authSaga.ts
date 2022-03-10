@@ -1,20 +1,21 @@
-// import { getSeoHomeRequest } from '@GraphQL/seoHomeRequest';
-// import { SeoHome } from 'src/types/SeoHomeModel';
-// import { put, takeEvery, all, fork } from 'redux-saga/effects';
-// import { getSeoHomeStart } from '../slices/seoHomeSlice';
-// // import { getSeoHomeStart, getSeoHomeSuccess } from '@Redux/slices/seoHomeSlice';
-
 import { LoginAction } from '@redux/action/authAction';
-import { loginStart } from '@redux/slices/auth';
-import { takeEvery } from 'redux-saga/effects';
+import { loginError, loginStart, loginSuccess } from '@redux/slices/authSlice';
+import axios from '@request/axios';
+import Constant from '@services/constant';
+import { put, takeEvery } from 'redux-saga/effects';
 import { loginAPI } from 'src/request/userRequest';
 
 function* watchLoginStart({ payload }: LoginAction) {
   try {
-    const result = yield loginAPI(payload);
-    console.log('result', result);
+    const response = yield loginAPI(payload);
+    if (Constant.CODE.SUCCESS_RESPONSE === response?.code) {
+      yield put(loginSuccess(response.data));
+      yield axios.setTokenRequest(response.data?.token as any);
+    } else {
+      yield put(loginError());
+    }
   } catch (error: any) {
-    console.log('error: ', error);
+    yield put(loginError());
   }
 }
 

@@ -3,6 +3,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
+import { Store } from 'redux';
 import { useStore } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { wrapper } from '@redux/store';
@@ -17,6 +18,8 @@ import { NotificationContainer } from 'react-notifications';
 import '@styles/globals.css';
 import 'react-notifications/lib/notifications.css';
 import { ethers } from 'ethers';
+import { AuthSlice } from '@type/auth';
+import axios from '@request/axios';
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -28,6 +31,11 @@ export const getLibrary = (provider: any): Web3Provider => {
   const library = new ethers.providers.Web3Provider(provider, 'any');
   library.pollingInterval = 10000;
   return library;
+};
+
+const onBeforeLift = (store: Store) => () => {
+  const authSlice: AuthSlice = store.getState().authSlice;
+  axios.setTokenRequest(authSlice.token as any);
 };
 
 const MyApp: FC<MyAppProps> = (props: MyAppProps) => {
@@ -45,7 +53,7 @@ const MyApp: FC<MyAppProps> = (props: MyAppProps) => {
   // }, []);
 
   const PageComponent = isClient ? (
-    <PersistGate persistor={(store as any).__persistor} loading={null}>
+    <PersistGate persistor={(store as any).__persistor} onBeforeLift={onBeforeLift(store)} loading={null}>
       <Component {...pageProps} />
     </PersistGate>
   ) : (

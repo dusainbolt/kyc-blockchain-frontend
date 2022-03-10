@@ -32,7 +32,7 @@ const useWalletSignature = () => {
       } catch (err: any) {
         console.log('[ERROR] - signMessage:', err);
         setLoadingSignature(false);
-        NotificationManager.error('Sign Message Fail', 'Warning');
+        NotificationManager.warning(err?.message, 'Warning');
       }
     },
     [library, connector]

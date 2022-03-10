@@ -9,6 +9,7 @@ export type WalletSlice = {
   chainId: number | string;
   balance: any;
   connected: boolean;
+  processing: boolean;
 };
 
 export type WalletSignature = {

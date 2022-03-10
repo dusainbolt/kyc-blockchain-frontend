@@ -1,6 +1,6 @@
 import { LoginParams } from '@redux/action/authAction';
-import req from './axios';
+import axios from './axios';
 
 export const loginAPI = async (body: LoginParams) => {
-  return await req.post('/user/login', body);
+  return await axios.post('/user/login', body);
 };

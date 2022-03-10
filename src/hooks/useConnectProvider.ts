@@ -4,17 +4,13 @@ import { useEagerConnect, useInactiveListener } from './useEagerConnect';
 import { TypeWallet } from '@type/wallet';
 import { injected, walletConnect } from '@connectors/walletConnector';
 import { NotificationManager } from 'react-notifications';
-// import { NoEthereumProviderError, UserRejectedRequestError } from '@web3-react/injected-connector';
 import Constant from '@services/constant';
 import { useAppDispatch } from '@redux/store';
-import { chooseWallet, disconnectWallet, receiveWallet } from '@redux/slices/walletSlice';
-import { ReceiveWallet } from '@redux/action/walletAction';
+import { chooseWallet, disconnectWallet } from '@redux/slices/walletSlice';
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector';
 
 export const useConnectProvider = () => {
   const { connector } = useWeb3React();
-  //   const isHmyLibrary = library?.messenger?.chainType === 'hmy';
-  // console.log('===========> connector: ', connector);
   // handle logic to recognize the connector currently being activated
   const [activatingConnector, setActivatingConnector] = useState<any>();
 
@@ -40,16 +36,8 @@ export const useControlConnect = (): {
   connectWallet: (type: TypeWallet) => void;
   onDisconnect: () => void;
 } => {
-  const { activate, account, error, chainId, connector, deactivate } = useWeb3React();
+  const { activate, error, connector, deactivate } = useWeb3React();
   const dispatch = useAppDispatch();
-
-  // const requestChangeNetwork = async () => {
-  //   // deactivate();
-  //   await library?.provider.request({
-  //     method: 'wallet_switchEthereumChain',
-  //     params: [{ chainId: '0x4' }],
-  //   });
-  // };
 
   useEffect(() => {
     if (error instanceof UnsupportedChainIdError) {
@@ -62,14 +50,6 @@ export const useControlConnect = (): {
       );
     }
   }, [error]);
-
-  useEffect(() => {
-    if (account && chainId) {
-      dispatch(receiveWallet({ account, chainId } as ReceiveWallet));
-    } else if (!account && !connector) {
-      dispatch(disconnectWallet());
-    }
-  }, [account, chainId]);
 
   const connectWallet = (type: TypeWallet) => {
     dispatch(chooseWallet(type));
