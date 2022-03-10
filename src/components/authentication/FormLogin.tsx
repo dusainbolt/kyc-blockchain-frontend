@@ -1,5 +1,5 @@
 import { makeStyles } from '@mui/styles';
-import {  loginField } from '@type/authentication';
+import { loginField } from '@type/authtication';
 import { IField } from '@type/field';
 import { Field, useFormikContext } from 'formik';
 import { FC } from 'react';
@@ -20,7 +20,7 @@ const useStyles = makeStyles({
   },
 });
 
-const FormLogin: FC<{loadingSubmitLogin: boolean, errorMessage: string}> = ({loadingSubmitLogin, errorMessage }) => {
+const FormLogin: FC<{ loadingSubmitLogin: boolean; errorMessage: string }> = ({ loadingSubmitLogin, errorMessage }) => {
   const classes = useStyles();
   const { handleSubmit } = useFormikContext();
   return (
@@ -41,7 +41,11 @@ const FormLogin: FC<{loadingSubmitLogin: boolean, errorMessage: string}> = ({loa
           />
         );
       })}
-      {errorMessage && <Alert className={classes.buttonSubmit} severity="error">{errorMessage}</Alert>}
+      {errorMessage && (
+        <Alert className={classes.buttonSubmit} severity="error">
+          {errorMessage}
+        </Alert>
+      )}
       <LoadingButton
         color="primary"
         className={classes.buttonSubmit}

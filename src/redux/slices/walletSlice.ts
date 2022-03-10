@@ -1,8 +1,8 @@
-// import { AddUserAction, UpdateUsersAction } from '@redux/action/authentication';
+// import { AddUserAction, UpdateUsersAction } from '@redux/action/authtication';
 import { ChooseWalletAction, ReceiveWalletAction } from '@redux/action/walletAction';
 import { getPersistConfig } from '@redux/storage';
 import { createAction, createSlice } from '@reduxjs/toolkit';
-import { WalletSlice } from '@type/wallet';
+import { TypeWallet, WalletSlice } from '@type/wallet';
 import { HYDRATE } from 'next-redux-wrapper';
 import { persistReducer } from 'redux-persist';
 import { RootState } from '../reducer';
@@ -10,7 +10,8 @@ import { AppState } from '../store';
 
 const initialState: WalletSlice = {
   address: '',
-  type: null,
+  type: TypeWallet.METAMASK,
+  processing: false,
   balance: 0,
   chainId: 0,
   connected: false,
@@ -24,21 +25,16 @@ const walletSlice = createSlice({
   reducers: {
     chooseWallet: (state: WalletSlice, { payload }: ChooseWalletAction) => {
       state.type = payload;
+      state.processing = true;
     },
     receiveWallet: (state: WalletSlice, { payload }: ReceiveWalletAction) => {
       state.address = payload.account;
       state.chainId = payload.chainId;
       state.connected = true;
     },
-    // setCurrentUser: (state: AuthenSlice, action: AddUserAction) => {
-    //   state.currentUser = action.payload;
-    // },
-    // updateUsers: (state: AuthenSlice, action: UpdateUsersAction) => {
-    //   state.users = action.payload;
-    // },
-    // disconnectUser: (state: AuthenSlice) => {
-    //   state.currentUser = {} as any;
-    // },
+    disconnectWallet: () => {
+      return initialState;
+    },
   },
   extraReducers(builder) {
     builder.addCase(hydrate, (state, action) => {
@@ -52,6 +48,6 @@ const walletSlice = createSlice({
 
 export const getWalletSlice = (state: RootState): WalletSlice => state.walletSlice;
 
-export const { chooseWallet, receiveWallet } = walletSlice.actions;
+export const { chooseWallet, receiveWallet, disconnectWallet } = walletSlice.actions;
 
 export default persistReducer(getPersistConfig('walletSlice'), walletSlice.reducer);

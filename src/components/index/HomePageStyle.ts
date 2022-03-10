@@ -9,6 +9,9 @@ export const useStyles = makeStyles({
   spacingContent: {
     marginTop: theme.spacing(4),
   },
+  spacingContentSmall: {
+    marginTop: theme.spacing(2),
+  },
   btnMetamask: {
     ...defaultStyle.btnStyle('#dc6a00', '#dc6a001c'),
     '& .icon-metamask': {
@@ -20,15 +23,11 @@ export const useStyles = makeStyles({
     color: '#5dabfc',
   },
 
-  //   btnGroup: {
-  //     marginTop: theme.spacing(4),
-  //   },
-  //   cardUser: {
-  //     padding: 10,
-  //     border: `solid 1px ${theme.palette.primary.main}`,
-  //     borderRadius: 12,
-  //   },
-  //   buttonLogout: {
-  //     marginTop: 100,
-  //   },
+  btnGroupToggle: {
+    '& button': {
+      marginRight: theme.spacing(1),
+      border: 'none !important',
+      borderRadius: `${theme.spacing(2)} !important`,
+    },
+  },
 });

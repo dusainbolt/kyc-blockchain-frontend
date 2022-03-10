@@ -1,5 +1,5 @@
 import { makeStyles } from '@mui/styles';
-import { registerField } from '@type/authentication';
+import { registerField } from '@type/authtication';
 import { IField } from '@type/field';
 import { Field, useFormikContext } from 'formik';
 import { FC } from 'react';

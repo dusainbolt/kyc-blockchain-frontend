@@ -12,5 +12,7 @@ export default class Constant {
 
   static CODE = {
     ALREADY_PENDING_REQUEST: -32002,
+    ERROR_RESPONSE: 500,
+    SUCCESS_RESPONSE: 200,
   };
 }

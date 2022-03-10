@@ -1,23 +1,47 @@
 import { useState, useEffect } from 'react';
 import { useWeb3React } from '@web3-react/core';
 import { injected } from '@connectors/walletConnector';
+import { useAppDispatch, useAppSelector } from '@redux/store';
+import { disconnectWallet, getWalletSlice, receiveWallet } from '@redux/slices/walletSlice';
+import { ReceiveWallet } from '@redux/action/walletAction';
+import { logout } from '@redux/slices/authSlice';
 
 export function useEagerConnect() {
-  const { activate, active } = useWeb3React();
-
+  const { activate, account, chainId, active } = useWeb3React();
   const [tried, setTried] = useState(false);
+  const { address } = useAppSelector(getWalletSlice);
+  const dispatch = useAppDispatch();
+
+  const resetAuthAndWallet = () => {
+    dispatch(disconnectWallet());
+    dispatch(logout());
+  };
 
   useEffect(() => {
-    injected.isAuthorized().then((isAuthorized: boolean) => {
-      if (isAuthorized) {
-        activate(injected, undefined, true).catch(() => {
+    address &&
+      injected.isAuthorized().then((isAuthorized: boolean) => {
+        if (isAuthorized) {
+          activate(injected, undefined, true).catch(() => {
+            setTried(true);
+          });
+        } else {
           setTried(true);
-        });
-      } else {
-        setTried(true);
-      }
-    });
-  }, []); // intentionally only running on mount (make sure it's only mounted once :))
+          // resetAuthAndWallet();
+        }
+      });
+  }, [address]); // intentionally only running on mount (make sure it's only mounted once :))
+
+  useEffect(() => {
+    if (account && chainId) {
+      dispatch(receiveWallet({ account, chainId } as ReceiveWallet));
+    }
+  }, [account, chainId]);
+
+  useEffect(() => {
+    if (tried && !account) {
+      resetAuthAndWallet();
+    }
+  }, [tried, account]);
 
   // if the connection worked, wait until we get confirmation of that to flip the flag
   useEffect(() => {
@@ -26,20 +50,12 @@ export function useEagerConnect() {
     }
   }, [tried, active]);
 
-  // useEffect(() => {
-  //   if (isAuthorized) {
-  //     setTimeout(() => {
-  //       activate(injected);
-  //     }, 1000);
-  //   } else {
-  //     setTried(true);
-  //   }
-  // }, [isAuthorized]);
   return tried;
 }
 
 export function useInactiveListener(suppress: boolean = false) {
   const { active, error, activate } = useWeb3React();
+
   useEffect((): any => {
     const { ethereum } = window as any;
     if (ethereum && ethereum.on && !active && !error && !suppress) {
@@ -51,8 +67,9 @@ export function useInactiveListener(suppress: boolean = false) {
         console.log("Handling 'chainChanged' event with payload", chainId);
         activate(injected);
       };
+
       const handleAccountsChanged = (accounts: string[]) => {
-        console.log("Handling 'accountsChanged' event with payload", accounts);
+        console.log("Handling 'accountsChanged' event with payload 123123213", accounts);
         if (accounts.length > 0) {
           activate(injected);
         }
