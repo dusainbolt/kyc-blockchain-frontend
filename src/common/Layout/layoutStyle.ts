@@ -36,4 +36,10 @@ export const layoutStyle = makeStyles({
     border: '1px solid #e8ebed',
     borderRadius: theme.spacing(2),
   },
+  walletWrap: {
+    flex: '1 1',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
 });

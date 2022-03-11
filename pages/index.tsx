@@ -6,20 +6,20 @@ import HomePageComponent from '@components/index/HomePage';
 import { useConnectProvider } from '@hooks/useConnectProvider';
 import { useRedirectAuth } from '@hooks/useRedirectAuth';
 import { getAuthSlice } from '@redux/slices/authSlice';
-import { useWeb3React } from '@web3-react/core';
+import { getWalletSlice } from '@redux/slices/walletSlice';
 
 const Home: FC<any> = () => {
   useConnectProvider();
   useRedirectAuth();
   const { token } = useAppSelector(getAuthSlice);
-  const { account } = useWeb3React();
+  const { address } = useAppSelector(getWalletSlice);
   return (
     <Fragment>
       <Head>
         <title>KYC Platform Home</title>
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
       </Head>
-      {(!token || !account) && <HomePageComponent />}
+      {(!token || !address) && <HomePageComponent />}
     </Fragment>
   );
 };

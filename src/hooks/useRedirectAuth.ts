@@ -11,6 +11,8 @@ export const useRedirectAuth = () => {
   const router = useRouter();
 
   useEffect(() => {
+    console.log('===> processing: ', token, address);
+
     if (token && address) {
       switch (role) {
         case Role.ADMIN:

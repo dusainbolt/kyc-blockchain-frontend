@@ -55,6 +55,8 @@ module.exports = {
     '@typescript-eslint/ban-ts-comment': 'off',
     'import/order': 'off',
     'object-shorthand': 'off',
+    'jsx-a11y/no-static-element-interactions': 'off',
+    'jsx-a11y/click-events-have-key-events': 'off',
     'prefer-destructuring': 'off',
     'spaced-comment': 'off',
     'import/no-mutable-exports': 'off',

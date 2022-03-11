@@ -1,12 +1,16 @@
 import { layoutStyle } from './layoutStyle';
 import LogoDevIcon from '@mui/icons-material/LogoDev';
-import { Breadcrumbs, IconButton, InputBase, Link, Typography } from '@mui/material';
-import { FC, ReactNode } from 'react';
+import { Breadcrumbs, Divider, IconButton, InputBase, Link, ListItemIcon, Typography } from '@mui/material';
+import { FC, ReactNode, useState } from 'react';
 import { BreadcrumbsType } from '@type/layout';
 import SearchIcon from '@mui/icons-material/Search';
 import { useAppSelector } from '@redux/store';
 import { getWalletSlice } from '@redux/slices/walletSlice';
 import Helper from '@services/helper';
+import MenuItem from '@mui/material/MenuItem';
+import { MenuCustom } from '@common/Menu/MenuCustom';
+import { Logout } from '@mui/icons-material';
+import { useWeb3React } from '@web3-react/core';
 
 interface LayoutProps {
   children: ReactNode;
@@ -16,6 +20,21 @@ interface LayoutProps {
 export const Layout: FC<LayoutProps> = ({ children, breadcrumbs }) => {
   const classes = layoutStyle();
   const { address } = useAppSelector(getWalletSlice);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const { deactivate } = useWeb3React();
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    handleClose();
+    deactivate();
+  };
 
   return (
     <>
@@ -42,7 +61,19 @@ export const Layout: FC<LayoutProps> = ({ children, breadcrumbs }) => {
             <SearchIcon />
           </IconButton>
         </div>
-        <div className={classes.logoWrap}>{Helper.splitString(address)}</div>
+        <div onClick={handleMenu} className={classes.walletWrap}>
+          {Helper.splitString(address)}
+        </div>
+        <MenuCustom id="account-wallet-menu" open={Boolean(anchorEl)} handleClose={handleClose} anchorEl={anchorEl}>
+          <MenuItem onClick={handleClose}>Profile</MenuItem>
+          <Divider />
+          <MenuItem onClick={handleLogout}>
+            <ListItemIcon>
+              <Logout fontSize="small" />
+            </ListItemIcon>
+            Logout
+          </MenuItem>
+        </MenuCustom>
       </div>
       {children}
     </>

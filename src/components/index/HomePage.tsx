@@ -27,8 +27,8 @@ const HomePageComponent: FC<any> = () => {
 
   const dispatch = useAppDispatch();
 
-  const handleChange = (event, newRole) => {
-    setRole(newRole || Role.USER);
+  const handleChange = (event) => {
+    setRole(parseInt(event.target.value, 10) || Role.USER);
   };
 
   useEffect(() => {
