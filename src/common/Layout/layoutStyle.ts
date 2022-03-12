@@ -17,12 +17,13 @@ export const layoutStyle = makeStyles({
   },
   body: {
     display: 'flex',
-    minHeight: '100vh',
+    // minHeight: '100vh',
     flex: '1 1',
   },
   bodyContent: {
     maxWidth: 'calc(100% - 96px)',
-    padding: `0 40px 0 20px`,
+    padding: `30px 40px 0 20px`,
+    width: '100%',
   },
   sidebar: {
     flexShrink: 0,
@@ -55,6 +56,8 @@ export const layoutStyle = makeStyles({
       fontWeight: 700,
       fontSize: theme.spacing(2),
       textAlign: 'center',
+      color: theme.palette.common.black,
+      textDecoration: 'unset',
     },
   },
   logoWrap: {

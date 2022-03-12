@@ -1,5 +1,8 @@
-import { layoutStyle } from './layoutStyle';
+import { MenuCustom } from '@common/Menu/MenuCustom';
+import { Logout } from '@mui/icons-material';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoDevIcon from '@mui/icons-material/LogoDev';
+import SearchIcon from '@mui/icons-material/Search';
 import {
   Backdrop,
   Breadcrumbs,
@@ -8,26 +11,19 @@ import {
   IconButton,
   InputBase,
   Link,
-  List,
-  ListItem,
-  ListItemButton,
   ListItemIcon,
   Typography,
-  ListItemText,
 } from '@mui/material';
-import { FC, ReactNode, useState } from 'react';
-import { BreadcrumbsType } from '@type/layout';
-import SearchIcon from '@mui/icons-material/Search';
-import { useAppSelector } from '@redux/store';
-import { getWalletSlice } from '@redux/slices/walletSlice';
-import Helper from '@services/helper';
 import MenuItem from '@mui/material/MenuItem';
-import { MenuCustom } from '@common/Menu/MenuCustom';
-import { Logout } from '@mui/icons-material';
-import { useWeb3React } from '@web3-react/core';
 import { getAuthSlice } from '@redux/slices/authSlice';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import InboxIcon from '@mui/icons-material/Inbox';
+import { getWalletSlice } from '@redux/slices/walletSlice';
+import { useAppSelector } from '@redux/store';
+import Helper from '@services/helper';
+import { BreadcrumbsType } from '@type/layout';
+import { useWeb3React } from '@web3-react/core';
+import { FC, ReactNode, useState } from 'react';
+import { layoutStyle } from './layoutStyle';
+import { Sidebar } from './SlideBar';
 
 interface LayoutProps {
   children: ReactNode;
@@ -98,36 +94,7 @@ export const Layout: FC<LayoutProps> = ({ children, breadcrumbs }) => {
         </MenuCustom>
       </div>
       <div className={classes.body}>
-        <div className={classes.sidebar}>
-          <div className={classes.sidebarWrap}>
-            <List style={{ width: '100%' }}>
-              <ListItem className={classes.navWrap} selected disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    <InboxIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Profile" />
-                </ListItemButton>
-              </ListItem>
-              <ListItem className={classes.navWrap} disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    <InboxIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="History" />
-                </ListItemButton>
-              </ListItem>
-              <ListItem className={classes.navWrap} disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    <InboxIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Share History" />
-                </ListItemButton>
-              </ListItem>
-            </List>
-          </div>
-        </div>
+        <Sidebar />
         <div className={classes.bodyContent}>{children}</div>
       </div>
     </>

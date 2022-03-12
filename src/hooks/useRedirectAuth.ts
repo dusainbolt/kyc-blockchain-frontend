@@ -11,15 +11,15 @@ export const useRedirectAuth = () => {
   const router = useRouter();
 
   useEffect(() => {
-    console.log('===> processing: ', token, address);
-
     if (token && address) {
       switch (role) {
         case Role.ADMIN:
           router.push('/user');
           break;
         default:
-          router.push('/user');
+          if (router.pathname.indexOf('/user') === -1) {
+            router.push('/user');
+          }
           break;
       }
     } else if (!processing) {
