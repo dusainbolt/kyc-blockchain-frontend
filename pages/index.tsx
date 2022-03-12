@@ -9,8 +9,6 @@ import { getAuthSlice } from '@redux/slices/authSlice';
 import { getWalletSlice } from '@redux/slices/walletSlice';
 
 const Home: FC<any> = () => {
-  useConnectProvider();
-  useRedirectAuth();
   const { token } = useAppSelector(getAuthSlice);
   const { address } = useAppSelector(getWalletSlice);
   return (

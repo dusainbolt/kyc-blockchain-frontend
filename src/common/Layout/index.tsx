@@ -1,4 +1,7 @@
 import { MenuCustom } from '@common/Menu/MenuCustom';
+import { useConnectProvider } from '@hooks/useConnectProvider';
+import { useGetProfile } from '@hooks/useGetProfile';
+import { useRedirectAuth } from '@hooks/useRedirectAuth';
 import { Logout } from '@mui/icons-material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoDevIcon from '@mui/icons-material/LogoDev';
@@ -16,6 +19,7 @@ import {
 } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import { getAuthSlice } from '@redux/slices/authSlice';
+import { getProfileSlice } from '@redux/slices/profileSlice';
 import { getWalletSlice } from '@redux/slices/walletSlice';
 import { useAppSelector } from '@redux/store';
 import Helper from '@services/helper';
@@ -31,11 +35,15 @@ interface LayoutProps {
 }
 
 export const Layout: FC<LayoutProps> = ({ children, breadcrumbs }) => {
+  useGetProfile();
+  useConnectProvider();
+  useRedirectAuth();
   const classes = layoutStyle();
   const { address } = useAppSelector(getWalletSlice);
   const { token } = useAppSelector(getAuthSlice);
   const [anchorEl, setAnchorEl] = useState(null);
   const { deactivate } = useWeb3React();
+  const { loadingProfile } = useAppSelector(getProfileSlice);
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -51,6 +59,12 @@ export const Layout: FC<LayoutProps> = ({ children, breadcrumbs }) => {
   };
 
   const showContentAuth = token && address;
+
+  const backDropLayout = (
+    <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open onClick={handleClose}>
+      <CircularProgress color="inherit" />
+    </Backdrop>
+  );
 
   return showContentAuth ? (
     <>
@@ -95,12 +109,10 @@ export const Layout: FC<LayoutProps> = ({ children, breadcrumbs }) => {
       </div>
       <div className={classes.body}>
         <Sidebar />
-        <div className={classes.bodyContent}>{children}</div>
+        {!loadingProfile ? <div className={classes.bodyContent}>{children}</div> : backDropLayout}
       </div>
     </>
   ) : (
-    <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open onClick={handleClose}>
-      <CircularProgress color="inherit" />
-    </Backdrop>
+    backDropLayout
   );
 };

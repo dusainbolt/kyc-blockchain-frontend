@@ -17,4 +17,5 @@ export interface IField {
   type?: 'password' | 'text' | any;
   restric?: Restrict;
   required?: boolean;
+  grid?: number;
 }

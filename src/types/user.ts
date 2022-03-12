@@ -6,6 +6,10 @@ export enum Role {
   PROJECT_ADMIN,
 }
 
+export enum Gender {
+  MALE,
+  FEMALE,
+}
 // export interface User extends Omit<RegisterInput, 'rePassword'> {
 //   status: boolean;
 //   role: Role;
