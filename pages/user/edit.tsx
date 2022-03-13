@@ -1,27 +1,37 @@
 import { Layout } from '@common/Layout';
 import { FormProfile } from '@components/user/FormProfile';
-import { useConnectProvider } from '@hooks/useConnectProvider';
-import { useRedirectAuth } from '@hooks/useRedirectAuth';
-import { getProfileSlice } from '@redux/slices/profileSlice';
-import { useAppSelector } from '@redux/store';
+import { openDialogApp } from '@redux/slices/layoutSlice';
+import { getProfileSlice, updateProfileStart } from '@redux/slices/profileSlice';
+import { useAppDispatch, useAppSelector } from '@redux/store';
 import { BreadcrumbsType } from '@type/layout';
-import { ProfileData } from '@type/profile';
+import { Profile } from '@type/profile';
 import { Formik } from 'formik';
 import { useMemo } from 'react';
 
 const UserHome = () => {
   const { profile } = useAppSelector(getProfileSlice);
-  useConnectProvider();
-  useRedirectAuth();
-
+  const dispatch = useAppDispatch();
   const breadcrumbs: BreadcrumbsType[] = [
     {
       text: 'Profile',
     },
   ];
 
-  const onSubmitForm = async (values: ProfileData) => {
-    console.log('values: ', values);
+  const onSubmitForm = (values: Profile) => {
+    const data = { ...values };
+    if (data?.email === profile?.email) {
+      delete data.email;
+    }
+    if (data?.phoneNumber === profile?.phoneNumber) {
+      delete data.phoneNumber;
+    }
+    dispatch(
+      openDialogApp({
+        title: 'Update your Profile',
+        description: 'Are you sure to update with content that you type?',
+        callbackOk: () => dispatch(updateProfileStart(data)),
+      })
+    );
   };
 
   const getInitValues = useMemo(() => {
@@ -35,13 +45,14 @@ const UserHome = () => {
       lastName: profile?.lastName,
       nowAddress: profile?.nowAddress,
       phoneNumber: profile?.phoneNumber,
+      _id: profile?._id,
     };
   }, [profile]);
 
   return (
     <Layout breadcrumbs={breadcrumbs}>
-      <Formik onSubmit={onSubmitForm} initialValues={getInitValues}>
-        <FormProfile getInitValues={getInitValues} />
+      <Formik onSubmit={onSubmitForm} initialValues={getInitValues as any}>
+        <FormProfile />
       </Formik>
     </Layout>
   );

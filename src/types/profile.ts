@@ -1,5 +1,4 @@
 import FieldText from '@common/FieldInput';
-import { string } from 'yup';
 import { IField, Restrict } from './field';
 import { Gender } from './user';
 
@@ -14,22 +13,21 @@ export type ProfileInputName =
   | 'address'
   | 'nowAddress';
 
-export type ProfileData = Record<ProfileInputName, any>;
-
 export type Profile = {
-  email: string;
-  firstName: string;
-  lastName: string;
-  fullName: string;
-  gender: Gender;
-  birthday: any;
-  phoneNumber: string;
-  address: string;
-  nowAddress: string;
+  email?: string;
+  firstName?: string;
+  lastName?: string;
+  fullName?: string;
+  gender?: Gender;
+  birthday?: any;
+  phoneNumber?: string;
+  address?: string;
+  nowAddress?: string;
+  _id?: string;
 };
 
 export type ProfileSlice = {
-  profile?: ProfileData;
+  profile?: Profile;
   loadingUpdate: boolean;
   loadingProfile: boolean;
 };

@@ -1,3 +1,4 @@
+import { AppDialog } from '@common/Dialog';
 import { MenuCustom } from '@common/Menu/MenuCustom';
 import { useConnectProvider } from '@hooks/useConnectProvider';
 import { useGetProfile } from '@hooks/useGetProfile';
@@ -111,6 +112,7 @@ export const Layout: FC<LayoutProps> = ({ children, breadcrumbs }) => {
         <Sidebar />
         {!loadingProfile ? <div className={classes.bodyContent}>{children}</div> : backDropLayout}
       </div>
+      <AppDialog />
     </>
   ) : (
     backDropLayout

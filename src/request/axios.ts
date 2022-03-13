@@ -1,10 +1,12 @@
 /* eslint-disable class-methods-use-this */
+import { logout } from '@redux/slices/authSlice';
+import { storeWrapper } from '@redux/store';
 import Constant from '@services/constant';
 import axios, { AxiosInstance } from 'axios';
 import { NotificationManager } from 'react-notifications';
 
 class AxiosServer {
-  public instance: AxiosInstance;
+  private instance: AxiosInstance;
 
   constructor() {
     const instance = axios.create({
@@ -16,14 +18,6 @@ class AxiosServer {
     instance.interceptors.response.use(this.handelSuccess, this.handelError);
     this.instance = instance;
   }
-
-  // setUserRequest(token) {
-  //   if (token) {
-  //     this.instance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-  //   } else {
-  //     delete this.instance.defaults.headers.common['Authorization'];
-  //   }
-  // }
 
   setTokenRequest(token: string) {
     if (token) {
@@ -45,6 +39,10 @@ class AxiosServer {
   handelSuccess(response) {
     if (Constant.CODE.ERROR_RESPONSE === response.data?.code) {
       NotificationManager.warning(response.data?.msg, 'Warning');
+    } else if (Constant.CODE.ERROR_AUTHENTICATION === response.data?.code) {
+      NotificationManager.warning('Your session is expire', 'Warning');
+      // console.log('storeWrapper: ', storeWrapper);
+      Promise.all([storeWrapper.dispatch(logout())]);
     }
     return response.data;
   }
@@ -62,9 +60,10 @@ class AxiosServer {
   post(endpoint, body) {
     return this.instance.post(endpoint, body);
   }
-  //   put(endpoint, body) {
-  //     return this.instance.put(this.getFullUrl(endpoint), body);
-  //   }
+
+  put(endpoint, body) {
+    return this.instance.put(endpoint, body);
+  }
   //   delete(endpoint) {
   //     return this.instance.delete(this.getFullUrl(endpoint));
   //   }

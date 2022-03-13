@@ -1,7 +1,5 @@
 import { LoadingButton } from '@mui/lab';
 import { Grid, Typography } from '@mui/material';
-import { getProfileSlice } from '@redux/slices/profileSlice';
-import { useAppSelector } from '@redux/store';
 import { IField } from '@type/field';
 import { profileField } from '@type/profile';
 import { Field, useFormikContext } from 'formik';
@@ -11,10 +9,9 @@ import { formProfileStyle } from './formProfileStyle';
 interface FormProfileProps {
   loadingSubmitLogin?: boolean;
   errorMessage?: string;
-  getInitValues?: any;
 }
 
-export const FormProfile: FC<FormProfileProps> = ({ loadingSubmitLogin = false, getInitValues }) => {
+export const FormProfile: FC<FormProfileProps> = ({ loadingSubmitLogin = false }) => {
   const classes = formProfileStyle();
   const { handleSubmit } = useFormikContext();
 

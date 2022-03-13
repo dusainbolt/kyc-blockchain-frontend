@@ -1,21 +1,16 @@
-import { useState, useEffect } from 'react';
-import { useWeb3React } from '@web3-react/core';
 import { injected } from '@connectors/walletConnector';
-import { useAppDispatch, useAppSelector } from '@redux/store';
-import { disconnectWallet, getWalletSlice, receiveWallet } from '@redux/slices/walletSlice';
 import { ReceiveWallet } from '@redux/action/walletAction';
 import { logout } from '@redux/slices/authSlice';
+import { getWalletSlice, receiveWallet } from '@redux/slices/walletSlice';
+import { useAppDispatch, useAppSelector } from '@redux/store';
+import { useWeb3React } from '@web3-react/core';
+import { useEffect, useState } from 'react';
 
 export function useEagerConnect() {
   const { activate, account, chainId, active } = useWeb3React();
   const [tried, setTried] = useState(false);
   const { address } = useAppSelector(getWalletSlice);
   const dispatch = useAppDispatch();
-
-  const resetAuthAndWallet = () => {
-    dispatch(disconnectWallet());
-    dispatch(logout());
-  };
 
   useEffect(() => {
     address &&
@@ -39,7 +34,7 @@ export function useEagerConnect() {
 
   useEffect(() => {
     if (tried && !account) {
-      resetAuthAndWallet();
+      dispatch(logout());
     }
   }, [tried, account]);
 

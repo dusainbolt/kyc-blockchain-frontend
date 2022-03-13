@@ -1,5 +1,6 @@
 import { LoginAction } from '@redux/action/authAction';
-import { loginError, loginStart, loginSuccess } from '@redux/slices/authSlice';
+import { loginError, loginStart, loginSuccess, logout } from '@redux/slices/authSlice';
+import { disconnectWallet } from '@redux/slices/walletSlice';
 import axios from '@request/axios';
 import Constant from '@services/constant';
 import { put, takeEvery } from 'redux-saga/effects';
@@ -19,6 +20,15 @@ function* watchLoginStart({ payload }: LoginAction) {
   }
 }
 
+function* watchLogout() {
+  try {
+    yield put(disconnectWallet());
+  } catch (error: any) {
+    yield put(loginError());
+  }
+}
+
 export default function* authSaga(): any {
   yield takeEvery(loginStart, watchLoginStart);
+  yield takeEvery(logout, watchLogout);
 }

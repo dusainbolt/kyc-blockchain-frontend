@@ -93,6 +93,10 @@ export const layoutStyle = makeStyles({
     color: '#dc6a00',
     display: 'flex',
     alignItems: 'center',
+    cursor: 'pointer',
+    '&:hover': {
+      opacity: 0.7,
+    },
     '& svg': {
       marginRight: 3,
     },
