@@ -1,13 +1,14 @@
 // import { ErrorSaga, NotifySystem, TypeNotify } from '@Models/LayoutModel';
 import { all } from 'redux-saga/effects';
 import authSaga from './sagas/authSaga';
+import profileSaga from './sagas/profileSaga';
 // import WatchLoginSaga from './sagas/loginSaga';
 // import seoHomeSaga from './sagas/seoHomeSaga';
 // import watchTagSaga from './sagas/tagSaga';
 // import { setNotifySlice } from './slices/layoutSlice';
 
 export default function* rootSaga(): any {
-  yield all([authSaga()]);
+  yield all([authSaga(), profileSaga()]);
 }
 
 // export function* handleMessageErrorSaga(error: ErrorSaga): any {

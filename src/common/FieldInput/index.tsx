@@ -27,7 +27,6 @@ const FieldText: FC<FieldTextType> = ({ label, placeholder, className, type, fie
 
   const onChangeInput = ({ currentTarget: { value } }: FormEvent<HTMLInputElement>) => {
     const includeSpecialChar = value.match(/[%<>\\$'"]/);
-    console.log(Restrict.DISALLOW_SPECIAL_CHAR === restric);
     if (Restrict.DISALLOW_SPECIAL_CHAR === restric && includeSpecialChar?.input) {
       return;
     }
@@ -47,6 +46,7 @@ const FieldText: FC<FieldTextType> = ({ label, placeholder, className, type, fie
         required={required as boolean}
         onChange={onChangeInput as any}
         error={isError}
+        size="small"
         helperText={fieldTouch && fieldError}
         variant="outlined"
       />
