@@ -1,6 +1,8 @@
 import { Layout } from '@common/Layout';
+import { Profile } from '@components/user/Profile';
 import { profileStyle } from '@components/user/profileStyle';
-import { Alert, Button } from '@mui/material';
+import { getProfileSlice } from '@redux/slices/profileSlice';
+import { useAppSelector } from '@redux/store';
 import { BreadcrumbsType } from '@type/layout';
 
 const UserHome = () => {
@@ -10,14 +12,9 @@ const UserHome = () => {
     },
   ];
 
-  const classes = profileStyle();
-
   return (
     <Layout breadcrumbs={breadcrumbs}>
-      <Alert severity="warning">You don't have profile! Please create your profile by click button bellow</Alert>
-      <Button className={classes.spacingContentSmall} variant="contained" href="/user/edit">
-        Create My Profile
-      </Button>
+      <Profile />
     </Layout>
   );
 };

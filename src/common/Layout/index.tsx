@@ -39,7 +39,7 @@ export const Layout: FC<LayoutProps> = ({ children, breadcrumbs }) => {
   useGetProfile();
   useConnectProvider();
   useRedirectAuth();
-  const classes = layoutStyle();
+  const styles = layoutStyle();
   const { address } = useAppSelector(getWalletSlice);
   const { token } = useAppSelector(getAuthSlice);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -69,8 +69,8 @@ export const Layout: FC<LayoutProps> = ({ children, breadcrumbs }) => {
 
   return showContentAuth ? (
     <>
-      <div className={classes.header}>
-        <div className={classes.logoWrap}>
+      <div className={styles.header}>
+        <div className={styles.logoWrap}>
           <LogoDevIcon />
           <div>KYC Platform</div>
           <Breadcrumbs separator="›" aria-label="breadcrumb">
@@ -86,14 +86,14 @@ export const Layout: FC<LayoutProps> = ({ children, breadcrumbs }) => {
             )}
           </Breadcrumbs>
         </div>
-        <div className={classes.searchWrap}>
+        <div className={styles.searchWrap}>
           <InputBase sx={{ ml: 1, flex: 1 }} placeholder="Search" inputProps={{ 'aria-label': 'search ...' }} />
           <IconButton type="submit" sx={{ p: '10px' }} aria-label="search">
             <SearchIcon />
           </IconButton>
         </div>
-        <div onClick={handleMenu} className={classes.walletWrap}>
-          <div className={classes.walletAddress}>
+        <div onClick={handleMenu} className={styles.walletWrap}>
+          <div className={styles.walletAddress}>
             <AccountCircleIcon /> <span>{Helper.splitString(address)}</span>
           </div>
         </div>
@@ -108,9 +108,9 @@ export const Layout: FC<LayoutProps> = ({ children, breadcrumbs }) => {
           </MenuItem>
         </MenuCustom>
       </div>
-      <div className={classes.body}>
+      <div className={styles.body}>
         <Sidebar />
-        {!loadingProfile ? <div className={classes.bodyContent}>{children}</div> : backDropLayout}
+        {!loadingProfile ? <div className={styles.bodyContent}>{children}</div> : backDropLayout}
       </div>
       <AppDialog />
     </>

@@ -17,7 +17,7 @@ import { ButtonIcon } from '@common/Button/ButtonIcon';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 const HomePageComponent: FC<any> = () => {
-  const classes = useStyles();
+  const styles = useStyles();
   const { connectWallet, onDisconnect } = useControlConnect();
   const wallet = useAppSelector(getWalletSlice);
   const auth = useAppSelector(getAuthSlice);
@@ -48,9 +48,9 @@ const HomePageComponent: FC<any> = () => {
   const loadingBtn = auth.loadingLogin || loadingSignature;
 
   return (
-    <main className={classes.main}>
+    <main className={styles.main}>
       <Container maxWidth="lg">
-        <Typography variant="h1" className={classes.title} component="h1" gutterBottom>
+        <Typography variant="h1" className={styles.title} component="h1" gutterBottom>
           Welcome to KYC Platform
         </Typography>
         <Typography variant="subtitle1" gutterBottom component="div">
@@ -58,13 +58,13 @@ const HomePageComponent: FC<any> = () => {
         </Typography>
         {!wallet.connected ? (
           <>
-            <Alert className={classes.spacingContent} severity="info">
+            <Alert className={styles.spacingContent} severity="info">
               Please choose method and connect your wallet to the platform
             </Alert>
-            <Stack className={classes.spacingContent} direction="row" spacing={2}>
+            <Stack className={styles.spacingContent} direction="row" spacing={2}>
               <Button
                 onClick={() => connectWallet(TypeWallet.METAMASK)}
-                className={classes.btnMetamask}
+                className={styles.btnMetamask}
                 variant="outlined"
                 startIcon={<MetaMaskIcon />}
               >
@@ -72,7 +72,7 @@ const HomePageComponent: FC<any> = () => {
               </Button>{' '}
               {/* <Button
                 onClick={() => connectWallet(TypeWallet.WALLET_CONNECT)}
-                className={classes.btnWalletConnect}
+                className={styles.btnWalletConnect}
                 variant="outlined"
                 startIcon={<WalletConnectIcon />}
               >
@@ -82,23 +82,23 @@ const HomePageComponent: FC<any> = () => {
           </>
         ) : (
           <>
-            <Typography className={classes.spacingContent} variant="subtitle1" gutterBottom component="div">
+            <Typography className={styles.spacingContent} variant="subtitle1" gutterBottom component="div">
               Your wallet address:
             </Typography>
             <Stack direction="row" spacing={2}>
-              <Button className={classes.btnMetamask} startIcon={<MetaMaskIcon />}>
+              <Button className={styles.btnMetamask} startIcon={<MetaMaskIcon />}>
                 {wallet.address}
               </Button>
               <ButtonIcon loading={loadingBtn} onClick={onDisconnect} icon={<LogoutIcon />} />
             </Stack>
-            <Alert className={classes.spacingContent} severity="success">
+            <Alert className={styles.spacingContent} severity="success">
               Thanks for your cooperation with us. You can choose permission and login right now.
             </Alert>
-            <Typography className={classes.spacingContent} variant="subtitle1" gutterBottom component="div">
+            <Typography className={styles.spacingContent} variant="subtitle1" gutterBottom component="div">
               1. What would you like to role for login?
             </Typography>
             <ToggleButtonGroup
-              className={classes.btnGroupToggle}
+              className={styles.btnGroupToggle}
               color="primary"
               value={role}
               exclusive
@@ -108,7 +108,7 @@ const HomePageComponent: FC<any> = () => {
               <ToggleButton value={Role.PROJECT_ADMIN}>Business Manager</ToggleButton>
               <ToggleButton value={Role.ADMIN}>Administrator</ToggleButton>
             </ToggleButtonGroup>
-            <Typography className={classes.spacingContent} variant="subtitle1" gutterBottom component="div">
+            <Typography className={styles.spacingContent} variant="subtitle1" gutterBottom component="div">
               2. Please click to continue?
             </Typography>
             <Stack direction="row" spacing={2}>

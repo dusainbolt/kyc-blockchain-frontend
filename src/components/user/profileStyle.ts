@@ -5,4 +5,12 @@ export const profileStyle = makeStyles({
   spacingContentSmall: {
     marginTop: theme.spacing(2),
   },
+  profileWrap: {
+    maxWidth: 700,
+    width: '100%',
+  },
+  profileLabel: {
+    fontSize: 18,
+    fontWeight: 700,
+  },
 });
