@@ -30,16 +30,7 @@ export const FormProfile: FC<FormProfileProps> = ({ loadingSubmitLogin = false }
             const field: IField = item[1];
             return (
               <Grid key={index} item xs={field.grid || 6}>
-                <Field
-                  className={styles.inputField}
-                  name={field.name}
-                  label={field.label}
-                  component={field.component}
-                  type={field.type}
-                  placeholder={field.placeholder}
-                  required={field.required}
-                  restric={field.restric}
-                />
+                <Field {...field} />
               </Grid>
             );
           })}
