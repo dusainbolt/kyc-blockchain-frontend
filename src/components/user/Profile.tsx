@@ -1,12 +1,16 @@
+import { ChipStatus } from '@common/Chip/ChipStatus';
 import { profileStyle } from '@components/user/profileStyle';
 import { Alert, Button, Divider, Grid, Typography } from '@mui/material';
 import { getProfileSlice } from '@redux/slices/profileSlice';
 import { useAppSelector } from '@redux/store';
+import Date from '@services/date';
+import { ProfileStatus, ProfileStatusData } from '@type/user';
 
 export const Profile = () => {
   const { profile } = useAppSelector(getProfileSlice);
 
   const styles = profileStyle();
+  const statusData = ProfileStatusData[profile?.status as ProfileStatus];
 
   return (
     <div>
@@ -42,7 +46,7 @@ export const Profile = () => {
             </Grid>
             <Grid item xs={6}>
               <div className={styles.profileLabel}>Birthday</div>
-              <div>{profile.birthday}</div>
+              <div>{Date.toDateStr(profile.birthday)}</div>
             </Grid>
             <Grid item xs={6}>
               <div className={styles.profileLabel}>Phone number</div>
@@ -56,7 +60,16 @@ export const Profile = () => {
               <div className={styles.profileLabel}>Current Address</div>
               <div>{profile.nowAddress}</div>
             </Grid>
+            <Grid item xs={6}>
+              <div className={styles.profileLabel}>Status</div>
+              <div>
+                <ChipStatus styleProps={{ marginTop: 4 }} label={statusData.text} colorStyle={statusData.color} />
+              </div>
+            </Grid>
           </Grid>
+          <Alert className={styles.spacingContentSmall} severity="info">
+            Please choose method and connect your wallet to the platform
+          </Alert>
         </div>
       )}
     </div>

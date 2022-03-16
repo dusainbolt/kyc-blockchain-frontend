@@ -16,4 +16,8 @@ export default class Constant {
     ERROR_RESPONSE: 500,
     SUCCESS_RESPONSE: 200,
   };
+
+  static DATE = {
+    D_M_Y: 'DD/MM/YYYY',
+  };
 }

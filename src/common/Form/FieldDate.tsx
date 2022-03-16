@@ -11,6 +11,8 @@ import DateAdapter from '@mui/lab/AdapterDayjs';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
 import dayjs from 'dayjs';
+import Date from '@services/date';
+import Constant from '@services/constant';
 
 export const fieldSelectStyle = makeStyles({
   label: {
@@ -23,13 +25,9 @@ export const fieldSelectStyle = makeStyles({
 
 export interface FieldDateType {
   label?: string;
-  // prefix?: any;
-  // suffix?: any;
   placeholder?: string;
   className?: string;
   options: OptionSelect[];
-  // restric: Restrict;
-  // type?: string;
   required?: boolean;
   field?: FieldInputProps<any>;
   meta?: FieldMetaProps<any>;
@@ -40,27 +38,28 @@ const FieldDate: FC<FieldDateType> = ({ label, placeholder, required, options, c
   const fieldTouch: boolean = Helper.objValue(touched, field?.name);
   const fieldError: string = Helper.objValue(errors, field?.name);
   const isError: boolean = fieldTouch && Boolean(fieldError);
-  // const [value, setValue] = useState(new Date());
-
-  // const styles = fieldSelectStyle();
 
   const handleChange = (newValue): any => {
     setFieldValue(field?.name as string, newValue);
   };
 
-  // label = `${label}${required && ' *'}`;
-
-  const value = field?.value instanceof dayjs ? field.value : dayjs(field?.value || new Date());
-
   return (
     <div className={clsx(className)}>
       <LocalizationProvider dateAdapter={DateAdapter}>
         <DatePicker
-          label="Basic example"
-          value={value}
-          inputFormat="MM/DD/YYYY"
+          label={label}
+          value={Date.renderDayjs(field?.value)}
+          inputFormat={Constant.DATE.D_M_Y}
           onChange={handleChange}
-          renderInput={(params) => <TextField {...params} helperText={fieldTouch && fieldError} />}
+          renderInput={(params) => (
+            <TextField
+              size="small"
+              {...params}
+              error={isError}
+              required={required as boolean}
+              helperText={fieldTouch && fieldError}
+            />
+          )}
         />
       </LocalizationProvider>
     </div>

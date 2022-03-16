@@ -59,6 +59,9 @@ const FieldSelect: FC<FieldSelectType> = ({ label, placeholder, required, option
           placeholder={placeholder}
           label={label}
           onChange={handleChange}
+          inputProps={{
+            required,
+          }}
         >
           {options?.map((item, index) => (
             <MenuItem key={index} value={item.value}>

@@ -8,3 +8,8 @@ export type SSRContext = GetServerSidePropsContext & {
 export type SSGContext = GetStaticPropsContext & {
   store: Store<any, AnyAction>;
 };
+
+export type StatusField = {
+  color: string;
+  text: string;
+};
