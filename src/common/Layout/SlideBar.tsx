@@ -23,6 +23,10 @@ export const Sidebar: FC<SidebarProps> = () => {
       { text: 'History', icon: <InboxIcon />, href: '/user/request' },
       { text: 'Share History', icon: <InboxIcon />, href: 'user/share-history' },
     ],
+    [Role.ADMIN]: [
+      { text: 'My Account', icon: <InboxIcon />, href: '/admin' },
+      { text: 'KYC', icon: <InboxIcon />, href: '/admin/kyc' },
+    ],
   };
 
   return (

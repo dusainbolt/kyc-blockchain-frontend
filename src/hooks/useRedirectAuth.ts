@@ -14,7 +14,9 @@ export const useRedirectAuth = () => {
     if (token && address) {
       switch (role) {
         case Role.ADMIN:
-          router.push('/user');
+          if (router.pathname.indexOf('/admin') === -1) {
+            router.push('/admin');
+          }
           break;
         default:
           if (router.pathname.indexOf('/user') === -1) {

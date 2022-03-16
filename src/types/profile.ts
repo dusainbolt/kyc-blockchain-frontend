@@ -2,7 +2,7 @@ import FieldDate from '@common/Form/FieldDate';
 import FieldText from '@common/Form/FieldInput';
 import FieldSelect from '@common/Form/FieldSelect';
 import { IField, Restrict } from './field';
-import { Gender } from './user';
+import { Gender, ProfileStatus } from './user';
 
 export type ProfileInputName =
   | 'email'
@@ -26,6 +26,7 @@ export type Profile = {
   address?: string;
   nowAddress?: string;
   _id?: string;
+  status?: ProfileStatus;
 };
 
 export type ProfileSlice = {

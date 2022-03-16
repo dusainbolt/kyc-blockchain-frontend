@@ -1,6 +1,6 @@
 import { ChipStatus } from '@common/Chip/ChipStatus';
 import { profileStyle } from '@components/user/profileStyle';
-import { Alert, Button, Divider, Grid, Typography } from '@mui/material';
+import { Alert, Button, Divider, Grid, Stack, Typography } from '@mui/material';
 import { getProfileSlice } from '@redux/slices/profileSlice';
 import { useAppSelector } from '@redux/store';
 import Date from '@services/date';
@@ -10,7 +10,39 @@ export const Profile = () => {
   const { profile } = useAppSelector(getProfileSlice);
 
   const styles = profileStyle();
-  const statusData = ProfileStatusData[profile?.status as ProfileStatus];
+  const statusData = ProfileStatusData[profile?.status || 0];
+
+  const renderButtonControl = () => {
+    switch (profile?.status) {
+      case ProfileStatus.EDIT:
+        return (
+          <>
+            <Button variant="contained" href="/user/edit">
+              Edit Profile
+            </Button>
+            <Button variant="contained" href="/user/edit">
+              Request KYC
+            </Button>
+          </>
+        );
+      default:
+        return '';
+    }
+  };
+
+  const renderAlertNotice = () => {
+    switch (profile?.status) {
+      case ProfileStatus.EDIT:
+        return (
+          <Alert className={styles.spacingContentSmall} severity="info">
+            Your status is editable that you can edit your profile. If you determined every thing is correct you need
+            request KYC to continue our process.
+          </Alert>
+        );
+      default:
+        return '';
+    }
+  };
 
   return (
     <div>
@@ -67,9 +99,10 @@ export const Profile = () => {
               </div>
             </Grid>
           </Grid>
-          <Alert className={styles.spacingContentSmall} severity="info">
-            Please choose method and connect your wallet to the platform
-          </Alert>
+          {renderAlertNotice()}
+          <Stack className={styles.spacingContentSmall} direction="row" spacing={2}>
+            {renderButtonControl()}
+          </Stack>
         </div>
       )}
     </div>
