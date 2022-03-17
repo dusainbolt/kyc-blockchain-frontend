@@ -16,8 +16,10 @@ const initialState: AuthSlice = {
 
 const hydrate = createAction<AppState>(HYDRATE);
 
+const sliceName = 'authSlice';
+
 const authSlice = createSlice({
-  name: 'authSlice',
+  name: sliceName,
   initialState,
   reducers: {
     loginStart: (state: AuthSlice, { payload }: LoginAction) => {
@@ -41,17 +43,17 @@ const authSlice = createSlice({
     builder.addCase(hydrate, (state, action) => {
       return {
         ...state,
-        ...action.payload?.authSlice,
+        ...action.payload[sliceName],
       };
     });
   },
 });
 
-export const getAuthSlice = (state: RootState): AuthSlice => state.authSlice;
+export const getAuthSlice = (state: RootState): AuthSlice => state[sliceName];
 
 export const { loginStart, loginSuccess, loginError, logout } = authSlice.actions;
 
 export default persistReducer(
-  getPersistConfig('authSlice', { whitelist: ['address', 'token', 'role'] }),
+  getPersistConfig(sliceName, { whitelist: ['address', 'token', 'role'] }),
   authSlice.reducer
 );

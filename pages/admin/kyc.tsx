@@ -1,19 +1,19 @@
 import { Layout } from '@common/Layout';
-import { Profile } from '@components/user/Profile';
+import { KycList } from '@components/admin/KycList';
 import { BreadcrumbsType } from '@type/layout';
 
-const UserHome = () => {
+const AdminKycList = () => {
   const breadcrumbs: BreadcrumbsType[] = [
     {
-      text: 'Profile',
+      text: 'KYC List',
     },
   ];
 
   return (
     <Layout breadcrumbs={breadcrumbs}>
-      <Profile />
+      <KycList />
     </Layout>
   );
 };
 
-export default UserHome;
+export default AdminKycList;

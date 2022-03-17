@@ -12,7 +12,7 @@ interface SidebarProps {
 }
 
 export const Sidebar: FC<SidebarProps> = () => {
-  const classes = layoutStyle();
+  const styles = layoutStyle();
   const { role } = useAppSelector(getAuthSlice);
   const router = useRouter();
 
@@ -23,14 +23,18 @@ export const Sidebar: FC<SidebarProps> = () => {
       { text: 'History', icon: <InboxIcon />, href: '/user/request' },
       { text: 'Share History', icon: <InboxIcon />, href: 'user/share-history' },
     ],
+    [Role.ADMIN]: [
+      { text: 'My Account', icon: <InboxIcon />, href: '/admin' },
+      { text: 'KYC', icon: <InboxIcon />, href: '/admin/kyc' },
+    ],
   };
 
   return (
-    <div className={classes.sidebar}>
-      <div className={classes.sidebarWrap}>
+    <div className={styles.sidebar}>
+      <div className={styles.sidebarWrap}>
         <List style={{ width: '100%' }}>
           {menu[role || Role.USER].map((item, index) => (
-            <ListItem key={index} className={classes.navWrap} selected={item.href === router.route} disablePadding>
+            <ListItem key={index} className={styles.navWrap} selected={item.href === router.route} disablePadding>
               <Link href={item.href}>
                 <ListItemButton>
                   <ListItemIcon>{item.icon}</ListItemIcon>

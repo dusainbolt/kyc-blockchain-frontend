@@ -1,6 +1,8 @@
-import FieldText from '@common/FieldInput';
+import FieldDate from '@common/Form/FieldDate';
+import FieldText from '@common/Form/FieldInput';
+import FieldSelect from '@common/Form/FieldSelect';
 import { IField, Restrict } from './field';
-import { Gender } from './user';
+import { Gender, ProfileStatus } from './user';
 
 export type ProfileInputName =
   | 'email'
@@ -13,6 +15,11 @@ export type ProfileInputName =
   | 'address'
   | 'nowAddress';
 
+export type ProfileUser = {
+  _id: string;
+  address: string;
+};
+
 export type Profile = {
   email?: string;
   firstName?: string;
@@ -24,6 +31,10 @@ export type Profile = {
   address?: string;
   nowAddress?: string;
   _id?: string;
+  status?: ProfileStatus;
+  userId?: ProfileUser;
+  createdAt?: string;
+  updatedAt?: string;
 };
 
 export type ProfileSlice = {
@@ -65,14 +76,18 @@ export const profileField: Record<ProfileInputName, IField> = {
   gender: {
     name: 'gender',
     label: 'Gender',
-    component: FieldText,
+    component: FieldSelect,
     required: true,
     grid: 4,
+    options: [
+      { label: 'Male', value: Gender.MALE },
+      { label: 'Female', value: Gender.FEMALE },
+    ],
   },
   birthday: {
     name: 'birthday',
     label: 'Birthday',
-    component: FieldText,
+    component: FieldDate,
     required: true,
   },
   phoneNumber: {

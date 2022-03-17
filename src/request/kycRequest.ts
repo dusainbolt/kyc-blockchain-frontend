@@ -1,3 +1,4 @@
+import { SearchKycParams } from '@redux/action/adminKycAction';
 import { Profile } from '@type/profile';
 import axios from './axios';
 
@@ -11,4 +12,8 @@ export const updateKycAPI = async (body: Profile) => {
 
 export const getKycInfoAPI = async () => {
   return await axios.get('/kyc/info');
+};
+
+export const searchKycAPI = async (params: SearchKycParams) => {
+  return await axios.get('/kyc/search', params);
 };

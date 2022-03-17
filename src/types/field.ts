@@ -3,7 +3,7 @@ export enum Restrict {
 }
 export interface OptionSelect {
   label: string;
-  value: string;
+  value: string | any;
   urlIcon?: any;
   disabled?: boolean;
 }
@@ -18,4 +18,5 @@ export interface IField {
   restric?: Restrict;
   required?: boolean;
   grid?: number;
+  disabled?: boolean;
 }

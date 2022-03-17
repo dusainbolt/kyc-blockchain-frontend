@@ -2,10 +2,10 @@ import { Layout } from '@common/Layout';
 import { Profile } from '@components/user/Profile';
 import { BreadcrumbsType } from '@type/layout';
 
-const UserHome = () => {
+const AdminMyAccount = () => {
   const breadcrumbs: BreadcrumbsType[] = [
     {
-      text: 'Profile',
+      text: 'My Account',
     },
   ];
 
@@ -16,4 +16,4 @@ const UserHome = () => {
   );
 };
 
-export default UserHome;
+export default AdminMyAccount;

@@ -1,7 +1,7 @@
 import { makeStyles } from '@mui/styles';
 import theme from '@styles/theme';
 
-export const formProfileStyle = makeStyles({
+export const editProfileStyle = makeStyles({
   inputField: {
     marginTop: theme.spacing(1),
   },
@@ -9,6 +9,7 @@ export const formProfileStyle = makeStyles({
     maxWidth: 500,
     width: '100%',
     margin: 'auto',
+    marginTop: theme.spacing(3),
   },
   titleForm: {
     fontSize: 24,

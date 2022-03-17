@@ -18,8 +18,10 @@ const initialState: WalletSlice = {
 
 const hydrate = createAction<AppState>(HYDRATE);
 
+const nameSlice = 'walletSlice';
+
 const walletSlice = createSlice({
-  name: 'walletSlice',
+  name: nameSlice,
   initialState,
   reducers: {
     chooseWallet: (state: WalletSlice, { payload }: ChooseWalletAction) => {
@@ -39,14 +41,14 @@ const walletSlice = createSlice({
     builder.addCase(hydrate, (state, action) => {
       return {
         ...state,
-        ...action.payload?.walletSlice,
+        ...action.payload[nameSlice],
       };
     });
   },
 });
 
-export const getWalletSlice = (state: RootState): WalletSlice => state.walletSlice;
+export const getWalletSlice = (state: RootState): WalletSlice => state[nameSlice];
 
 export const { chooseWallet, receiveWallet, disconnectWallet } = walletSlice.actions;
 
-export default persistReducer(getPersistConfig('walletSlice'), walletSlice.reducer);
+export default persistReducer(getPersistConfig(nameSlice), walletSlice.reducer);

@@ -43,6 +43,9 @@ export const layoutStyle = makeStyles({
     marginTop: theme.spacing(2),
     borderRadius: theme.spacing(2),
     overflow: 'hidden',
+    '& a.MuiLink-root': {
+      width: '100%',
+    },
     '&.Mui-selected': {
       background: '#e8ebed',
     },
