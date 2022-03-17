@@ -15,6 +15,11 @@ export type ProfileInputName =
   | 'address'
   | 'nowAddress';
 
+export type ProfileUser = {
+  _id: string;
+  address: string;
+};
+
 export type Profile = {
   email?: string;
   firstName?: string;
@@ -27,6 +32,9 @@ export type Profile = {
   nowAddress?: string;
   _id?: string;
   status?: ProfileStatus;
+  userId?: ProfileUser;
+  createdAt?: string;
+  updatedAt?: string;
 };
 
 export type ProfileSlice = {

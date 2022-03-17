@@ -13,3 +13,10 @@ export type StatusField = {
   color: string;
   text: string;
 };
+
+export type Paging = {
+  currentPage?: number;
+  pageSize?: number;
+  totalCount?: number;
+  // totalPage?: number;
+};

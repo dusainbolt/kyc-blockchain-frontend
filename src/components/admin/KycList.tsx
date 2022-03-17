@@ -1,4 +1,8 @@
 import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
+import { getAdminKycSlice } from '@redux/slices/adminKycSlice';
+import { useAppSelector } from '@redux/store';
+import { TableHelper } from '@services/table';
+import { useState } from 'react';
 
 const rows: GridRowsProp = [
   { id: 1, col1: 'Hello', col2: 'World' },
@@ -16,9 +20,17 @@ const columns: GridColDef[] = [
 ];
 
 export const KycList = () => {
+  const [pageSize, setPageSize] = useState(5);
+  const { paging } = useAppSelector(getAdminKycSlice);
+
   return (
     <div style={{ height: 550, width: '100%' }}>
-      <DataGrid rows={rows} columns={columns} />
+      <DataGrid
+        {...TableHelper.propsParamsTable(paging)}
+        rows={rows}
+        onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+        columns={columns}
+      />
     </div>
   );
 };
