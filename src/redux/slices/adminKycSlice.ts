@@ -17,10 +17,10 @@ const initialState: AdminKycSlice = {
 
 const hydrate = createAction<AppState>(HYDRATE);
 
-const nameSlice = 'adminKycSlice';
+const sliceName = 'adminKycSlice';
 
 const adminKycSlice = createSlice({
-  name: nameSlice,
+  name: sliceName,
   initialState,
   reducers: {
     searchKycStart: (state: AdminKycSlice, { payload }: SearchKycAction) => {
@@ -38,17 +38,17 @@ const adminKycSlice = createSlice({
     builder.addCase(hydrate, (state, action) => {
       return {
         ...state,
-        ...action.payload[nameSlice],
+        ...action.payload[sliceName],
       };
     });
   },
 });
 
-export const getAdminKycSlice = (state: RootState): AdminKycSlice => state.adminKycSlice;
+export const getAdminKycSlice = (state: RootState): AdminKycSlice => state[sliceName];
 
 export const { searchKycStart, searchKycSuccess } = adminKycSlice.actions;
 
 export default persistReducer(
-  getPersistConfig(nameSlice, { whitelist: ['address', 'token', 'role'] }),
+  getPersistConfig(sliceName, { whitelist: ['address', 'token', 'role'] }),
   adminKycSlice.reducer
 );

@@ -14,8 +14,10 @@ const initialState: ProfileSlice = {
 
 const hydrate = createAction<AppState>(HYDRATE);
 
+const sliceName = 'profileSlice';
+
 const profileSlice = createSlice({
-  name: 'profileSlice',
+  name: sliceName,
   initialState,
   reducers: {
     getProfileStart: (state: ProfileSlice) => {
@@ -42,13 +44,13 @@ const profileSlice = createSlice({
     builder.addCase(hydrate, (state, action) => {
       return {
         ...state,
-        ...action.payload?.profileSlice,
+        ...action.payload[sliceName],
       };
     });
   },
 });
 
-export const getProfileSlice = (state: RootState): ProfileSlice => state.profileSlice;
+export const getProfileSlice = (state: RootState): ProfileSlice => state[sliceName];
 
 export const {
   getProfileStart,
@@ -59,4 +61,4 @@ export const {
   updateProfileStart,
 } = profileSlice.actions;
 
-export default persistReducer(getPersistConfig('profileSlice', { whitelist: ['profile'] }), profileSlice.reducer);
+export default persistReducer(getPersistConfig(sliceName, { whitelist: ['profile'] }), profileSlice.reducer);

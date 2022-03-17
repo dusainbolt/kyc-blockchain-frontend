@@ -13,8 +13,10 @@ const initialState: LayoutSlice = {};
 
 const hydrate = createAction<AppState>(HYDRATE);
 
+const sliceName = 'layoutSlice';
+
 const layoutSlice = createSlice({
-  name: 'layoutSlice',
+  name: sliceName,
   initialState,
   reducers: {
     openDialogApp: (state: LayoutSlice, { payload }: OpenDialogAction) => {
@@ -29,14 +31,14 @@ const layoutSlice = createSlice({
     builder.addCase(hydrate, (state, action) => {
       return {
         ...state,
-        ...action.payload?.layoutSlice,
+        ...action.payload[sliceName],
       };
     });
   },
 });
 
-export const getLayoutSlice = (state: RootState): LayoutSlice => state.layoutSlice;
+export const getLayoutSlice = (state: RootState): LayoutSlice => state[sliceName];
 
 export const { openDialogApp, closeDialogApp } = layoutSlice.actions;
 
-export default persistReducer(getPersistConfig('layoutSlice', { whitelist: [] }), layoutSlice.reducer);
+export default persistReducer(getPersistConfig(sliceName, { whitelist: [] }), layoutSlice.reducer);
