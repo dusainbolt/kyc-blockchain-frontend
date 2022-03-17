@@ -1,8 +1,8 @@
-import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
-import { getAdminKycSlice } from '@redux/slices/adminKycSlice';
-import { useAppSelector } from '@redux/store';
+import { DataGrid, GridColDef, GridRowsProp } from '@mui/x-data-grid';
+import { getAdminKycSlice, searchKycStart } from '@redux/slices/adminKycSlice';
+import { useAppDispatch, useAppSelector } from '@redux/store';
 import { TableHelper } from '@services/table';
-import { useState } from 'react';
+import { useEffect } from 'react';
 
 const rows: GridRowsProp = [
   { id: 1, col1: 'Hello', col2: 'World' },
@@ -20,16 +20,21 @@ const columns: GridColDef[] = [
 ];
 
 export const KycList = () => {
-  const [pageSize, setPageSize] = useState(5);
-  const { paging } = useAppSelector(getAdminKycSlice);
+  const { paging, loadingData } = useAppSelector(getAdminKycSlice);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(searchKycStart({ ...TableHelper.queryDefault }));
+  }, []);
 
   return (
     <div style={{ height: 550, width: '100%' }}>
       <DataGrid
         {...TableHelper.propsParamsTable(paging)}
         rows={rows}
-        onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+        // onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
         columns={columns}
+        loading={loadingData}
       />
     </div>
   );

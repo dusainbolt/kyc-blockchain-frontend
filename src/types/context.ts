@@ -18,5 +18,11 @@ export type Paging = {
   currentPage?: number;
   pageSize?: number;
   totalCount?: number;
-  // totalPage?: number;
 };
+
+export type SearchResponse = {
+  data?: any;
+  paging: Paging;
+};
+
+export type querySearchDefault = { page: number; pageSize: number; sortBy?: string };

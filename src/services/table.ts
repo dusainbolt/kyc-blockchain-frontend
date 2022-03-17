@@ -1,5 +1,5 @@
 import { DataGridProps } from '@mui/x-data-grid/models/props/DataGridProps';
-import { Paging } from '@type/context';
+import { Paging, querySearchDefault } from '@type/context';
 
 export class TableHelper {
   static rowsPerPageOptions = [10, 20, 30, 50, 100];
@@ -8,6 +8,11 @@ export class TableHelper {
     currentPage: 1,
     pageSize: 10,
     totalCount: 0,
+  };
+
+  static queryDefault: querySearchDefault = {
+    page: this.pagingDefault.currentPage as number,
+    pageSize: this.pagingDefault.pageSize as number,
   };
 
   static propsParamsTable = (
