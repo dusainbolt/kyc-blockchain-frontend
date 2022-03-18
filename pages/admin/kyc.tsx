@@ -5,7 +5,7 @@ import { BreadcrumbsType } from '@type/layout';
 const AdminKycList = () => {
   const breadcrumbs: BreadcrumbsType[] = [
     {
-      text: 'KYC List',
+      text: 'KYC Management',
     },
   ];
 

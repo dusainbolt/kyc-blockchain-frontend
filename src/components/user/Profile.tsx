@@ -1,16 +1,15 @@
-import { ChipStatus } from '@common/Chip/ChipStatus';
+import { StatusKYC } from '@common/Chip/StatusKyc';
 import { profileStyle } from '@components/user/profileStyle';
 import { Alert, Button, Divider, Grid, Stack, Typography } from '@mui/material';
 import { getProfileSlice } from '@redux/slices/profileSlice';
 import { useAppSelector } from '@redux/store';
 import Date from '@services/date';
-import { ProfileStatus, ProfileStatusData } from '@type/user';
+import { ProfileStatus } from '@type/user';
 
 export const Profile = () => {
   const { profile } = useAppSelector(getProfileSlice);
 
   const styles = profileStyle();
-  const statusData = ProfileStatusData[profile?.status || 0];
 
   const renderButtonControl = () => {
     switch (profile?.status) {
@@ -95,7 +94,7 @@ export const Profile = () => {
             <Grid item xs={6}>
               <div className={styles.profileLabel}>Status</div>
               <div>
-                <ChipStatus styleProps={{ marginTop: 4 }} label={statusData.text} colorStyle={statusData.color} />
+                <StatusKYC styleProps={{ marginTop: 4 }} status={profile.status as ProfileStatus} />
               </div>
             </Grid>
           </Grid>

@@ -21,7 +21,7 @@ export class TableHelper {
   ): DataGridProps | any => {
     return {
       pagination: true,
-      rowCount: totalCount || this.pagingDefault.totalCount,
+      rowCount: totalCount,
       pageSize: pageSize || this.pagingDefault.pageSize,
       paginationMode: 'server',
       page: currentPage || this.pagingDefault.currentPage,

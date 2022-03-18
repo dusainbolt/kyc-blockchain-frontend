@@ -19,5 +19,6 @@ export default class Constant {
 
   static DATE = {
     D_M_Y: 'DD/MM/YYYY',
+    D_M_Y_H_M: 'DD/MM/YYYY HH:mm',
   };
 }
