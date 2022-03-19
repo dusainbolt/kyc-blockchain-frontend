@@ -5,13 +5,14 @@ import { getProfileSlice } from '@redux/slices/profileSlice';
 import { useAppSelector } from '@redux/store';
 import Date from '@services/date';
 import { ProfileStatus } from '@type/user';
+import { useMemo } from 'react';
 
 export const Profile = () => {
   const { profile } = useAppSelector(getProfileSlice);
 
   const styles = profileStyle();
 
-  const renderButtonControl = () => {
+  const renderButtonControl = useMemo(() => {
     switch (profile?.status) {
       case ProfileStatus.EDIT:
         return (
@@ -27,9 +28,9 @@ export const Profile = () => {
       default:
         return '';
     }
-  };
+  }, [profile?.status]);
 
-  const renderAlertNotice = () => {
+  const renderAlertNotice = useMemo(() => {
     switch (profile?.status) {
       case ProfileStatus.EDIT:
         return (
@@ -41,7 +42,7 @@ export const Profile = () => {
       default:
         return '';
     }
-  };
+  }, [profile?.status]);
 
   return (
     <div>
@@ -98,9 +99,9 @@ export const Profile = () => {
               </div>
             </Grid>
           </Grid>
-          {renderAlertNotice()}
+          {renderAlertNotice}
           <Stack className={styles.spacingContentSmall} direction="row" spacing={2}>
-            {renderButtonControl()}
+            {renderButtonControl}
           </Stack>
         </div>
       )}

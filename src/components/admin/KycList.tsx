@@ -1,19 +1,33 @@
+import { ButtonIcon } from '@common/Button/ButtonIcon';
 import { StatusKYC } from '@common/Chip/StatusKyc';
 import { TableGrid } from '@common/TableGrid';
-import { Fingerprint, Preview } from '@mui/icons-material';
-import { Divider, IconButton, Stack, Typography } from '@mui/material';
-import { GridColDef } from '@mui/x-data-grid';
+import { Preview } from '@mui/icons-material';
+import { Divider, Stack, Typography } from '@mui/material';
+import { GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { getAdminKycSlice, searchKycStart } from '@redux/slices/adminKycSlice';
 import { useAppDispatch, useAppSelector } from '@redux/store';
 import Date from '@services/date';
 import Helper from '@services/helper';
 import { TableHelper } from '@services/table';
-import { useEffect } from 'react';
-import { ButtonIcon } from '@common/Button/ButtonIcon';
+import { Profile } from '@type/profile';
+import { useEffect, useState } from 'react';
+import { KycModal } from './KycModal';
 
 export const KycList = () => {
   const { paging, loadingData, data } = useAppSelector(getAdminKycSlice);
   const dispatch = useAppDispatch();
+  const [visibleKycModal, setVisibleKycModal] = useState<boolean>(false);
+  const [kycDetail, setKycDetail] = useState<Profile>();
+
+  const onOpenKycModal = (value: GridRenderCellParams) => () => {
+    setVisibleKycModal(true);
+    setKycDetail(value.row);
+  };
+
+  const onCloseKycModal = () => {
+    setVisibleKycModal(false);
+    setKycDetail({});
+  };
 
   useEffect(() => {
     dispatch(searchKycStart({ ...TableHelper.queryDefault }));
@@ -56,7 +70,7 @@ export const KycList = () => {
       headerName: 'Action',
       renderCell: (value) => (
         <Stack direction="row" spacing={1}>
-          <ButtonIcon helpText="view" icon={<Preview />} color="success" />
+          <ButtonIcon helpText="view" icon={<Preview />} onClick={onOpenKycModal(value)} color="success" />
           {/* <IconButton aria-label="fingerprint" color="secondary">
             <Fingerprint />
           </IconButton>
@@ -77,6 +91,7 @@ export const KycList = () => {
       <div style={{ height: 550, width: '100%' }}>
         <TableGrid paging={paging} columns={columns} loadingData={loadingData} rows={data} />
       </div>
+      <KycModal kyc={kycDetail} open={visibleKycModal} onCloseModal={onCloseKycModal} />
     </div>
   );
 };
