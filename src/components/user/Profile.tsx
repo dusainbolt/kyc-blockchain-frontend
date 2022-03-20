@@ -1,26 +1,39 @@
 import { StatusKYC } from '@common/Chip/StatusKyc';
 import { profileStyle } from '@components/user/profileStyle';
-import { Alert, Button, Divider, Grid, Stack, Typography } from '@mui/material';
-import { getProfileSlice } from '@redux/slices/profileSlice';
-import { useAppSelector } from '@redux/store';
+import { Alert, Divider, Grid, Stack, Typography } from '@mui/material';
+import { getProfileSlice, requestKycStart } from '@redux/slices/profileSlice';
+import { useAppDispatch, useAppSelector } from '@redux/store';
 import Date from '@services/date';
 import { ProfileStatus } from '@type/user';
 import { useMemo } from 'react';
+import { Button } from '@common/Button';
+import { openDialogApp } from '@redux/slices/layoutSlice';
 
 export const Profile = () => {
-  const { profile } = useAppSelector(getProfileSlice);
+  const { profile, loadingUpdate } = useAppSelector(getProfileSlice);
+  const dispatch = useAppDispatch();
 
   const styles = profileStyle();
+
+  const requestKyc = () => {
+    dispatch(
+      openDialogApp({
+        title: 'Request your KYC',
+        description: `Are you sure to send request? Then you can't edit your profile, you must waiting admin confirm your KYC.`,
+        callbackOk: () => dispatch(requestKycStart()),
+      })
+    );
+  };
 
   const renderButtonControl = useMemo(() => {
     switch (profile?.status) {
       case ProfileStatus.EDIT:
         return (
           <>
-            <Button variant="contained" href="/user/edit">
+            <Button loading={loadingUpdate} variant="contained" href="/user/edit">
               Edit Profile
             </Button>
-            <Button variant="contained" href="/user/edit">
+            <Button loading={loadingUpdate} onClick={requestKyc} variant="contained">
               Request KYC
             </Button>
           </>
@@ -28,7 +41,7 @@ export const Profile = () => {
       default:
         return '';
     }
-  }, [profile?.status]);
+  }, [profile?.status, loadingUpdate]);
 
   const renderAlertNotice = useMemo(() => {
     switch (profile?.status) {

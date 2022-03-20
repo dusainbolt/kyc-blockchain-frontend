@@ -1,7 +1,6 @@
 import { Alert, Container, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
 import { FC, useEffect, useState } from 'react';
 import { useStyles } from './homePageStyle';
-// import Button from '@mui/lab/Button';
 import Stack from '@mui/material/Stack';
 import { MetaMaskIcon } from '@asset/icon/metamask';
 import { useControlConnect } from '@hooks/useConnectProvider';

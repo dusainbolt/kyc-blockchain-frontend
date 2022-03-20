@@ -17,3 +17,7 @@ export const getKycInfoAPI = async () => {
 export const searchKycAPI = async (params: SearchKycParams) => {
   return await axios.get('/kyc/search', params);
 };
+
+export const requestKycAPI = async () => {
+  return await axios.patch('/kyc/request');
+};

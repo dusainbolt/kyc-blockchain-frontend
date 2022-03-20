@@ -39,6 +39,19 @@ const profileSlice = createSlice({
     updateProfileError: (state: ProfileSlice) => {
       state.loadingUpdate = false;
     },
+    requestKycStart: (state: ProfileSlice) => {
+      state.loadingUpdate = true;
+    },
+    requestKycSuccess: (state: ProfileSlice, { payload }: any) => {
+      state.loadingUpdate = false;
+      state.profile = payload;
+    },
+    requestKycError: (state: ProfileSlice) => {
+      state.loadingUpdate = false;
+    },
+    logoutProfile: () => {
+      return initialState;
+    },
   },
   extraReducers(builder) {
     builder.addCase(hydrate, (state, action) => {
@@ -59,6 +72,10 @@ export const {
   updateProfileError,
   updateProfileSuccess,
   updateProfileStart,
+  requestKycError,
+  requestKycSuccess,
+  requestKycStart,
+  logoutProfile,
 } = profileSlice.actions;
 
 export default persistReducer(getPersistConfig(sliceName, { whitelist: ['profile'] }), profileSlice.reducer);

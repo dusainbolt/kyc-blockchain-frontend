@@ -3,11 +3,14 @@ import {
   getProfileError,
   getProfileStart,
   getProfileSuccess,
+  requestKycError,
+  requestKycStart,
+  requestKycSuccess,
   updateProfileError,
   updateProfileStart,
   updateProfileSuccess,
 } from '@redux/slices/profileSlice';
-import { createKycAPI, getKycInfoAPI, updateKycAPI } from '@request/kycRequest';
+import { createKycAPI, getKycInfoAPI, requestKycAPI, updateKycAPI } from '@request/kycRequest';
 import Constant from '@services/constant';
 import { put, takeEvery } from 'redux-saga/effects';
 
@@ -38,7 +41,21 @@ function* watchUpdateProfile({ payload }: updateProfileAction) {
   }
 }
 
+function* watchRequestProfile() {
+  try {
+    const response = yield requestKycAPI();
+    if (Constant.CODE.SUCCESS_RESPONSE === response?.code) {
+      yield put(requestKycSuccess(response.data));
+    } else {
+      yield put(requestKycError());
+    }
+  } catch (error: any) {
+    yield put(requestKycError());
+  }
+}
+
 export default function* profileSaga(): any {
   yield takeEvery(getProfileStart, watchGetProfile);
   yield takeEvery(updateProfileStart, watchUpdateProfile);
+  yield takeEvery(requestKycStart, watchRequestProfile);
 }

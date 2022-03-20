@@ -17,7 +17,7 @@ export const KycModal: FC<KycModalProps> = ({ onCloseModal, kyc, ...otherProps }
 
   const renderButtonControl = useMemo(() => {
     switch (kyc?.status) {
-      case ProfileStatus.EDIT:
+      case ProfileStatus.REQUEST:
         return (
           <>
             <Button variant="contained" href="/user/edit">

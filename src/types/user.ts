@@ -27,7 +27,7 @@ export const ProfileStatusData: Record<ProfileStatus, StatusField> = {
     text: 'Editable',
   },
   [ProfileStatus.REQUEST]: {
-    color: 'yellow',
+    color: '#e3b300',
     text: 'Requesting',
   },
   [ProfileStatus.APPROVE]: {

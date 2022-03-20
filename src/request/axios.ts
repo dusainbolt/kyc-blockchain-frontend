@@ -53,20 +53,24 @@ class AxiosServer {
   }
 
   get(endpoint, body = {}) {
-    // this.instance.defaults.params = body;
     return this.instance.get(endpoint, { params: body });
   }
 
-  post(endpoint, body) {
+  post(endpoint, body = {}) {
     return this.instance.post(endpoint, body);
   }
 
-  put(endpoint, body) {
+  put(endpoint, body = {}) {
     return this.instance.put(endpoint, body);
   }
-  //   delete(endpoint) {
-  //     return this.instance.delete(this.getFullUrl(endpoint));
-  //   }
+
+  patch(endpoint, body = {}) {
+    return this.instance.patch(endpoint, body);
+  }
+
+  delete(endpoint) {
+    return this.instance.delete(endpoint);
+  }
 }
 
 export default new AxiosServer();
