@@ -1,6 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-unused-vars */
-import { SearchKycAction, SearchKycSuccessAction } from '@redux/action/adminKycAction';
+import {
+  ConfirmKycAction,
+  ConfirmKycSuccessAction,
+  SearchKycAction,
+  SearchKycSuccessAction,
+} from '@redux/action/adminKycAction';
 import { getPersistConfig } from '@redux/storage';
 import { createAction, createSlice } from '@reduxjs/toolkit';
 import { AdminKycSlice } from '@type/adminKyc';
@@ -33,6 +38,17 @@ const adminKycSlice = createSlice({
       state.data = payload.data;
       state.loadingData = false;
     },
+    confirmKycStart: (state: AdminKycSlice, { payload }: ConfirmKycAction) => {
+      state.loadingData = !!payload.kycId;
+    },
+    confirmKycSuccess: (state: AdminKycSlice, { payload }: ConfirmKycSuccessAction) => {
+      state.loadingData = false;
+      state.data[payload.index].status = payload.profile.status;
+      state.data[payload.index].updatedAt = payload.profile.updatedAt;
+    },
+    confirmKycError: (state: AdminKycSlice) => {
+      state.loadingData = false;
+    },
   },
   extraReducers(builder) {
     builder.addCase(hydrate, (state, action) => {
@@ -46,7 +62,8 @@ const adminKycSlice = createSlice({
 
 export const getAdminKycSlice = (state: RootState): AdminKycSlice => state[sliceName];
 
-export const { searchKycStart, searchKycSuccess } = adminKycSlice.actions;
+export const { searchKycStart, searchKycSuccess, confirmKycSuccess, confirmKycStart, confirmKycError } =
+  adminKycSlice.actions;
 
 export default persistReducer(
   getPersistConfig(sliceName, { whitelist: ['address', 'token', 'role'] }),

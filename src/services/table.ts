@@ -15,6 +15,8 @@ export class TableHelper {
     pageSize: this.pagingDefault.pageSize as number,
   };
 
+  static recoverIndex = (id: number, currentPage: number, pageSize: number) => id - (currentPage - 1) * pageSize - 1;
+
   static propsParamsTable = (
     { currentPage, pageSize, totalCount }: Paging,
     rowsPerPageOptions = null

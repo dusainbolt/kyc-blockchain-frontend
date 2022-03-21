@@ -52,6 +52,12 @@ export const Profile = () => {
             request KYC to continue our process.
           </Alert>
         );
+      case ProfileStatus.REQUEST:
+        return (
+          <Alert className={styles.spacingContentSmall} severity="info">
+            Your KYC is being reviewed. Please wait for confirmation by the admin
+          </Alert>
+        );
       default:
         return '';
     }

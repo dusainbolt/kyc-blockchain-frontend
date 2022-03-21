@@ -1,4 +1,4 @@
-import { SearchKycParams } from '@redux/action/adminKycAction';
+import { SearchKycParams, ConfirmKycBody } from '@redux/action/adminKycAction';
 import { Profile } from '@type/profile';
 import axios from './axios';
 
@@ -20,4 +20,8 @@ export const searchKycAPI = async (params: SearchKycParams) => {
 
 export const requestKycAPI = async () => {
   return await axios.patch('/kyc/request');
+};
+
+export const confirmKycAPI = async (body: ConfirmKycBody) => {
+  return await axios.patch('/kyc/confirm', body);
 };

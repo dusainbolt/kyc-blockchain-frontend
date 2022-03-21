@@ -18,10 +18,12 @@ export const KycList = () => {
   const dispatch = useAppDispatch();
   const [visibleKycModal, setVisibleKycModal] = useState<boolean>(false);
   const [kycDetail, setKycDetail] = useState<Profile>();
+  const [node, setNode] = useState<number>(0);
 
   const onOpenKycModal = (value: GridRenderCellParams) => () => {
     setVisibleKycModal(true);
     setKycDetail(value.row);
+    setNode(TableHelper.recoverIndex(value.id as number, paging.currentPage as number, paging.pageSize as number));
   };
 
   const onCloseKycModal = () => {
@@ -91,7 +93,13 @@ export const KycList = () => {
       <div style={{ height: 550, width: '100%' }}>
         <TableGrid paging={paging} columns={columns} loadingData={loadingData} rows={data} />
       </div>
-      <KycModal kyc={kycDetail} open={visibleKycModal} onCloseModal={onCloseKycModal} />
+      <KycModal
+        index={node}
+        loadingAction={loadingData}
+        kyc={kycDetail}
+        open={visibleKycModal}
+        onCloseModal={onCloseKycModal}
+      />
     </div>
   );
 };

@@ -8,6 +8,7 @@ export type AppDialog = {
   title?: string;
   description?: string;
   callbackOk?: any;
+  label?: string;
 };
 
 export type LayoutSlice = {

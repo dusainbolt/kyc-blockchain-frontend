@@ -1,6 +1,10 @@
+import { Button } from '@common/Button';
 import { StatusKYC } from '@common/Chip/StatusKyc';
 import { DialogModal } from '@common/Dialog/DialogModal';
-import { Button, DialogActions, DialogProps, Grid } from '@mui/material';
+import { DialogActions, DialogProps, Grid } from '@mui/material';
+import { confirmKycStart, getAdminKycSlice } from '@redux/slices/adminKycSlice';
+import { openDialogApp } from '@redux/slices/layoutSlice';
+import { useAppDispatch } from '@redux/store';
 import Date from '@services/date';
 import { Profile } from '@type/profile';
 import { ProfileStatus } from '@type/user';
@@ -10,28 +14,46 @@ import { kycModalStyle } from './kycModalStyle';
 interface KycModalProps extends DialogProps {
   onCloseModal?: any;
   kyc?: Profile;
+  loadingAction?: boolean;
+  index?: number;
 }
 
-export const KycModal: FC<KycModalProps> = ({ onCloseModal, kyc, ...otherProps }) => {
+export const KycModal: FC<KycModalProps> = ({ onCloseModal, index, loadingAction, kyc, ...otherProps }) => {
   const styles = kycModalStyle();
+  const dispatch = useAppDispatch();
+
+  const receiveConfirmApprove = (message: string) => {
+    dispatch(confirmKycStart({ kycId: kyc?._id as string, status: ProfileStatus.APPROVE, message, index }));
+  };
+
+  const requestKyc = () => {
+    dispatch(
+      openDialogApp({
+        title: 'Request your KYC',
+        description: `Are you sure to send request? Then you can't edit your profile, you must waiting admin confirm your KYC.`,
+        label: 'Reason',
+        callbackOk: receiveConfirmApprove,
+      })
+    );
+  };
 
   const renderButtonControl = useMemo(() => {
     switch (kyc?.status) {
       case ProfileStatus.REQUEST:
         return (
           <>
-            <Button variant="contained" href="/user/edit">
-              Edit Profile
+            <Button loading={loadingAction} variant="contained" color="error" onClick={requestKyc}>
+              Reject
             </Button>
-            <Button variant="contained" href="/user/edit">
-              Request KYC
+            <Button loading={loadingAction} variant="contained" onClick={requestKyc}>
+              Approve
             </Button>
           </>
         );
       default:
         return '';
     }
-  }, [kyc?.status]);
+  }, [kyc?.status, loadingAction]);
 
   return (
     <DialogModal

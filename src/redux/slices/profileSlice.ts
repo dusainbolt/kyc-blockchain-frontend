@@ -69,12 +69,12 @@ export const {
   getProfileStart,
   getProfileSuccess,
   getProfileError,
-  updateProfileError,
-  updateProfileSuccess,
   updateProfileStart,
-  requestKycError,
-  requestKycSuccess,
+  updateProfileSuccess,
+  updateProfileError,
   requestKycStart,
+  requestKycSuccess,
+  requestKycError,
   logoutProfile,
 } = profileSlice.actions;
 
