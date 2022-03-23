@@ -5,15 +5,35 @@ import { getProfileSlice, requestKycStart } from '@redux/slices/profileSlice';
 import { useAppDispatch, useAppSelector } from '@redux/store';
 import Date from '@services/date';
 import { ProfileStatus } from '@type/user';
-import { useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { Button } from '@common/Button';
 import { openDialogApp } from '@redux/slices/layoutSlice';
+import WidgetsIcon from '@mui/icons-material/Widgets';
+import { requestDeployAPI } from '@request/kycRequest';
+import { ContractService } from '@services/contract';
+import { useWeb3React } from '@web3-react/core';
 
 export const Profile = () => {
   const { profile, loadingUpdate } = useAppSelector(getProfileSlice);
   const dispatch = useAppDispatch();
-
+  const [loadingDeploy, setLoadingDeploy] = useState<boolean>(false);
+  const { account, library } = useWeb3React();
   const styles = profileStyle();
+
+  // console.log("e", account)
+
+  const handleReceiveABIDeploy = useCallback(async () => {
+    setLoadingDeploy(true);
+    try {
+      const data = await requestDeployAPI();
+      const contractService = new ContractService(library, account as any);
+      await contractService.deployKYC(data.data);
+      setLoadingDeploy(false);
+    } catch (e) {
+      console.log('e', e);
+      setLoadingDeploy(false);
+    }
+  }, [account, library]);
 
   const requestKyc = () => {
     dispatch(
@@ -21,6 +41,16 @@ export const Profile = () => {
         title: 'Request your KYC',
         description: `Are you sure to send request? Then you can't edit your profile, you must waiting admin confirm your KYC.`,
         callbackOk: () => dispatch(requestKycStart()),
+      })
+    );
+  };
+
+  const deployKyc = () => {
+    dispatch(
+      openDialogApp({
+        title: 'Save KYC to blockchain',
+        description: `Do want to save KYC information to blockchain?`,
+        callbackOk: handleReceiveABIDeploy,
       })
     );
   };
@@ -38,10 +68,23 @@ export const Profile = () => {
             </Button>
           </>
         );
+      case ProfileStatus.APPROVE:
+        return (
+          <>
+            <Button
+              startIcon={<WidgetsIcon />}
+              loading={loadingUpdate || loadingDeploy}
+              onClick={handleReceiveABIDeploy}
+              variant="contained"
+            >
+              Save to Blockchain
+            </Button>
+          </>
+        );
       default:
         return '';
     }
-  }, [profile?.status, loadingUpdate]);
+  }, [profile?.status, loadingUpdate, loadingDeploy]);
 
   const renderAlertNotice = useMemo(() => {
     switch (profile?.status) {
@@ -56,6 +99,12 @@ export const Profile = () => {
         return (
           <Alert className={styles.spacingContentSmall} severity="info">
             Your KYC is being reviewed. Please wait for confirmation by the admin
+          </Alert>
+        );
+      case ProfileStatus.APPROVE:
+        return (
+          <Alert className={styles.spacingContentSmall} severity="info">
+            Your KYC is approved. Now you can save your kyc information to blockchain
           </Alert>
         );
       default:

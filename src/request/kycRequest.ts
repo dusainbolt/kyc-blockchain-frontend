@@ -25,3 +25,7 @@ export const requestKycAPI = async () => {
 export const confirmKycAPI = async (body: ConfirmKycBody) => {
   return await axios.patch('/kyc/confirm', body);
 };
+
+export const requestDeployAPI = async () => {
+  return await axios.get('/kyc/request_deploy');
+};

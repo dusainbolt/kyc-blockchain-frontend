@@ -9,7 +9,6 @@ import {
 import { confirmKycAPI, searchKycAPI } from '@request/kycRequest';
 import Constant from '@services/constant';
 import { delay, put, takeEvery } from 'redux-saga/effects';
-import { number } from 'yup';
 
 function* watchSearchKyc({ payload }: SearchKycAction) {
   try {
