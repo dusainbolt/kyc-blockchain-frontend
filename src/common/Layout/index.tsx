@@ -26,7 +26,7 @@ import { useAppSelector } from '@redux/store';
 import Helper from '@services/helper';
 import { BreadcrumbsType } from '@type/layout';
 import { useWeb3React } from '@web3-react/core';
-import { FC, ReactNode, useState } from 'react';
+import { FC, ReactNode, useMemo, useState } from 'react';
 import { layoutStyle } from './layoutStyle';
 import { Sidebar } from './SlideBar';
 
@@ -36,7 +36,6 @@ interface LayoutProps {
 }
 
 export const Layout: FC<LayoutProps> = ({ children, breadcrumbs }) => {
-  useGetProfile();
   useConnectProvider();
   useRedirectAuth();
   const styles = layoutStyle();

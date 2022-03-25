@@ -1,9 +1,9 @@
 import { PayloadName } from '@redux/reducer';
-import { SearchResponse } from '@type/context';
+import { querySearchDefault, SearchResponse } from '@type/context';
 import { Profile } from '@type/profile';
 import { ProfileStatus } from '@type/user';
 
-export type SearchKycParams = { page: number; pageSize: number; sortBy?: string } & { email?: string };
+export type SearchKycParams = querySearchDefault & { email?: string };
 
 export type SearchKycAction = Record<PayloadName, SearchKycParams>;
 export type SearchKycSuccessAction = Record<PayloadName, SearchResponse>;

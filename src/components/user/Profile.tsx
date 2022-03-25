@@ -5,7 +5,7 @@ import { getProfileSlice, requestKycStart } from '@redux/slices/profileSlice';
 import { useAppDispatch, useAppSelector } from '@redux/store';
 import Date from '@services/date';
 import { ProfileStatus } from '@type/user';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Button } from '@common/Button';
 import { openDialogApp } from '@redux/slices/layoutSlice';
 import WidgetsIcon from '@mui/icons-material/Widgets';
@@ -22,12 +22,16 @@ export const Profile = () => {
 
   // console.log("e", account)
 
+  const callbackDeploy = (e) => {
+    console.log(e);
+  };
+
   const handleReceiveABIDeploy = useCallback(async () => {
     setLoadingDeploy(true);
     try {
       const data = await requestDeployAPI();
       const contractService = new ContractService(library, account as any);
-      await contractService.deployKYC(data.data);
+      await contractService.deployKYC(data.data, callbackDeploy);
       setLoadingDeploy(false);
     } catch (e) {
       console.log('e', e);
@@ -55,7 +59,7 @@ export const Profile = () => {
     );
   };
 
-  const renderButtonControl = useMemo(() => {
+  const renderButtonControl = () => {
     switch (profile?.status) {
       case ProfileStatus.EDIT:
         return (
@@ -74,7 +78,7 @@ export const Profile = () => {
             <Button
               startIcon={<WidgetsIcon />}
               loading={loadingUpdate || loadingDeploy}
-              onClick={handleReceiveABIDeploy}
+              onClick={deployKyc}
               variant="contained"
             >
               Save to Blockchain
@@ -84,9 +88,9 @@ export const Profile = () => {
       default:
         return '';
     }
-  }, [profile?.status, loadingUpdate, loadingDeploy]);
+  };
 
-  const renderAlertNotice = useMemo(() => {
+  const renderAlertNotice = () => {
     switch (profile?.status) {
       case ProfileStatus.EDIT:
         return (
@@ -110,7 +114,7 @@ export const Profile = () => {
       default:
         return '';
     }
-  }, [profile?.status]);
+  };
 
   return (
     <div>
@@ -167,9 +171,9 @@ export const Profile = () => {
               </div>
             </Grid>
           </Grid>
-          {renderAlertNotice}
+          {renderAlertNotice()}
           <Stack className={styles.spacingContentSmall} direction="row" spacing={2}>
-            {renderButtonControl}
+            {renderButtonControl()}
           </Stack>
         </div>
       )}

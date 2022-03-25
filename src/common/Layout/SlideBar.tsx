@@ -20,7 +20,7 @@ export const Sidebar: FC<SidebarProps> = () => {
     [Role.USER]: [
       { text: 'Profile', icon: <InboxIcon />, href: '/user' },
       { text: 'Edit Profile', icon: <InboxIcon />, href: '/user/edit' },
-      { text: 'History', icon: <InboxIcon />, href: '/user/request' },
+      { text: 'History', icon: <InboxIcon />, href: '/user/history' },
       { text: 'Share History', icon: <InboxIcon />, href: 'user/share-history' },
     ],
     [Role.ADMIN]: [

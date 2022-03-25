@@ -1,8 +1,4 @@
-import { isAddress } from '@ethersproject/address';
-import { AddressZero } from '@ethersproject/constants';
-import { Contract } from '@ethersproject/contracts';
 import { JsonRpcSigner, Web3Provider } from '@ethersproject/providers';
-import KYCContractABI from '@asset/contracts/KYCPlatform.json';
 
 export enum EventPayment {
   ACCEPT_PAYMENT,
@@ -44,7 +40,7 @@ export class ContractService {
   //     return new Contract(contractAddress, ABI, this.getProviderOrSigner());
   //   };
 
-  public deployKYC = async (abiCode: string, callbackPayment: (event: EventPayment, data: any) => void) => {
+  public deployKYC = async (abiCode: string, callbackTransaction: (event: EventPayment, data: any) => void) => {
     try {
       // const kycPlatformContract = this.getContract('0x5FbDB2315678afecb367f032d93F642f64180aa3', KYCContractABI);
       // console.log(this.account);
@@ -65,13 +61,13 @@ export class ContractService {
       console.log('response: ', transactionReceipt);
     } catch (e: any) {
       if (e.code == ContractService.errorCode.UNPREDICTABLE_GAS_LIMIT) {
-        callbackPayment(EventPayment.PAYMENT_STATUS_ERROR, null);
+        callbackTransaction(EventPayment.PAYMENT_STATUS_ERROR, null);
       } else if (e.code === ContractService.errorCode.USER_REJECT_REQUEST) {
-        callbackPayment(EventPayment.PAYMENT_REQUEST_REJECT, null);
+        callbackTransaction(EventPayment.PAYMENT_REQUEST_REJECT, null);
       } else if (e.code === ContractService.errorCode.USER_NOT_ENOUGH_PRICE) {
-        callbackPayment(EventPayment.PAYMENT_STATUS_ERROR, null);
+        callbackTransaction(EventPayment.PAYMENT_STATUS_ERROR, null);
       } else {
-        callbackPayment(EventPayment.PAYMENT_STATUS_ERROR, null);
+        callbackTransaction(EventPayment.PAYMENT_STATUS_ERROR, null);
       }
     }
   };

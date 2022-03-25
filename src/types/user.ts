@@ -32,14 +32,14 @@ export const ProfileStatusData: Record<ProfileStatus, StatusField> = {
   },
   [ProfileStatus.APPROVE]: {
     color: 'green',
-    text: '1231',
+    text: 'Approve',
   },
   [ProfileStatus.REJECT]: {
     color: 'red',
-    text: '1231',
+    text: 'Reject',
   },
   [ProfileStatus.DEPLOY]: {
     color: 'violet',
-    text: '1231',
+    text: 'Deploy',
   },
 };
