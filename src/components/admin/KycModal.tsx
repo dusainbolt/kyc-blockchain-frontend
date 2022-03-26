@@ -2,7 +2,7 @@ import { Button } from '@common/Button';
 import { StatusKYC } from '@common/Chip/StatusKyc';
 import { DialogModal } from '@common/Dialog/DialogModal';
 import { DialogActions, DialogProps, Grid } from '@mui/material';
-import { confirmKycStart, getAdminKycSlice } from '@redux/slices/adminKycSlice';
+import { confirmKycStart } from '@redux/slices/adminKycSlice';
 import { openDialogApp } from '@redux/slices/layoutSlice';
 import { useAppDispatch } from '@redux/store';
 import Date from '@services/date';
@@ -26,13 +26,29 @@ export const KycModal: FC<KycModalProps> = ({ onCloseModal, index, loadingAction
     dispatch(confirmKycStart({ kycId: kyc?._id as string, status: ProfileStatus.APPROVE, message, index }));
   };
 
-  const requestKyc = () => {
+  const receiveReject = (message: string) => {
+    dispatch(confirmKycStart({ kycId: kyc?._id as string, status: ProfileStatus.REJECT, message, index }));
+  };
+
+  const requestApproveKyc = () => {
     dispatch(
       openDialogApp({
-        title: 'Request your KYC',
+        title: 'Approve the KYC',
         description: `Are you sure to send request? Then you can't edit your profile, you must waiting admin confirm your KYC.`,
         label: 'Reason',
         callbackOk: receiveConfirmApprove,
+      })
+    );
+  };
+
+  const requestRejectKyc = () => {
+    dispatch(
+      openDialogApp({
+        title: 'Reject the KYC',
+        description: `Are you sure to send request? Then you can't edit your profile, you must waiting admin confirm your KYC.`,
+        label: 'Reason',
+        require: true,
+        callbackOk: receiveReject,
       })
     );
   };
@@ -42,10 +58,10 @@ export const KycModal: FC<KycModalProps> = ({ onCloseModal, index, loadingAction
       case ProfileStatus.REQUEST:
         return (
           <>
-            <Button loading={loadingAction} variant="contained" color="error" onClick={requestKyc}>
+            <Button loading={loadingAction} variant="contained" color="error" onClick={requestRejectKyc}>
               Reject
             </Button>
-            <Button loading={loadingAction} variant="contained" onClick={requestKyc}>
+            <Button loading={loadingAction} variant="contained" onClick={requestApproveKyc}>
               Approve
             </Button>
           </>

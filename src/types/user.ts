@@ -19,6 +19,7 @@ export enum ProfileStatus {
   APPROVE,
   REJECT,
   DEPLOY,
+  RECEIVE_ABI_CODE,
 }
 
 export const ProfileStatusData: Record<ProfileStatus, StatusField> = {
@@ -41,5 +42,9 @@ export const ProfileStatusData: Record<ProfileStatus, StatusField> = {
   [ProfileStatus.DEPLOY]: {
     color: 'violet',
     text: 'Deploy',
+  },
+  [ProfileStatus.RECEIVE_ABI_CODE]: {
+    color: '#9f3afb',
+    text: 'Repair Deploy',
   },
 };

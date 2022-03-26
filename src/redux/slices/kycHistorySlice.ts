@@ -1,12 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-unused-vars */
-import { SearchKycAction, SearchKycSuccessAction } from '@redux/action/adminKycAction';
 import { SearchKycHistoryAction, SearchKycHistorySuccessAction } from '@redux/action/kycHistoryAction';
-import { getPersistConfig } from '@redux/storage';
 import { createAction, createSlice } from '@reduxjs/toolkit';
 import { KycHistorySlice } from '@type/kycHistory';
 import { HYDRATE } from 'next-redux-wrapper';
-import { persistReducer } from 'redux-persist';
 import { RootState } from '../reducer';
 import { AppState } from '../store';
 
@@ -49,4 +46,4 @@ export const getKycHistorySlice = (state: RootState): KycHistorySlice => state[s
 
 export const { searchKycHistoryStart, searchKycHistorySuccess } = kycHistorySlice.actions;
 
-export default persistReducer(getPersistConfig(sliceName, {}), kycHistorySlice.reducer);
+export default kycHistorySlice.reducer;

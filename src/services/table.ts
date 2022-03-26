@@ -11,8 +11,8 @@ export class TableHelper {
   };
 
   static queryDefault: querySearchDefault = {
-    page: this.pagingDefault.currentPage as number,
-    pageSize: this.pagingDefault.pageSize as number,
+    page: TableHelper.pagingDefault.currentPage as number,
+    pageSize: TableHelper.pagingDefault.pageSize as number,
   };
 
   static recoverIndex = (id: number, currentPage: number, pageSize: number) => id - (currentPage - 1) * pageSize - 1;
@@ -24,10 +24,10 @@ export class TableHelper {
     return {
       pagination: true,
       rowCount: totalCount,
-      pageSize: pageSize || this.pagingDefault.pageSize,
+      pageSize: pageSize || TableHelper.pagingDefault.pageSize,
       paginationMode: 'server',
-      page: currentPage || this.pagingDefault.currentPage,
-      rowsPerPageOptions: rowsPerPageOptions || this.rowsPerPageOptions,
+      page: currentPage || TableHelper.pagingDefault.currentPage,
+      rowsPerPageOptions: rowsPerPageOptions || TableHelper.rowsPerPageOptions,
     };
   };
 }

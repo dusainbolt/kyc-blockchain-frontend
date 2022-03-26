@@ -1,7 +1,6 @@
 import { AppDialog } from '@common/Dialog';
 import { MenuCustom } from '@common/Menu/MenuCustom';
 import { useConnectProvider } from '@hooks/useConnectProvider';
-import { useGetProfile } from '@hooks/useGetProfile';
 import { useRedirectAuth } from '@hooks/useRedirectAuth';
 import { Logout } from '@mui/icons-material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -26,7 +25,7 @@ import { useAppSelector } from '@redux/store';
 import Helper from '@services/helper';
 import { BreadcrumbsType } from '@type/layout';
 import { useWeb3React } from '@web3-react/core';
-import { FC, ReactNode, useMemo, useState } from 'react';
+import { FC, ReactNode, useState } from 'react';
 import { layoutStyle } from './layoutStyle';
 import { Sidebar } from './SlideBar';
 

@@ -1,12 +1,12 @@
 import { SearchKycAction } from '@redux/action/adminKycAction';
 import { searchKycHistoryStart, searchKycHistorySuccess } from '@redux/slices/kycHistorySlice';
-import { searchKycAPI } from '@request/kycRequest';
+import { searchKycHistoryAPI } from '@request/kycHistoryRequest';
 import Constant from '@services/constant';
 import { delay, put, takeEvery } from 'redux-saga/effects';
 
 function* watchSearchKycHistory({ payload }: SearchKycAction) {
   try {
-    const response = yield searchKycAPI(payload);
+    const response = yield searchKycHistoryAPI(payload);
     if (Constant.CODE.SUCCESS_RESPONSE === response?.code) {
       yield delay(1000);
       yield put(searchKycHistorySuccess(response.data));

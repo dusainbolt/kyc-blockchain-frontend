@@ -34,7 +34,6 @@ export const Profile = () => {
       await contractService.deployKYC(data.data, callbackDeploy);
       setLoadingDeploy(false);
     } catch (e) {
-      console.log('e', e);
       setLoadingDeploy(false);
     }
   }, [account, library]);
@@ -66,6 +65,20 @@ export const Profile = () => {
           <>
             <Button loading={loadingUpdate} variant="contained" href="/user/edit">
               Edit Profile
+            </Button>
+            <Button loading={loadingUpdate} onClick={requestKyc} variant="contained">
+              Request KYC
+            </Button>
+          </>
+        );
+      case ProfileStatus.REJECT:
+        return (
+          <>
+            <Button loading={loadingUpdate} variant="contained" href="/user/edit">
+              Edit Profile
+            </Button>
+            <Button loading={loadingUpdate} variant="contained" href="/user/history">
+              View History
             </Button>
             <Button loading={loadingUpdate} onClick={requestKyc} variant="contained">
               Request KYC
@@ -109,6 +122,12 @@ export const Profile = () => {
         return (
           <Alert className={styles.spacingContentSmall} severity="info">
             Your KYC is approved. Now you can save your kyc information to blockchain
+          </Alert>
+        );
+      case ProfileStatus.REJECT:
+        return (
+          <Alert className={styles.spacingContentSmall} severity="error">
+            Your KYC is rejected. Please check history to view our reason. And update your KYC to re-check
           </Alert>
         );
       default:

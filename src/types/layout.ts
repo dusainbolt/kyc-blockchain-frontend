@@ -9,6 +9,7 @@ export type AppDialog = {
   description?: string;
   callbackOk?: any;
   label?: string;
+  require?: boolean;
 };
 
 export type LayoutSlice = {

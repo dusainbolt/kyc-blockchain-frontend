@@ -23,6 +23,7 @@ export const AppDialog = () => {
   };
 
   const handleOk = () => {
+    if (dialog?.require && !value) return;
     dialog?.callbackOk(value);
     dispatch(closeDialogApp());
   };
@@ -50,7 +51,7 @@ export const AppDialog = () => {
             id="name"
             label={dialog?.label}
             value={value}
-            required
+            required={dialog.require}
             onChange={onChangeInput as any}
             type="string"
             fullWidth

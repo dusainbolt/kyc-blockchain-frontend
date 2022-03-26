@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react';
 import { KycModal } from './KycModal';
 
 export const KycList = () => {
-  const { paging, loadingData, data } = useAppSelector(getAdminKycSlice);
+  const { paging, loadingData, data: kycList } = useAppSelector(getAdminKycSlice);
   const dispatch = useAppDispatch();
   const [visibleKycModal, setVisibleKycModal] = useState<boolean>(false);
   const [kycDetail, setKycDetail] = useState<Profile>();
@@ -30,6 +30,10 @@ export const KycList = () => {
     setVisibleKycModal(false);
     setKycDetail({});
   };
+
+  useEffect(() => {
+    onCloseKycModal();
+  }, [kycList]);
 
   useEffect(() => {
     dispatch(searchKycStart({ ...TableHelper.queryDefault }));
@@ -73,12 +77,6 @@ export const KycList = () => {
       renderCell: (value) => (
         <Stack direction="row" spacing={1}>
           <ButtonIcon helpText="view" icon={<Preview />} onClick={onOpenKycModal(value)} color="success" />
-          {/* <IconButton aria-label="fingerprint" color="secondary">
-            <Fingerprint />
-          </IconButton>
-          <IconButton aria-label="fingerprint" >
-            <Preview />
-          </IconButton> */}
         </Stack>
       ),
     },
@@ -91,7 +89,7 @@ export const KycList = () => {
       </Typography>
       <Divider style={{ marginBottom: 30 }} />
       <div style={{ height: 550, width: '100%' }}>
-        <TableGrid paging={paging} columns={columns} loadingData={loadingData} rows={data} />
+        <TableGrid paging={paging} columns={columns} loadingData={loadingData} rows={kycList} />
       </div>
       <KycModal
         index={node}

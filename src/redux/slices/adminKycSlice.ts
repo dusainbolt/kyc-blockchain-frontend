@@ -6,11 +6,9 @@ import {
   SearchKycAction,
   SearchKycSuccessAction,
 } from '@redux/action/adminKycAction';
-import { getPersistConfig } from '@redux/storage';
 import { createAction, createSlice } from '@reduxjs/toolkit';
 import { AdminKycSlice } from '@type/adminKyc';
 import { HYDRATE } from 'next-redux-wrapper';
-import { persistReducer } from 'redux-persist';
 import { RootState } from '../reducer';
 import { AppState } from '../store';
 
@@ -65,7 +63,4 @@ export const getAdminKycSlice = (state: RootState): AdminKycSlice => state[slice
 export const { searchKycStart, searchKycSuccess, confirmKycSuccess, confirmKycStart, confirmKycError } =
   adminKycSlice.actions;
 
-export default persistReducer(
-  getPersistConfig(sliceName, { whitelist: ['address', 'token', 'role'] }),
-  adminKycSlice.reducer
-);
+export default adminKycSlice.reducer;

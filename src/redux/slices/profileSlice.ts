@@ -78,4 +78,4 @@ export const {
   logoutProfile,
 } = profileSlice.actions;
 
-export default persistReducer(getPersistConfig(sliceName, {}), profileSlice.reducer);
+export default persistReducer(getPersistConfig(sliceName, { whitelist: ['profile'] }), profileSlice.reducer);

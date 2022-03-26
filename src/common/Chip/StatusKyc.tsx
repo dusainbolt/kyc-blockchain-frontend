@@ -8,5 +8,5 @@ export const StatusKYC: FC<{ status: ProfileStatus; styleProps?: CSSProperties }
 }) => {
   const statusData = ProfileStatusData[status];
 
-  return <ChipStatus styleProps={styleProps} label={statusData.text} colorStyle={statusData.color} />;
+  return <ChipStatus styleProps={styleProps} label={statusData?.text} colorStyle={statusData?.color} />;
 };

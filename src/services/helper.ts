@@ -10,4 +10,6 @@ export default class Helper {
     if (hex?.length < numStart + numEnd) return hex;
     return `${hex?.substring(0, numStart)}...${hex.substring(hex.length - numEnd)}`;
   };
+
+  static getEtherUrl = (txId: string) => `${process.env.NEXT_PUBLIC_ETHER_SCAN}/tx/${txId}`;
 }
