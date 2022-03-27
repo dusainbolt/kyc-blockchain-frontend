@@ -1,4 +1,4 @@
-import { updateProfileAction } from '@redux/action/profileAction';
+import { UpdateProfileAction } from '@redux/action/profileAction';
 import { getPersistConfig } from '@redux/storage';
 import { createAction, createSlice } from '@reduxjs/toolkit';
 import { ProfileSlice } from '@type/profile';
@@ -30,7 +30,7 @@ const profileSlice = createSlice({
     getProfileError: (state: ProfileSlice) => {
       state.loadingProfile = false;
     },
-    updateProfileStart: (state: ProfileSlice, { payload }: updateProfileAction) => {
+    updateProfileStart: (state: ProfileSlice, { payload }: UpdateProfileAction) => {
       state.loadingUpdate = !!payload.address;
     },
     updateProfileSuccess: (state: ProfileSlice) => {

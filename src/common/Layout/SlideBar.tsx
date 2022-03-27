@@ -18,10 +18,12 @@ export const Sidebar: FC<SidebarProps> = () => {
 
   const menu = {
     [Role.USER]: [
-      { text: 'Profile', icon: <InboxIcon />, href: '/user' },
-      { text: 'Edit Profile', icon: <InboxIcon />, href: '/user/edit' },
-      { text: 'History', icon: <InboxIcon />, href: '/user/history' },
-      { text: 'Share History', icon: <InboxIcon />, href: 'user/share-history' },
+      { text: 'Profile', icon: <InboxIcon />, href: '/user', hideByProject: true },
+      { text: 'Edit Profile', icon: <InboxIcon />, href: '/user/edit', hideByProject: true },
+      { text: 'History', icon: <InboxIcon />, href: '/user/history', hideByProject: true },
+      { text: 'Share History', icon: <InboxIcon />, href: '/user/share-history', hideByProject: true },
+      // Project route together user route
+      { text: 'Dashboard', icon: <InboxIcon />, href: '/user/project' },
     ],
     [Role.ADMIN]: [
       { text: 'My Account', icon: <InboxIcon />, href: '/admin' },
@@ -29,20 +31,26 @@ export const Sidebar: FC<SidebarProps> = () => {
     ],
   };
 
+  const hideByProject = (item) => router.route.indexOf('/project') !== -1 && item.hideByProject;
+
   return (
     <div className={styles.sidebar}>
       <div className={styles.sidebarWrap}>
         <List style={{ width: '100%' }}>
-          {menu[role || Role.USER].map((item, index) => (
-            <ListItem key={index} className={styles.navWrap} selected={item.href === router.route} disablePadding>
-              <Link href={item.href}>
-                <ListItemButton>
-                  <ListItemIcon>{item.icon}</ListItemIcon>
-                  <ListItemText primary={item.text} />
-                </ListItemButton>
-              </Link>
-            </ListItem>
-          ))}
+          {menu[role || Role.USER].map((item, index) =>
+            !hideByProject(item) ? (
+              <ListItem key={index} className={styles.navWrap} selected={item.href === router.route} disablePadding>
+                <Link href={item.href}>
+                  <ListItemButton>
+                    <ListItemIcon>{item.icon}</ListItemIcon>
+                    <ListItemText primary={item.text} />
+                  </ListItemButton>
+                </Link>
+              </ListItem>
+            ) : (
+              ''
+            )
+          )}
         </List>
       </div>
     </div>

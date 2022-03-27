@@ -104,7 +104,7 @@ const HomePageComponent: FC<any> = () => {
               onChange={handleChange}
             >
               <ToggleButton value={Role.USER}>KYC User</ToggleButton>
-              <ToggleButton value={Role.PROJECT_ADMIN}>Business Manager</ToggleButton>
+              <ToggleButton value={Role.USER}>Business Manager</ToggleButton>
               <ToggleButton value={Role.ADMIN}>Administrator</ToggleButton>
             </ToggleButtonGroup>
             <Typography className={styles.spacingContent} variant="subtitle1" gutterBottom component="div">

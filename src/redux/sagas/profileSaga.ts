@@ -1,4 +1,4 @@
-import { updateProfileAction } from '@redux/action/profileAction';
+import { UpdateProfileAction } from '@redux/action/profileAction';
 import {
   getProfileError,
   getProfileStart,
@@ -27,7 +27,7 @@ function* watchGetProfile() {
   }
 }
 
-function* watchUpdateProfile({ payload }: updateProfileAction) {
+function* watchUpdateProfile({ payload }: UpdateProfileAction) {
   try {
     const response = yield payload._id ? updateKycAPI(payload) : createKycAPI(payload);
     if (Constant.CODE.SUCCESS_RESPONSE === response?.code) {

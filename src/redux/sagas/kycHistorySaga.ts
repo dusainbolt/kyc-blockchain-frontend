@@ -16,6 +16,6 @@ function* watchSearchKycHistory({ payload }: SearchKycAction) {
   }
 }
 
-export default function* adminKycSaga(): any {
+export default function* kycHistorySaga(): any {
   yield takeEvery(searchKycHistoryStart, watchSearchKycHistory);
 }
