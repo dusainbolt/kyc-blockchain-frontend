@@ -3,6 +3,8 @@
 import {
   CreateProjectAction,
   CreateProjectSuccessAction,
+  GetProjectAction,
+  GetProjectSuccessAction,
   SearchProjectAction,
   SearchProjectSuccessAction,
 } from '@redux/action/projectAction';
@@ -46,6 +48,16 @@ const projectSlice = createSlice({
     createProjectError: (state: ProjectSlice) => {
       state.loadingData = false;
     },
+    getProjectStart: (state: ProjectSlice, { payload }: GetProjectAction) => {
+      state.loadingData = !!payload.id;
+    },
+    getProjectSuccess: (state: ProjectSlice, { payload }: GetProjectSuccessAction) => {
+      state.projectDetail = payload;
+      state.loadingData = false;
+    },
+    getProjectError: (state: ProjectSlice) => {
+      state.loadingData = false;
+    },
   },
   extraReducers(builder) {
     builder.addCase(hydrate, (state, action) => {
@@ -65,6 +77,9 @@ export const {
   createProjectStart,
   createProjectSuccess,
   createProjectError,
+  getProjectStart,
+  getProjectSuccess,
+  getProjectError,
 } = projectSlice.actions;
 
 export default projectSlice.reducer;

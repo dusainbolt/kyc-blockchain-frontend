@@ -40,7 +40,7 @@ export class ContractService {
 
   private isRevert = (error: any) => error?.toString()?.indexOf('execution reverted: ') !== -1;
 
-  public deployKYC = async (abiCode: string, callbackTransaction: (event: EventPayment, data: any) => void) => {
+  public callContractKYC = async (abiCode?: string, callbackTransaction: (event: EventPayment, data: any) => void) => {
     try {
       const singer = this.getSigner();
       const address = await singer.getAddress();
@@ -60,6 +60,7 @@ export class ContractService {
       if (this.isRevert(e)) {
         NotificationManager.warning(this.renderRevertMessage(e), 'Warning');
       } else {
+        console.log('e: ', e);
         NotificationManager.error('Please try again or contact admin', 'Error');
       }
       // if (e.code === ContractService.errorCode.UNPREDICTABLE_GAS_LIMIT) {

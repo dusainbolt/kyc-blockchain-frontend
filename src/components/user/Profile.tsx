@@ -20,8 +20,6 @@ export const Profile = () => {
   const { account, library } = useWeb3React();
   const styles = profileStyle();
 
-  // console.log("e", account)
-
   const callbackDeploy = (e) => {
     console.log(e);
   };
@@ -31,7 +29,7 @@ export const Profile = () => {
     try {
       const data = await requestDeployAPI();
       const contractService = new ContractService(library, account as any);
-      await contractService.deployKYC(data.data, callbackDeploy);
+      await contractService.callContractKYC(data.data, callbackDeploy);
       setLoadingDeploy(false);
     } catch (e) {
       setLoadingDeploy(false);

@@ -15,6 +15,7 @@ export type Project = {
   name?: string;
   userId?: string;
   status?: ProjectStatus;
+  encodeShareKycABI?: string;
   message?: string;
   encodeABI?: string;
   avatar?: string;
@@ -25,6 +26,7 @@ export type ProjectSlice = {
   data: Project[];
   paging: Paging;
   loadingData: boolean;
+  projectDetail?: Project;
 };
 
 export const ProjectStatusData: Record<ProjectStatus, StatusField> = {
