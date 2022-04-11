@@ -7,6 +7,7 @@ import { useAppDispatch } from '@redux/store';
 import { TableHelper } from '@services/table';
 import { BreadcrumbsType } from '@type/layout';
 import { Formik } from 'formik';
+import Head from 'next/head';
 import { useEffect, useMemo } from 'react';
 
 const ProjectDashBoardPage = () => {
@@ -40,6 +41,10 @@ const ProjectDashBoardPage = () => {
 
   return (
     <Layout breadcrumbs={breadcrumbs}>
+      <Head>
+        <title>Project Management</title>
+        <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
+      </Head>
       <Formik onSubmit={onSubmitForm} initialValues={getInitValues as any}>
         <ProjectDashBoard />
       </Formik>

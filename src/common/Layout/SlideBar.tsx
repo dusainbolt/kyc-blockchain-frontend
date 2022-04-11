@@ -21,7 +21,7 @@ export const Sidebar: FC<SidebarProps> = () => {
       { text: 'Profile', icon: <InboxIcon />, href: '/user', hideByProject: true },
       { text: 'Edit Profile', icon: <InboxIcon />, href: '/user/edit', hideByProject: true },
       { text: 'History', icon: <InboxIcon />, href: '/user/history', hideByProject: true },
-      { text: 'Share History', icon: <InboxIcon />, href: '/user/share-history', hideByProject: true },
+      { text: 'Share History', icon: <InboxIcon />, href: '/user/shared', hideByProject: true },
       // Project route together user route
       { text: 'Dashboard', icon: <InboxIcon />, href: '/user/project' },
     ],

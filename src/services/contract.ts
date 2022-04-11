@@ -40,7 +40,7 @@ export class ContractService {
 
   private isRevert = (error: any) => error?.toString()?.indexOf('execution reverted: ') !== -1;
 
-  public callContractKYC = async (abiCode?: string, callbackTransaction: (event: EventPayment, data: any) => void) => {
+  public callContractKYC = async (abiCode: string, callbackTransaction: (event: EventPayment, data: any) => void) => {
     try {
       const singer = this.getSigner();
       const address = await singer.getAddress();

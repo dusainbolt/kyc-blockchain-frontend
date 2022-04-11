@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '@redux/store';
 import { BreadcrumbsType } from '@type/layout';
 import { Profile } from '@type/profile';
 import { Formik } from 'formik';
+import Head from 'next/head';
 import { useMemo } from 'react';
 
 const UserHome = () => {
@@ -51,6 +52,10 @@ const UserHome = () => {
 
   return (
     <Layout breadcrumbs={breadcrumbs}>
+      <Head>
+        <title>KYC Edit</title>
+        <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
+      </Head>
       <Formik onSubmit={onSubmitForm} initialValues={getInitValues as any}>
         <FormProfile />
       </Formik>

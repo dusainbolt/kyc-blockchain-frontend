@@ -6,6 +6,7 @@ import layoutSlice from './slices/layoutSlice';
 import adminKycSlice from './slices/adminKycSlice';
 import kycHistorySlice from './slices/kycHistorySlice';
 import projectSlice from './slices/projectSlice';
+import kycSharedSlice from './slices/kycSharedSlice';
 
 export const whitelist = [];
 
@@ -17,6 +18,7 @@ export const rootReducer = combineReducers({
   adminKycSlice,
   kycHistorySlice,
   projectSlice,
+  kycSharedSlice,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

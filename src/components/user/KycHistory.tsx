@@ -15,7 +15,6 @@ export const KycHistory = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    console.log('loadder');
     dispatch(searchKycHistoryStart({ ...TableHelper.queryDefault }));
   }, []);
 

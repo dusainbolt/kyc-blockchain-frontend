@@ -6,7 +6,7 @@ export class TableHelper {
 
   static pagingDefault: Paging = {
     currentPage: 1,
-    pageSize: 10,
+    pageSize: 1000,
     totalCount: 0,
   };
 

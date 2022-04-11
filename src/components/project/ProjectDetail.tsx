@@ -26,14 +26,11 @@ const ProjectDetail: FC<{ project: Project }> = ({ project }) => {
     console.log(e);
   };
 
-  console.log('library, account as any: ', library, account as any);
-
   const onClickShareKYC = useCallback(async () => {
     setLoadingDeploy(true);
     try {
-      console.log('library, account as any: ', library, account as any);
       const contractService = new ContractService(library, account as any);
-      await contractService.callContractKYC(project.encodeShareKycABI, callbackDeploy);
+      await contractService.callContractKYC(project.encodeShareKycABI as string, callbackDeploy);
       setLoadingDeploy(false);
     } catch (e) {
       setLoadingDeploy(false);
@@ -61,14 +58,6 @@ const ProjectDetail: FC<{ project: Project }> = ({ project }) => {
               >
                 Metamask
               </Button>{' '}
-              {/* <Button
-                onClick={() => connectWallet(TypeWallet.WALLET_CONNECT)}
-                className={styles.btnWalletConnect}
-                variant="outlined"
-                startIcon={<WalletConnectIcon />}
-              >
-                WalletConnect
-              </Button> */}
             </Stack>
           </>
         ) : (

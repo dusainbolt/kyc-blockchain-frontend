@@ -20,7 +20,7 @@ const ProjectPage = () => {
         <title>{projectDetail?.name}</title>
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
       </Head>
-      <ProjectDetail project={projectDetail} />
+      <ProjectDetail project={projectDetail as any} />
     </Fragment>
   );
 };

@@ -1,27 +1,24 @@
 import { Layout } from '@common/Layout';
-import { Profile } from '@components/user/Profile';
-import { useGetProfile } from '@hooks/useGetProfile';
+import { KycSharedHistory } from '@components/user/KycSharedHistory';
 import { BreadcrumbsType } from '@type/layout';
 import Head from 'next/head';
 
-const UserHome = () => {
-  useGetProfile();
-
+const UserHistory = () => {
   const breadcrumbs: BreadcrumbsType[] = [
     {
-      text: 'Profile',
+      text: 'KYC Shared History',
     },
   ];
 
   return (
     <Layout breadcrumbs={breadcrumbs}>
       <Head>
-        <title>KYC Profile</title>
+        <title>KYC Shared History</title>
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
       </Head>
-      <Profile />
+      <KycSharedHistory />
     </Layout>
   );
 };
 
-export default UserHome;
+export default UserHistory;
