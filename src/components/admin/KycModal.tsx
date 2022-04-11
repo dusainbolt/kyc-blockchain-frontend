@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import { Button } from '@common/Button';
 import { StatusKYC } from '@common/Chip/StatusKyc';
 import { DialogModal } from '@common/Dialog/DialogModal';
@@ -117,11 +118,19 @@ export const KycModal: FC<KycModalProps> = ({ onCloseModal, index, loadingAction
               <div className={styles.profileLabel}>Current Address</div>
               <div>{kyc?.nowAddress}</div>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12}>
               <div className={styles.profileLabel}>Status</div>
               <div>
                 <StatusKYC styleProps={{ marginTop: 4 }} status={kyc?.status as ProfileStatus} />
               </div>
+            </Grid>
+            <Grid item xs={6}>
+              <div className={styles.profileLabel}>Identifier Image before</div>
+              {kyc?.identifierImage1 && <img style={{ maxWidth: '100%' }} src={kyc?.identifierImage1} />}
+            </Grid>
+            <Grid item xs={6}>
+              <div className={styles.profileLabel}>Identifier Image after</div>
+              {kyc?.identifierImage2 && <img style={{ maxWidth: '100%' }} src={kyc?.identifierImage2} />}
             </Grid>
           </Grid>
         </>

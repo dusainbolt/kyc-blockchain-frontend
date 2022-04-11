@@ -25,6 +25,13 @@ class AxiosServer {
     }
   }
 
+  setAPIKeyRequest(apiKey: string) {
+    console.log('API KEY: ', apiKey);
+    if (apiKey) {
+      this.instance.defaults.headers.common['x-api-key'] = apiKey;
+    }
+  }
+
   //   getFullUrl(url) {
   //     if (!url.startsWith('/')) {
   //       url = '/' + url;

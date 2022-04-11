@@ -1,6 +1,7 @@
 import FieldDate from '@common/Form/FieldDate';
 import FieldText from '@common/Form/FieldInput';
 import FieldSelect from '@common/Form/FieldSelect';
+import FieldUpload from '@common/Form/FieldUpload';
 import { IField, Restrict } from './field';
 import { Gender, ProfileStatus } from './user';
 
@@ -13,7 +14,9 @@ export type ProfileInputName =
   | 'birthday'
   | 'phoneNumber'
   | 'address'
-  | 'nowAddress';
+  | 'nowAddress'
+  | 'identifierImage1'
+  | 'identifierImage2';
 
 export type ProfileUser = {
   _id: string;
@@ -35,6 +38,8 @@ export type Profile = {
   userId?: ProfileUser;
   createdAt?: string;
   updatedAt?: string;
+  identifierImage1?: string;
+  identifierImage2?: string;
 };
 
 export type ProfileSlice = {
@@ -108,6 +113,18 @@ export const profileField: Record<ProfileInputName, IField> = {
     label: 'Current address',
     component: FieldText,
     required: true,
+    grid: 12,
+  },
+  identifierImage1: {
+    name: 'identifierImage1',
+    label: 'Identifier Image before',
+    component: FieldUpload,
+    grid: 12,
+  },
+  identifierImage2: {
+    name: 'identifierImage2',
+    label: 'Identifier Image after',
+    component: FieldUpload,
     grid: 12,
   },
 };

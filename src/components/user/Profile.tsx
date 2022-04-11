@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import { StatusKYC } from '@common/Chip/StatusKyc';
 import { profileStyle } from '@components/user/profileStyle';
 import { Alert, Divider, Grid, Stack, Typography } from '@mui/material';
@@ -181,11 +182,19 @@ export const Profile = () => {
               <div className={styles.profileLabel}>Current Address</div>
               <div>{profile.nowAddress}</div>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12}>
               <div className={styles.profileLabel}>Status</div>
               <div>
                 <StatusKYC styleProps={{ marginTop: 4 }} status={profile.status as ProfileStatus} />
               </div>
+            </Grid>
+            <Grid item xs={6}>
+              <div className={styles.profileLabel}>Identifier Image before</div>
+              {profile?.identifierImage1 && <img style={{ maxWidth: '100%' }} src={profile?.identifierImage1} />}
+            </Grid>
+            <Grid item xs={6}>
+              <div className={styles.profileLabel}>Identifier Image after</div>
+              {profile?.identifierImage2 && <img style={{ maxWidth: '100%' }} src={profile?.identifierImage2} />}
             </Grid>
           </Grid>
           {renderAlertNotice()}

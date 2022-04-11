@@ -2,17 +2,24 @@ import ProjectDetail from '@components/project/ProjectDetail';
 import { useConnectProvider } from '@hooks/useConnectProvider';
 import { getProjectSlice, getProjectStart } from '@redux/slices/projectSlice';
 import { useAppSelector, wrapper } from '@redux/store';
+import axios from '@request/axios';
 import Helper from '@services/helper';
 import { SSRContext } from '@type/context';
 import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 import { END } from 'redux-saga';
 
 const ProjectPage = () => {
   useConnectProvider();
 
   const { projectDetail } = useAppSelector(getProjectSlice);
+
+  useEffect(() => {
+    if (projectDetail?._id) {
+      axios.setAPIKeyRequest(projectDetail.apiKey as any);
+    }
+  }, []);
 
   return (
     <Fragment>

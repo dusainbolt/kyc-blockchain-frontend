@@ -46,6 +46,8 @@ const UserHome = () => {
       lastName: profile?.lastName,
       nowAddress: profile?.nowAddress,
       phoneNumber: profile?.phoneNumber,
+      identifierImage1: profile?.identifierImage1,
+      identifierImage2: profile?.identifierImage2,
       _id: profile?._id,
     };
   }, [profile]);

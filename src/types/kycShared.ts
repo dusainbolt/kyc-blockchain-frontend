@@ -14,4 +14,5 @@ export type KycSharedSlice = {
   data: KycShared[];
   paging: Paging;
   loadingData: boolean;
+  kycShared?: KycShared;
 };

@@ -1,6 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-unused-vars */
-import { SearchKycSharedAction, SearchKycSharedSuccessAction } from '@redux/action/kycSharedAction';
+import {
+  CheckSharedKycAction,
+  checkSharedKycSuccess,
+  SearchKycSharedAction,
+  SearchKycSharedSuccessAction,
+} from '@redux/action/kycSharedAction';
 import { createAction, createSlice } from '@reduxjs/toolkit';
 import { KycSharedSlice } from '@type/kycShared';
 import { HYDRATE } from 'next-redux-wrapper';
@@ -31,6 +36,13 @@ const kycSharedSlice = createSlice({
       state.data = payload.data;
       state.loadingData = false;
     },
+    checkKycSharedStart: (state: KycSharedSlice, { payload }: CheckSharedKycAction) => {
+      state.loadingData = !!payload.userAddress;
+    },
+    checkKycSharedSuccess: (state: KycSharedSlice, { payload }: checkSharedKycSuccess) => {
+      state.kycShared = payload;
+      state.loadingData = false;
+    },
   },
   extraReducers(builder) {
     builder.addCase(hydrate, (state, action) => {
@@ -44,6 +56,7 @@ const kycSharedSlice = createSlice({
 
 export const getKycSharedSlice = (state: RootState): KycSharedSlice => state[sliceName];
 
-export const { searchKycSharedStart, searchKycSharedSuccess } = kycSharedSlice.actions;
+export const { searchKycSharedStart, searchKycSharedSuccess, checkKycSharedStart, checkKycSharedSuccess } =
+  kycSharedSlice.actions;
 
 export default kycSharedSlice.reducer;
