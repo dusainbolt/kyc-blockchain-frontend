@@ -21,20 +21,57 @@
     "sourceMap": true, // Generate corrresponding .map file
     "declaration": true, // Generate corresponding .d.ts file
     "noUnusedLocals": true, // Report errors on unused locals
+    "noImplicitAny": false,
     "noUnusedParameters": true, // Report errors on unused parameters
     "noFallthroughCasesInSwitch": true, // Report errors for fallthrough cases in switch statement
     "rootDir": ".",
     "baseUrl": ".",
     "paths": { //alias pathing for absolute paths
-      "@src/*": ["src/*"],
-      "@pages/*": ["pages/*"],
-      "@styles/*": ["styles/*"]
+      "@pages/*": [
+        "pages/*"
+      ],
+      "@styles/*": [
+        "styles/*"
+      ],
+      "@services/*": [
+        "src/services/*"
+      ],
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@type/*": [
+        "src/types/*"
+      ],
+      "@redux/*": [
+        "src/redux/*"
+      ],
+      "@hooks/*": [
+        "src/hooks/*"
+      ],
+      "@common/*": [
+        "src/common/*"
+      ],
+      "@asset/*": [
+        "src/asset/*"
+      ],
+      "@connectors/*": [
+        "src/connectors/*"
+      ],
+      "@request/*": [
+        "src/request/*"
+      ],
     },
     "experimentalDecorators": true, /* Enables experimental support for ES7 decorators. */
     "emitDecoratorMetadata": true, /* Enables experimental support for emitting type metadata for decorators. */
   },
   "include": [
-    "next-env.d.ts", "pages/**/*", "src/**/*", "styles/**/*" // *** The files TypeScript should type check ***
+    "next-env.d.ts",
+    "pages/**/*",
+    "src/**/*",
+    "styles/**/*" // *** The files TypeScript should type check ***
   ],
-  "exclude": ["node_modules", "coverage"] // *** The files to not type check ***
+  "exclude": [
+    "node_modules",
+    "coverage"
+  ] // *** The files to not type check ***
 }
